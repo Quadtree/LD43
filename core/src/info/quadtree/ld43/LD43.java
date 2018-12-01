@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,8 @@ public class LD43 extends ApplicationAdapter {
 	Stage mainStage;
 
 	Label.LabelStyle defaultLabelStyle;
+
+	InventoryDisplay inventoryDisplay;
 
 	public Sprite getGraphic(String name){
 		if (!graphics.containsKey(name)) graphics.put(name, atlas.createSprite(name));
@@ -67,6 +70,12 @@ public class LD43 extends ApplicationAdapter {
 		mainStage.addActor(upperStatusLabel);
 		upperStatusLabel.setPosition(20, 40);
 
+		inventoryDisplay = new InventoryDisplay();
+
+		ScrollPane invDisplayPane = new ScrollPane(inventoryDisplay);
+		mainStage.addActor(invDisplayPane);
+		invDisplayPane.setBounds(Gdx.graphics.getWidth() - 300, 0, 300, Gdx.graphics.getHeight());
+
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
 		batch = new SpriteBatch();
@@ -97,6 +106,8 @@ public class LD43 extends ApplicationAdapter {
 				System.err.println("Player has died!!!");
 				resetGameState();
 			}
+
+			inventoryDisplay.refresh();
 		}
 
 		gameState.pc.tickActions();

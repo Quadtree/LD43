@@ -48,4 +48,8 @@ public class Util {
         };
         return ret;
     }
+
+    public static Label lbl(String txt){
+        return new Label(txt, LD43.s.defaultLabelStyle);
+    }
 }
