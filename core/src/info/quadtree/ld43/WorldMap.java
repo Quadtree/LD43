@@ -33,7 +33,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         }
     }
 
-    final static int WORLD_HEIGHT = 384;
+    final static int WORLD_HEIGHT = 128;
     final static int WORLD_WIDTH = 48;
 
     transient IndexedAStarPathFinder<TilePos> pathFinder;
@@ -175,14 +175,14 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 corridorEndPoints.remove(nxt);
             }
 
-            if (Util.randInt(7) == 0){
+            if (Util.randInt(2) == 0){
                 TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
 
                 Rectangle roomRect = new Rectangle(
-                        nxt.x,
-                        nxt.y,
-                        farExt.x,
-                        farExt.y
+                        nxt.x - 4,
+                        nxt.y - 4,
+                        farExt.x + 8,
+                        farExt.y + 8
                 );
 
                 if (previousRooms.stream().noneMatch(it -> it.overlaps(roomRect))) {
