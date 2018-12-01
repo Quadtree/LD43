@@ -241,8 +241,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
             boolean xMode = MathUtils.randomBoolean();
             boolean yMode = MathUtils.randomBoolean();
 
-            float jaggedness = MathUtils.random() * 0.25f;
-            jaggedness += (trgRoom.y / (float)WORLD_HEIGHT) * 0.3f;
+            float jaggedness = MathUtils.random() * 0.5f * ((trgRoom.y / (float)WORLD_HEIGHT) + 0.15f);
+            //jaggedness +=  * 0.45f;
             jaggedness = Math.min(jaggedness, 0.8f);
 
             TilePos cp = roomToAddConn;
