@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class WorldMap implements IndexedGraph<TilePos> {
     public enum TerrainType {
@@ -125,5 +126,9 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     public boolean canSee(TilePos start, TilePos end){
         return true; // @todo: Actual system
+    }
+
+    public Optional<Creature> getCreatureOnTile(TilePos tp){
+        return LD43.s.gameState.creatures.stream().filter(it -> it.pos.equals(tp)).findAny();
     }
 }

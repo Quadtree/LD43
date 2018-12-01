@@ -58,4 +58,9 @@ public class GameState {
     public void tickActions(){
         Util.indexIterate(creatures, Creature::tickActions);
     }
+
+    public void addCombatLogMessage(TilePos loc, String message){
+        // todo: Actual combat log
+        System.err.println(loc + " " + message);
+    }
 }
