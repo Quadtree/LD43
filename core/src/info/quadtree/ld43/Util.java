@@ -25,4 +25,8 @@ public class Util {
     public static int minAll(int... ints){
         return Arrays.stream(ints).min().getAsInt();
     }
+
+    public static float randGaussian(float center, float stddev){
+        return (float)rand.nextGaussian() * stddev + center;
+    }
 }

@@ -212,25 +212,32 @@ public class WorldMap implements IndexedGraph<TilePos> {
             TilePos roomTopLeft = TilePos.create(Util.randInt(WORLD_WIDTH), Util.randInt(WORLD_HEIGHT));
             TilePos roomSize = TilePos.create(Util.randInt(15)+3, Util.randInt(15)+3);
 
+            TilePos roomCenter = roomTopLeft.add(roomSize.x / 2, roomSize.y / 2);
+
             float jaggedness = computeJagedness(roomTopLeft);
+
+            float[] maxDists = new float[16];
+            for (int j=0;j<16;++j){
+                maxDists[j] = roomSize.x / 2;// * Util.randGaussian(1, jaggedness);
+            }
+            float aspectRatio = (float)roomSize.y / roomSize.x;
 
             for (int x=roomTopLeft.x;x<roomTopLeft.x+roomSize.x;++x){
                 for (int y=roomTopLeft.y;y<roomTopLeft.y+roomSize.y;++y){
+                    float xDist = x - roomCenter.x;
+                    float yDist = (y - roomCenter.y) * aspectRatio;
 
-                    int distanceToEdge = Util.minAll(
-                        Math.abs(x - roomTopLeft.x),
-                        Math.abs(y - roomTopLeft.y),
-                        Math.abs(x - roomTopLeft.x+roomSize.x - 1),
-                        Math.abs(y - roomTopLeft.y+roomSize.y - 1)
-                    );
+                    float effDistance = (float)Math.sqrt(xDist * xDist + yDist * yDist);
 
-                    float effJaggedness = (3 - distanceToEdge) / 3f * jaggedness * 2;
+                    float ang = MathUtils.atan2(yDist, xDist);
+                    if (ang < 0) ang += MathUtils.PI;
+                    float maxDist = maxDists[MathUtils.clamp((int)(ang / MathUtils.PI2), 0, 15)];
 
-                    if (MathUtils.randomBoolean(1f - effJaggedness)) setTile(TilePos.create(x,y), TerrainType.Floor, jaggedness);
+                    if (effDistance < maxDist) setTile(TilePos.create(x,y), TerrainType.Floor, jaggedness);
                 }
             }
 
-            roomCenters.add(roomTopLeft.add(roomSize.x / 2, roomSize.y / 2));
+            roomCenters.add(roomCenter);
         }
 
         startSpot = roomCenters.stream().filter(this::isPassable).min(Comparator.comparingInt(it -> it.y)).get();
