@@ -1,5 +1,6 @@
 package info.quadtree.ld43;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
@@ -19,5 +20,9 @@ public class Util {
                 i -= startSize - list.size();
             }
         }
+    }
+
+    public static int minAll(int... ints){
+        return Arrays.stream(ints).min().getAsInt();
     }
 }

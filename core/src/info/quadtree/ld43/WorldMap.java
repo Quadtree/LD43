@@ -10,9 +10,7 @@ import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import javafx.util.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,6 +41,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     TerrainType[][] terrain;
     boolean[][] tileSeen;
+    byte[][] jaggednessLevelGrid;
 
     transient TilePos currentPathFindTarget = null;
 
@@ -111,7 +110,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         return terrain[tp.x][tp.y] == TerrainType.Floor;
     }
 
-    void setTile(TilePos tp, TerrainType tt){
+    void setTile(TilePos tp, TerrainType tt, float jaggednessLevel){
         if (tp.x >= WORLD_WIDTH || tp.x < 0 || tp.y >= WORLD_HEIGHT || tp.y < 0) return;
 
         if (tt == TerrainType.Floor && (tp.x >= WORLD_WIDTH - 1 || tp.x < 1 || tp.y >= WORLD_HEIGHT - 1 || tp.y < 1)) return;
@@ -123,6 +122,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
             }
 
             terrain[tp.x][tp.y] = tt;
+            jaggednessLevelGrid[tp.x][tp.y] = (byte)(jaggednessLevel * 100);
         }
     }
 
@@ -194,12 +194,15 @@ public class WorldMap implements IndexedGraph<TilePos> {
         corridorEndPoints = new ArrayList<>();
         terrain = new TerrainType[WORLD_WIDTH][];
         tileSeen = new boolean[WORLD_WIDTH][];
+        jaggednessLevelGrid = new byte[WORLD_WIDTH][];
         for (int i=0;i<WORLD_WIDTH;++i){
             terrain[i] = new TerrainType[WORLD_HEIGHT];
             tileSeen[i] = new boolean[WORLD_HEIGHT];
+            jaggednessLevelGrid[i] = new byte[WORLD_HEIGHT];
             for (int j=0;j<WORLD_HEIGHT;++j){
                 terrain[i][j] = TerrainType.CornerWall;
                 tileSeen[i][j] = false;
+                jaggednessLevelGrid[i][j] = 0;
             }
         }
 
@@ -209,9 +212,21 @@ public class WorldMap implements IndexedGraph<TilePos> {
             TilePos roomTopLeft = TilePos.create(Util.randInt(WORLD_WIDTH), Util.randInt(WORLD_HEIGHT));
             TilePos roomSize = TilePos.create(Util.randInt(15)+3, Util.randInt(15)+3);
 
+            float jaggedness = computeJagedness(roomTopLeft);
+
             for (int x=roomTopLeft.x;x<roomTopLeft.x+roomSize.x;++x){
                 for (int y=roomTopLeft.y;y<roomTopLeft.y+roomSize.y;++y){
-                    setTile(TilePos.create(x,y), TerrainType.Floor);
+
+                    int distanceToEdge = Util.minAll(
+                        Math.abs(x - roomTopLeft.x),
+                        Math.abs(y - roomTopLeft.y),
+                        Math.abs(x - roomTopLeft.x+roomSize.x - 1),
+                        Math.abs(y - roomTopLeft.y+roomSize.y - 1)
+                    );
+
+                    float effJaggedness = (3 - distanceToEdge) / 3f * jaggedness * 2;
+
+                    if (MathUtils.randomBoolean(1f - effJaggedness)) setTile(TilePos.create(x,y), TerrainType.Floor, jaggedness);
                 }
             }
 
@@ -241,9 +256,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
             boolean xMode = MathUtils.randomBoolean();
             boolean yMode = MathUtils.randomBoolean();
 
-            float jaggedness = MathUtils.random() * 0.5f * ((trgRoom.y / (float)WORLD_HEIGHT) + 0.15f);
-            //jaggedness +=  * 0.45f;
-            jaggedness = Math.min(jaggedness, 0.8f);
+            float jaggedness = computeJagedness(trgRoom);
 
             TilePos cp = roomToAddConn;
             while(!cp.equals(trgRoom)){
@@ -251,18 +264,18 @@ public class WorldMap implements IndexedGraph<TilePos> {
                     if (xMode) {
                         if (trgRoom.x < cp.x) cp = TilePos.create(cp.x - 1, cp.y);
                         if (trgRoom.x > cp.x) cp = TilePos.create(cp.x + 1, cp.y);
-                        setTile(cp, TerrainType.Floor);
+                        setTile(cp, TerrainType.Floor, jaggedness);
                     }
                     if (yMode) {
                         if (trgRoom.y < cp.y) cp = TilePos.create(cp.x, cp.y - 1);
                         if (trgRoom.y > cp.y) cp = TilePos.create(cp.x, cp.y + 1);
-                        setTile(cp, TerrainType.Floor);
+                        setTile(cp, TerrainType.Floor, jaggedness);
                     }
                 } else {
                     cp = TilePos.create(cp.x + MathUtils.random(-1, 1), cp.y);
-                    setTile(cp, TerrainType.Floor);
+                    setTile(cp, TerrainType.Floor, jaggedness);
                     cp = TilePos.create(cp.x, cp.y + MathUtils.random(-1, 1));
-                    setTile(cp, TerrainType.Floor);
+                    setTile(cp, TerrainType.Floor, jaggedness);
                 }
 
                 if (Util.randInt(10) == 0) xMode = MathUtils.randomBoolean();
@@ -276,6 +289,13 @@ public class WorldMap implements IndexedGraph<TilePos> {
             //drawDebugPixmap(n++);
             conRadius++;
         }
+    }
+
+    private float computeJagedness(TilePos trgRoom) {
+        float jaggedness = MathUtils.random() * 0.5f * ((trgRoom.y / (float)WORLD_HEIGHT) + 0.15f);
+        //jaggedness +=  * 0.45f;
+        jaggedness = Math.min(jaggedness, 0.8f);
+        return jaggedness;
     }
 
     public void drawDebugPixmap(int n) {
