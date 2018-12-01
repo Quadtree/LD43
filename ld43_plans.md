@@ -40,6 +40,7 @@
 
 # TODO
 * Fix bug where moves can be saved up
+* Minimap
 * Food system (and regeneration)
 * Magic system
 * More monster types
