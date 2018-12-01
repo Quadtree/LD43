@@ -31,6 +31,7 @@
 
 # TODO
 * More correct map generation
+* Fix weird freeze issue
 * Persistence of tiles that have been seen
 * Openable doors
 * Ability to restart
