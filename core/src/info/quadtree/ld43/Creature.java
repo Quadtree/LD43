@@ -55,7 +55,7 @@ public class Creature {
             Optional<Creature> onTile = LD43.s.gameState.worldMap.getCreatureOnTile(np);
             if (!onTile.isPresent()){
                 pos = np;
-                ticksTillNextAction = 10 * getSpeedModifier();
+                ticksTillNextAction += 10 * getSpeedModifier();
             } else {
                 meleeAttack(onTile.get());
             }
@@ -85,7 +85,7 @@ public class Creature {
             LD43.s.gameState.addCombatLogMessage(trg.pos, name + " misses " + trg.name);
         }
 
-        ticksTillNextAction = 20 * getSpeedModifier();
+        ticksTillNextAction += 20 * getSpeedModifier();
     }
 
     public boolean canAct(){
