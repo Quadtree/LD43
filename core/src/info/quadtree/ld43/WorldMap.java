@@ -338,7 +338,18 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 if (withinLOS) tileSeen[i][j] = true;
 
                 if (tileSeen[i][j] || withinLOS){
-                    LD43.s.cam.drawOnTile(terrain[i][j].graphic, TilePos.create(i,j), withinLOS ? Color.WHITE : Color.GRAY);
+                    Color c = getTileColor(TilePos.create(i,j));
+
+                    if (!withinLOS){
+                        c = new Color(
+                                c.r * 0.5f,
+                                c.g * 0.5f,
+                                c.b * 0.5f,
+                                1f
+                        );
+                    }
+
+                    LD43.s.cam.drawOnTile(terrain[i][j].graphic, TilePos.create(i,j), c);
                 }
             }
         }
@@ -403,8 +414,12 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     final Color c1 = new Color(1,1,1,1);
-    final Color c2 = new Color(0x5c3d25ff);
-    final Color c3 = new Color(0x482d3fff);
+    final Color c2 = new Color(0xe1955bff);
+    final Color c3 = new Color(0xac7ac4ff);
+
+    final float c1bp = 5f;
+    final float c2bp = 20f;
+    final float c3bp = 35f;
 
     public Color getTileColor(TilePos tp){
         int x = MathUtils.clamp(tp.x, 0, WORLD_WIDTH - 1);
@@ -412,10 +427,10 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
         byte j = jaggednessLevelGrid[x][y];
 
-        if (j < 10){
+        if (j < c1bp){
             return c1;
-        } else if (j <= 30) {
-            float a = (j - 5f) / 15f;
+        } else if (j <= c2bp) {
+            float a = (j - c1bp) / (c3bp - c2bp);
             return new Color(
                     MathUtils.lerp(c1.r, c2.r, a),
                     MathUtils.lerp(c1.g, c2.g, a),
@@ -423,7 +438,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                     1f
             );
         } else {
-            float a = (j - 20f) / 15f;
+            float a = (j - c2bp) / 15f;
             return new Color(
                     MathUtils.lerp(c2.r, c3.r, a),
                     MathUtils.lerp(c2.g, c3.g, a),
