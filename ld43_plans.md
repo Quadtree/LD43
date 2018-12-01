@@ -37,9 +37,9 @@
 * Openable doors
 * Melee weapons
 * Ranged weapons
+* Fix bug where moves can be saved up
 
 # TODO
-* Fix bug where moves can be saved up
 * Minimap
 * Food system (and regeneration)
 * Magic system

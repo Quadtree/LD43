@@ -66,6 +66,7 @@ public class Creature {
 
     public void tick(){
         ticksTillNextAction -= 1;
+        if (ticksTillNextAction < 0) ticksTillNextAction = 0;
     }
 
     public void tickActions(){
