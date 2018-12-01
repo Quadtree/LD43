@@ -2,6 +2,7 @@ package info.quadtree.ld43;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 
 public class GameInputProcessor implements InputProcessor {
     @Override
@@ -32,6 +33,10 @@ public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        TilePos rp = LD43.s.cam.screenToReal(new Vector2(screenX, screenY));
+
+        
+
         return false;
     }
 
