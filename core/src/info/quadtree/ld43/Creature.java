@@ -36,6 +36,11 @@ public class Creature {
 
     public BaseAction currentAction;
 
+    public void init(){
+        hp = statEndurance;
+        sp = statMagic;
+    }
+
     public void render(){
         LD43.s.cam.drawOnTile(graphicName, pos);
     }
