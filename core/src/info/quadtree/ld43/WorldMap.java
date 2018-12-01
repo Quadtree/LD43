@@ -14,6 +14,9 @@ import com.badlogic.gdx.utils.Array;
 import java.util.*;
 
 public class WorldMap implements IndexedGraph<TilePos> {
+
+    public static final int DENSITY_TILE_SIZE = 16;
+
     public enum TerrainType {
         Floor("floor1"),
         HorizontalWall("wall1"),
@@ -41,6 +44,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     transient Map<TilePos, Map<TilePos, Boolean>> losCache;
 
+    Map<TilePos, Integer> densityTiles = new HashMap<>();
+
     public List<TilePos> findPath(TilePos start, TilePos end){
         start = start.nor();
         end = end.nor();
@@ -67,6 +72,33 @@ public class WorldMap implements IndexedGraph<TilePos> {
         }
     }
 
+    public TilePos getMinDensityOpenSpace(){
+        TilePos minDensityTile = null;
+        int bestDensity = 1000000;
+
+        for (Map.Entry<TilePos, Integer> potentialDensityTile : densityTiles.entrySet()){
+            if (potentialDensityTile.getValue() > 0 && potentialDensityTile.getValue() < bestDensity){
+                minDensityTile = potentialDensityTile.getKey();
+                bestDensity = potentialDensityTile.getValue();
+            }
+        }
+
+        if (minDensityTile != null) {
+            // we assume we got one
+            for (int i = 0; i < 10000; ++i) {
+                TilePos ret = TilePos.create(
+                        minDensityTile.x * DENSITY_TILE_SIZE + Util.randInt(DENSITY_TILE_SIZE),
+                        minDensityTile.y * DENSITY_TILE_SIZE + Util.randInt(DENSITY_TILE_SIZE)
+                );
+
+                if (isPassable(ret)) return ret;
+            }
+        }
+
+        System.err.println("Fallback!!!");
+        return getOpenSpace();
+    }
+
     public boolean isPassable(TilePos tp){
         if (tp.x >= WORLD_WIDTH || tp.x < 0 || tp.y >= WORLD_HEIGHT || tp.y < 0) return false;
         return terrain[tp.x][tp.y] == TerrainType.Floor;
@@ -75,7 +107,14 @@ public class WorldMap implements IndexedGraph<TilePos> {
     void setTile(TilePos tp, TerrainType tt){
         if (tp.x >= WORLD_WIDTH || tp.x < 0 || tp.y >= WORLD_HEIGHT || tp.y < 0) return;
 
-        terrain[tp.x][tp.y] = tt;
+        if (!terrain[tp.x][tp.y].equals(tt)){
+            if (tt == TerrainType.Floor){
+                TilePos densityTile = TilePos.create(tp.x / DENSITY_TILE_SIZE, tp.y / DENSITY_TILE_SIZE);
+                densityTiles.put(densityTile, densityTiles.getOrDefault(densityTile, 0) + 1);
+            }
+
+            terrain[tp.x][tp.y] = tt;
+        }
     }
 
     public WorldMap(){
@@ -92,8 +131,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
         terrain[WORLD_WIDTH / 2][1] = TerrainType.Floor;
 
-        for (int i=0;i<50;++i){
-            TilePos nxt = getOpenSpace();
+        for (int i=0;i<200;++i){
+            TilePos nxt = getMinDensityOpenSpace();
             if (Util.randInt(3) == 0){
                 TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
 
