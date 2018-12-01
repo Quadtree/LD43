@@ -210,10 +210,10 @@ public class WorldMap implements IndexedGraph<TilePos> {
             roomCenters.add(roomTopLeft.add(roomSize.x / 2, roomSize.y / 2));
         }
 
-        TilePos startSpot = roomCenters.stream().min(Comparator.comparingInt(it -> it.y)).get();
-        TilePos endSpot = roomCenters.stream().max(Comparator.comparingInt(it -> it.y)).get();
+        TilePos startSpot = roomCenters.stream().filter(this::isPassable).min(Comparator.comparingInt(it -> it.y)).get();
+        TilePos endSpot = roomCenters.stream().filter(this::isPassable).max(Comparator.comparingInt(it -> it.y)).get();
 
-
+        int n = 0;
 
         while(findPath(startSpot, endSpot).size() == 0){
             TilePos roomToAddConn = roomCenters.get(Util.randInt(roomCenters.size()));
@@ -226,6 +226,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 System.out.println("Connecting " + roomToAddConn + " --> " + trgRoom.get() + " || " + connectedRooms.size());
 
                 boolean xMode = MathUtils.randomBoolean();
+                boolean yMode = MathUtils.randomBoolean();
 
                 TilePos cp = roomToAddConn;
                 while(!cp.equals(trgRoom.get())){
@@ -233,19 +234,22 @@ public class WorldMap implements IndexedGraph<TilePos> {
                         if (trgRoom.get().x < cp.x) cp = TilePos.create(cp.x - 1, cp.y);
                         if (trgRoom.get().x > cp.x) cp = TilePos.create(cp.x + 1, cp.y);
                         setTile(cp, TerrainType.Floor);
-                    } else {
+                    }
+                    if (yMode){
                         if (trgRoom.get().y < cp.y) cp = TilePos.create(cp.x, cp.y - 1);
                         if (trgRoom.get().y > cp.y) cp = TilePos.create(cp.x, cp.y + 1);
                         setTile(cp, TerrainType.Floor);
                     }
 
                     if (Util.randInt(10) == 0) xMode = MathUtils.randomBoolean();
+                    if (Util.randInt(10) == 0) yMode = MathUtils.randomBoolean();
 
                     //System.out.println(cp + " --> " + trgRoom.get());
 
 
                 }
                 connectedRooms.add(new TilePosPair(roomToAddConn, trgRoom.get()));
+                //drawDebugPixmap(n++);
             } else {
                 //System.err.println("ERRRRRRROR!");
                 //break;
