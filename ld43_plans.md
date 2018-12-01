@@ -34,11 +34,12 @@
 * Persistence of tiles that have been seen
 * Ability to restart
 * Fix weird freeze issue
+* Openable doors
 
 # TODO
-* Openable doors
 * Melee weapons
 * Ranged weapons
+* Food system
 * Magic system
 * More monster types
 * End boss

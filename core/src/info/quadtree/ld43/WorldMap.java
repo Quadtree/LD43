@@ -313,12 +313,36 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
                 TilePos ctp = TilePos.create(x,y);
 
-                if (isPassable(ctp)){
+                if (isPassable(ctp) && !MathUtils.randomBoolean(jaggednessLevelGrid[x][y] / 50f)){
                     if (isPassable(ctp.add(-1, 1)) &&
                         isPassable(ctp.add(0, 1)) &&
                         isPassable(ctp.add(1, 1)) &&
                         !isPassable(ctp.add(-1, 0)) &&
                         !isPassable(ctp.add(1, 0))){
+                        setTile(ctp, TerrainType.ClosedDoor, null);
+                    }
+
+                    if (isPassable(ctp.add(-1, -1)) &&
+                        isPassable(ctp.add(0, -1)) &&
+                        isPassable(ctp.add(1, -1)) &&
+                        !isPassable(ctp.add(-1, 0)) &&
+                        !isPassable(ctp.add(1, 0))){
+                        setTile(ctp, TerrainType.ClosedDoor, null);
+                    }
+
+                    if (isPassable(ctp.add(-1, 1)) &&
+                        isPassable(ctp.add(-1, 0)) &&
+                        isPassable(ctp.add(-1, -1)) &&
+                        !isPassable(ctp.add(0, -1)) &&
+                        !isPassable(ctp.add(0, 1))){
+                        setTile(ctp, TerrainType.ClosedDoor, null);
+                    }
+
+                    if (isPassable(ctp.add(1, 1)) &&
+                        isPassable(ctp.add(1, 0)) &&
+                        isPassable(ctp.add(1, -1)) &&
+                        !isPassable(ctp.add(0, -1)) &&
+                        !isPassable(ctp.add(0, 1))){
                         setTile(ctp, TerrainType.ClosedDoor, null);
                     }
                 }
