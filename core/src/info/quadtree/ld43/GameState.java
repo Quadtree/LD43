@@ -46,4 +46,8 @@ public class GameState {
         Util.indexIterate(creatures, Creature::tick);
         tick++;
     }
+
+    public void tickActions(){
+        Util.indexIterate(creatures, Creature::tickActions);
+    }
 }

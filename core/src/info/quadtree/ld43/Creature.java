@@ -1,5 +1,7 @@
 package info.quadtree.ld43;
 
+import info.quadtree.ld43.action.BaseAction;
+
 public class Creature {
     public int statPower;
     public int statSpeed;
@@ -18,12 +20,18 @@ public class Creature {
 
     public String graphicName;
 
+    public BaseAction currentAction;
+
     public void render(){
         LD43.s.cam.drawOnTile(graphicName, pos);
     }
 
     public void tick(){
         ticksTillNextAction -= 1;
+    }
+
+    public void tickActions(){
+        if (currentAction != null) currentAction.tick();
     }
 
     public void move(int dx, int dy){
