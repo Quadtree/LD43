@@ -161,83 +161,15 @@ public class WorldMap implements IndexedGraph<TilePos> {
             }
         }
 
-        terrain[WORLD_WIDTH / 2][1] = TerrainType.Floor;
+        for (int i=0;i<40;++i){
+            TilePos roomTopLeft = TilePos.create(Util.randInt(WORLD_WIDTH), Util.randInt(WORLD_HEIGHT));
+            TilePos roomSize = TilePos.create(Util.randInt(15)+3, Util.randInt(15)+3);
 
-        TilePos endBossRoom = null;
-
-        for (int i=0;i<10000;++i){
-            TilePos nxt = null;
-
-            if (corridorEndPoints.size() == 0) {
-                nxt = getMinDensityOpenSpace();
-            } else {
-                nxt = corridorEndPoints.get(Util.randInt(corridorEndPoints.size()));
-            }
-
-            if (Util.randInt(2) == 0){
-                TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
-
-                Rectangle roomRect = new Rectangle(
-                        nxt.x - 4,
-                        nxt.y - 4,
-                        farExt.x + 8,
-                        farExt.y + 8
-                );
-
-                if (previousRooms.stream().noneMatch(it -> it.overlaps(roomRect))) {
-                    for (int x = nxt.x; x < nxt.x + farExt.x; ++x) {
-                        for (int y = nxt.y; y < nxt.y + farExt.y; ++y) {
-                            setTile(TilePos.create(x, y), TerrainType.Floor);
-                        }
-                    }
-                    previousRooms.add(roomRect);
-                    corridorEndPoints.remove(nxt);
+            for (int x=roomTopLeft.x;x<roomTopLeft.x+roomSize.x;++x){
+                for (int y=roomTopLeft.y;y<roomTopLeft.y+roomSize.y;++y){
+                    setTile(TilePos.create(x,y), TerrainType.Floor);
                 }
-            } else {
-                corridorEndPoints.remove(nxt);
-                TilePos delta = generateCorridorDelta();
-
-                while(Util.randInt(30) != 0){
-                    nxt = nxt.add(delta);
-                    if (Util.randInt(30) == 0) delta = generateCorridorDelta();
-                    if (isPassable(nxt)) break;
-                    setTile(nxt, TerrainType.Floor);
-                    if (!isPassable(nxt)) break;
-                }
-
-                corridorEndPoints.add(nxt);
             }
-
-            //if (i % 10 == 0) drawDebugPixmap(i);
-
-            // see if we can find the end boss room
-            for (int x=0;x<WORLD_WIDTH;++x){
-                for (int y=WORLD_HEIGHT - 20;y<WORLD_HEIGHT;++y){
-
-                    boolean isTotallyClear = true;
-
-                    for (int cx=x;cx<x + 4;++cx){
-                        for (int cy=y;cy<y + 4;++cy){
-                            if (!isPassable(TilePos.create(cx,cy))){
-                                isTotallyClear = false;
-                                break;
-                            }
-                        }
-                        if (!isTotallyClear) break;
-                    }
-
-                    if (isTotallyClear){
-                        endBossRoom = TilePos.create(x,y);
-                        break;
-                    }
-                }
-                if (endBossRoom != null) break;
-            }
-            if (endBossRoom != null) break;
-        }
-
-        if (endBossRoom == null){
-            System.err.println("No end boss room!");
         }
     }
 
