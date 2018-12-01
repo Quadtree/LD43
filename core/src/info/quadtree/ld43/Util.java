@@ -2,7 +2,11 @@ package info.quadtree.ld43;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,5 +55,16 @@ public class Util {
 
     public static Label lbl(String txt){
         return new Label(txt, LD43.s.defaultLabelStyle);
+    }
+
+    public static Button btn(String txt, Runnable onClick){
+        Button btn = new TextButton(txt, LD43.s.defaultTextButtonStyle);
+        btn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                onClick.run();
+            }
+        });
+        return btn;
     }
 }

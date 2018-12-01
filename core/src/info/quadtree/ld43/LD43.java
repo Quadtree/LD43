@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +38,7 @@ public class LD43 extends ApplicationAdapter {
 	Stage mainStage;
 
 	Label.LabelStyle defaultLabelStyle;
+	TextButton.TextButtonStyle defaultTextButtonStyle;
 
 	InventoryDisplay inventoryDisplay;
 
@@ -50,7 +53,15 @@ public class LD43 extends ApplicationAdapter {
 		s = this;
 
 		bitmapFont = new BitmapFont();
+		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
+
 		defaultLabelStyle = new Label.LabelStyle(LD43.s.bitmapFont, Color.WHITE);
+		defaultTextButtonStyle = new TextButton.TextButtonStyle(
+				new SpriteDrawable(getGraphic("floor1")),
+				new SpriteDrawable(getGraphic("floor1")),
+				new SpriteDrawable(getGraphic("floor1")),
+				LD43.s.bitmapFont
+		);
 
 		mainStage = new Stage();
 		Label lowerStatusLabel = Util.createDynamicLabel(() -> "PWR: " + gameState.pc.statPower +
@@ -76,7 +87,7 @@ public class LD43 extends ApplicationAdapter {
 		mainStage.addActor(invDisplayPane);
 		invDisplayPane.setBounds(Gdx.graphics.getWidth() - 300, 0, 300, Gdx.graphics.getHeight());
 
-		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
+
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
