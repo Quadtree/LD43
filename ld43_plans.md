@@ -29,12 +29,14 @@
 
 # Decision: Roguelike Game
 
-# TODO
+# DONE
 * More correct map generation
-* Fix weird freeze issue
 * Persistence of tiles that have been seen
-* Openable doors
 * Ability to restart
+
+# TODO
+* Fix weird freeze issue
+* Openable doors
 * Melee weapons
 * Ranged weapons
 * Magic system
