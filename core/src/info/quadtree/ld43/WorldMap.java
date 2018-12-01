@@ -217,8 +217,9 @@ public class WorldMap implements IndexedGraph<TilePos> {
             float jaggedness = computeJagedness(roomTopLeft);
 
             float[] maxDists = new float[16];
-            for (int j=0;j<16;++j){
-                maxDists[j] = roomSize.x / 2f * Util.randGaussian(1.5f - jaggedness * 2, jaggedness*2);
+            maxDists[0] = roomSize.x / 2f * Util.randGaussian(2f - jaggedness * 4, jaggedness);
+            for (int j=1;j<16;++j){
+                maxDists[j] = maxDists[j - 1] * Util.randGaussian(1f, jaggedness);
             }
             float aspectRatio = (float)roomSize.y / roomSize.x;
 
