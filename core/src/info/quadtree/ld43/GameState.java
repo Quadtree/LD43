@@ -11,7 +11,7 @@ public class GameState {
 
     public int tick;
 
-    public GameState() {
+    public void init(){
         this.worldMap = new WorldMap();
 
         pc = new Creature();
@@ -34,6 +34,14 @@ public class GameState {
         pc.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
 
         creatures.add(pc);
+
+
+
+
+        // test monsters
+        for (int i=0;i<10;++i){
+            Monsters.spawnSlimeAt(worldMap.getOpenSpace());
+        }
     }
 
     public void render(){

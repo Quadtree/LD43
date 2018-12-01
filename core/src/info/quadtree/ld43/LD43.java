@@ -46,6 +46,7 @@ public class LD43 extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 
 		gameState = new GameState();
+		gameState.init();
 		cam.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
 
 		Gdx.input.setInputProcessor(new GameInputProcessor());
