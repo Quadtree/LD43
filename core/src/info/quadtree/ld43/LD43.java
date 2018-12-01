@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -25,6 +26,8 @@ public class LD43 extends ApplicationAdapter {
 
 	Map<String, Sprite> graphics = new HashMap<String, Sprite>();
 
+	BitmapFont bitmapFont;
+
 	public Sprite getGraphic(String name){
 		if (!graphics.containsKey(name)) graphics.put(name, atlas.createSprite(name));
 
@@ -34,6 +37,8 @@ public class LD43 extends ApplicationAdapter {
 	@Override
 	public void create () {
 		s = this;
+
+		bitmapFont = new BitmapFont();
 
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
@@ -55,7 +60,18 @@ public class LD43 extends ApplicationAdapter {
 		batch.begin();
 		//batch.draw(img, 0, 0);
 		gameState.render();
+
+
+		bitmapFont.draw(batch,
+				"PWR: " + gameState.pc.statPower +
+					" SPD: " + gameState.pc.statSpeed +
+					" END: " + gameState.pc.statEndurance +
+					" MGC: " + gameState.pc.statMagic,
+				20, 20);
+
 		batch.end();
+
+
 	}
 	
 	@Override
