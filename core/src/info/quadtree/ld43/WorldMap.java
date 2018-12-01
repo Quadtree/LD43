@@ -7,6 +7,7 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -223,21 +224,31 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
             if (trgRoom.isPresent()){
                 System.out.println("Connecting " + roomToAddConn + " --> " + trgRoom.get() + " || " + connectedRooms.size());
+
+                boolean xMode = MathUtils.randomBoolean();
+
                 TilePos cp = roomToAddConn;
                 while(!cp.equals(trgRoom.get())){
-                    if (trgRoom.get().x < cp.x) cp = TilePos.create(cp.x - 1, cp.y);
-                    if (trgRoom.get().y < cp.y) cp = TilePos.create(cp.x, cp.y - 1);
-                    if (trgRoom.get().x > cp.x) cp = TilePos.create(cp.x + 1, cp.y);
-                    if (trgRoom.get().y > cp.y) cp = TilePos.create(cp.x, cp.y + 1);
+                    if (xMode) {
+                        if (trgRoom.get().x < cp.x) cp = TilePos.create(cp.x - 1, cp.y);
+                        if (trgRoom.get().x > cp.x) cp = TilePos.create(cp.x + 1, cp.y);
+                        setTile(cp, TerrainType.Floor);
+                    } else {
+                        if (trgRoom.get().y < cp.y) cp = TilePos.create(cp.x, cp.y - 1);
+                        if (trgRoom.get().y > cp.y) cp = TilePos.create(cp.x, cp.y + 1);
+                        setTile(cp, TerrainType.Floor);
+                    }
+
+                    if (Util.randInt(10) == 0) xMode = MathUtils.randomBoolean();
 
                     //System.out.println(cp + " --> " + trgRoom.get());
 
-                    setTile(cp, TerrainType.Floor);
+
                 }
                 connectedRooms.add(new TilePosPair(roomToAddConn, trgRoom.get()));
             } else {
-                System.err.println("ERRRRRRROR!");
-                break;
+                //System.err.println("ERRRRRRROR!");
+                //break;
             }
         }
     }
