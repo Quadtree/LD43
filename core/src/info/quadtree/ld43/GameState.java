@@ -9,6 +9,8 @@ public class GameState {
 
     public ArrayList<Creature> creatures = new ArrayList<>();
 
+    public int tick;
+
     public GameState() {
         this.worldMap = new WorldMap();
 

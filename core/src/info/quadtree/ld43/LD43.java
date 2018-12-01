@@ -69,6 +69,10 @@ public class LD43 extends ApplicationAdapter {
 					" MGC: " + gameState.pc.statMagic,
 				20, 20);
 
+		bitmapFont.draw(batch,
+				"Tick: " + gameState.tick,
+				20, 40);
+
 		batch.end();
 
 
