@@ -144,8 +144,12 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 }
             } else {
                 TilePos delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
-                if (delta.manhattanDistance() > 1) delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
-                if (delta.manhattanDistance() > 1) delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
+                if (delta.manhattanDistance() > 1){
+                    if (Util.randInt(2) == 0)
+                        delta = TilePos.create(delta.x, 0);
+                    else
+                        delta = TilePos.create(0, delta.y);
+                }
 
                 while(Util.randInt(20) != 0){
                     nxt = nxt.add(delta);
