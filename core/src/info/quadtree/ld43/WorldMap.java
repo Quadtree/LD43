@@ -59,9 +59,11 @@ public class WorldMap {
                         setTile(new TilePos(x,y), TerrainType.Floor);
                     }
                 }
-
-                
             }
         }
+    }
+
+    public void render(){
+
     }
 }
