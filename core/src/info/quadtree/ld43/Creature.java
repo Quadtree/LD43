@@ -1,9 +1,12 @@
 package info.quadtree.ld43;
 
+import com.badlogic.gdx.math.MathUtils;
 import info.quadtree.ld43.action.BaseAction;
 import info.quadtree.ld43.action.MoveAction;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class Creature {
@@ -68,6 +71,40 @@ public class Creature {
     }
 
     public boolean justMeleeAttackedDueToMove = false;
+
+    Map<Item.EquipSlot, Item> equippedItems = new HashMap<>();
+
+    public void unequip(Item item){
+        if (equippedItems.containsValue(item)){
+            equippedItems.remove(item.slot);
+        }
+    }
+
+    public void equip(Item item){
+        if (item.slot != null) equippedItems.put(item.slot, item);
+    }
+
+    public void drop(Item item){
+        if (equippedItems.containsValue(item)){
+            equippedItems.remove(item.slot);
+        }
+
+        TilePos dropPos = pos;
+        for (int i=0;i<1000;++i){
+            final TilePos fDropPos = dropPos;
+            if (LD43.s.gameState.items.stream().noneMatch(it -> it.onGroundLocation.equals(fDropPos))) break;
+            TilePos newDropPos = dropPos.add(MathUtils.random(-1, 1), MathUtils.random(-1, 1));
+            if (LD43.s.gameState.worldMap.isPassable(newDropPos)) dropPos = newDropPos;
+        }
+
+        item.onGroundLocation = dropPos;
+        LD43.s.gameState.items.add(item);
+        LD43.s.gameState.addCombatLogMessage(pos, name + " drops " + item.name);
+    }
+
+    public boolean isEquipped(Item item){
+        return equippedItems.containsValue(item);
+    }
 
     public void move(int dx, int dy){
         if (!canAct()) return;

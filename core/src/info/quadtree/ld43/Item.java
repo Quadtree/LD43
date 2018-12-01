@@ -11,7 +11,6 @@ public class Item {
     String graphic;
     String name;
     EquipSlot slot;
-    boolean isEquipped;
     TilePos onGroundLocation;
 
     int powerMod;

@@ -24,6 +24,17 @@ public class InventoryDisplay extends Table {
 
         for (Item itm : LD43.s.gameState.pc.inventory){
             add(Util.lbl(itm.name));
+
+            if (itm.slot != null){
+                if (LD43.s.gameState.pc.isEquipped(itm)){
+                    add(Util.btn("Unequip", () -> LD43.s.gameState.pc.unequip(itm)));
+                } else {
+                    add(Util.btn("Equip", () -> LD43.s.gameState.pc.equip(itm)));
+                }
+            }
+
+            add(Util.btn("Drop", () -> LD43.s.gameState.pc.drop(itm)));
+
             row();
         }
     }
