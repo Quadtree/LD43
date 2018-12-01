@@ -45,11 +45,15 @@ public class LD43 extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 
-		gameState = new GameState();
-		gameState.init();
+		resetGameState();
 		cam.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
 
 		Gdx.input.setInputProcessor(new GameInputProcessor());
+	}
+
+	public void resetGameState() {
+		gameState = new GameState();
+		gameState.init();
 	}
 
 	@Override

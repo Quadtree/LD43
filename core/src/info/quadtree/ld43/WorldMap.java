@@ -1,9 +1,12 @@
 package info.quadtree.ld43;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.pfa.*;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -110,6 +113,17 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 }
             }
         }
+
+        Pixmap debugPixmap = new Pixmap(WORLD_WIDTH, WORLD_HEIGHT, Pixmap.Format.RGBA8888);
+        for (int i=0;i<WORLD_WIDTH;++i) {
+            for (int j = 0; j < WORLD_HEIGHT; ++j) {
+                if (isPassable(TilePos.create(i,j)))
+                    debugPixmap.drawPixel(i,WORLD_HEIGHT - j, Color.rgba8888(Color.WHITE));
+                else
+                    debugPixmap.drawPixel(i,WORLD_HEIGHT - j, Color.rgba8888(Color.BLACK));
+            }
+        }
+        PixmapIO.writePNG(Gdx.files.absolute("C:/tmp/debug_pixmap.png"), debugPixmap);
     }
 
     public void render(){
