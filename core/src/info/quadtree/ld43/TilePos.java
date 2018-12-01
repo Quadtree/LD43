@@ -8,4 +8,8 @@ public class TilePos {
         this.x = x;
         this.y = y;
     }
+
+    public TilePos add(int x, int y){
+        return new TilePos()
+    }
 }

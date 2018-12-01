@@ -12,11 +12,21 @@ public class Creature {
     public int xp;
     public int level = 1;
 
+    public float ticksTillNextAction = 0;
+
     public TilePos pos;
 
     public String graphicName;
 
     public void render(){
         LD43.s.cam.drawOnTile(graphicName, pos);
+    }
+
+    public void tick(){
+        ticksTillNextAction -= 1;
+    }
+
+    public void move(int dx, int dy){
+        TilePos np = new TilePos()
     }
 }
