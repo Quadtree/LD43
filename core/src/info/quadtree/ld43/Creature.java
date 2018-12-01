@@ -100,6 +100,7 @@ public class Creature {
             inventory.add(toPickUp.get());
             LD43.s.gameState.items.remove(toPickUp.get());
             LD43.s.gameState.addCombatLogMessage(pos, name + " picks up " + toPickUp.get().name);
+            ticksTillNextAction += 5 * getSpeedModifier();
         }
     }
 
