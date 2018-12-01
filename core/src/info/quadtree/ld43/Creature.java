@@ -1,18 +1,20 @@
 package info.quadtree.ld43;
 
 public class Creature {
-    int statPower;
-    int statSpeed;
-    int statEndurance;
-    int statMagic;
+    public int statPower;
+    public int statSpeed;
+    public int statEndurance;
+    public int statMagic;
 
-    int hp;
-    int sp;
+    public int hp;
+    public int sp;
 
-    int xp;
-    int level = 1;
+    public int xp;
+    public int level = 1;
 
-    String graphicName;
+    public TilePos pos;
+
+    public String graphicName;
 
 
 }
