@@ -7,9 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class WorldMap implements IndexedGraph<TilePos> {
     public enum TerrainType {
@@ -30,11 +28,13 @@ public class WorldMap implements IndexedGraph<TilePos> {
     final static int WORLD_HEIGHT = 128;
     final static int WORLD_WIDTH = 48;
 
-    IndexedAStarPathFinder<TilePos> pathFinder;
+    transient IndexedAStarPathFinder<TilePos> pathFinder;
 
     TerrainType[][] terrain;
 
-    TilePos currentPathFindTarget = null;
+    transient TilePos currentPathFindTarget = null;
+
+    transient Map<TilePos, Map<TilePos, Boolean>> losCache;
 
     public List<TilePos> findPath(TilePos start, TilePos end){
         start = start.nor();
@@ -131,6 +131,17 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     public boolean canSee(TilePos start, TilePos end, float within){
+
+        if (losCache == null) losCache = new HashMap<>();
+        if (!losCache.containsKey(start)) losCache.put(start, new HashMap<>());
+        if (!losCache.get(start).containsKey(end)){
+            losCache.get(start).put(end, canSeeImpl(start, end, within));
+        }
+
+        return losCache.get(start).get(end);
+    }
+
+    private boolean canSeeImpl(TilePos start, TilePos end, float within) {
         Vector2 pos = new Vector2(start.x, start.y);
         Vector2 endVec = new Vector2(end.x, end.y);
         Vector2 delta = endVec.cpy().sub(pos).nor();
