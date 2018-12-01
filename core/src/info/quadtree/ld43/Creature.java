@@ -2,6 +2,7 @@ package info.quadtree.ld43;
 
 import com.badlogic.gdx.math.MathUtils;
 import info.quadtree.ld43.action.BaseAction;
+import info.quadtree.ld43.action.EatAction;
 import info.quadtree.ld43.action.MoveAction;
 
 import java.util.ArrayList;
@@ -22,6 +23,10 @@ public class Creature {
     public int level = 1;
 
     public int naturalArmor = 0;
+
+    public int corpseFood = 0;
+    public int corpseToxicity = 0;
+    public int corpseWeight = 0;
 
     final static int MAX_FOOD = 6000;
     final static int STARTING_FOOD = 1500;
@@ -298,6 +303,18 @@ public class Creature {
 
         if (hp <= 0){
             LD43.s.gameState.creatures.remove(this);
+
+            if (corpseWeight > 0){
+                Item corpse = new Item();
+                corpse.name = this.name + " Corpse";
+                corpse.graphic = "corpse1";
+                corpse.weight = corpseWeight;
+                corpse.toxcitiy = corpseToxicity;
+                corpse.food = corpseFood;
+
+                Items.createItemAt(corpse, pos);
+            }
+
             return true;
         } else {
             return false;
@@ -318,5 +335,28 @@ public class Creature {
 
     void gainXP(int amt){
         this.xp += amt;
+    }
+
+    public void eat(Item itm){
+        if (!canAct()) return;
+
+        currentAction = new EatAction(this, itm);
+    }
+
+    public void finishEating(Item itm){
+        if (inventory.contains(itm)){
+            inventory.remove(itm);
+
+            food += itm.food;
+
+            int effTox = itm.toxcitiy - getEffectiveEndurance();
+
+            LD43.s.gameState.addCombatLogMessage(pos, "You finish eating the " + itm.name);
+
+            if (MathUtils.randomBoolean(effTox / 100f)){
+                LD43.s.gameState.addCombatLogMessage(pos, "Oog, that was poisonous...");
+                takeDamage(MathUtils.random(12,24));
+            }
+        }
     }
 }

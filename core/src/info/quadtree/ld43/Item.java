@@ -7,7 +7,7 @@ public class Item {
         Amulet
     }
 
-    int weight;
+    public int weight;
     String graphic;
     String name;
     EquipSlot slot;
@@ -25,6 +25,9 @@ public class Item {
     int attackDamage;
     int attackSpeedMod;
     int defenseSpeedMod;
+
+    int food;
+    int toxcitiy;
 
     public void render(){
         if (LD43.s.gameState.worldMap.canSee(LD43.s.gameState.pc.pos, onGroundLocation, 0)) {

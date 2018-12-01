@@ -38,6 +38,10 @@ public class InventoryDisplay extends Table {
                 }
             }
 
+            if (itm.food > 0){
+                add(Util.btn("Eat", () -> LD43.s.gameState.pc.eat(itm)));
+            }
+
             add(Util.btn("Drop", () -> LD43.s.gameState.pc.drop(itm)));
 
             row();
