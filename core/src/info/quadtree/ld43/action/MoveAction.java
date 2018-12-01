@@ -20,8 +20,8 @@ public class MoveAction extends BaseAction {
 
         List<TilePos> moves = LD43.s.gameState.worldMap.findPath(actor.pos, dest);
 
-        if (moves.size() > 0){
-            actor.move(moves.get(0).x - actor.pos.x, moves.get(0).y - actor.pos.y);
+        if (moves.size() > 1){
+            actor.move(moves.get(1).x - actor.pos.x, moves.get(1).y - actor.pos.y);
             return true;
         } else {
             return false;

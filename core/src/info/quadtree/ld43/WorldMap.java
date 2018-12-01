@@ -56,6 +56,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     public boolean isPassable(TilePos tp){
+        if (tp.x >= WORLD_WIDTH || tp.x < 0 || tp.y >= WORLD_HEIGHT || tp.y < 0) return false;
         return terrain[tp.x][tp.y] == TerrainType.Floor;
     }
 

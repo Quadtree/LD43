@@ -57,7 +57,7 @@ public class GameInputProcessor implements InputProcessor {
     public boolean mouseMoved(int screenX, int screenY) {
         TilePos rp = LD43.s.cam.screenToReal(new Vector2(screenX, screenY));
 
-        System.err.println(rp);
+        //System.err.println(rp);
 
         return false;
     }
