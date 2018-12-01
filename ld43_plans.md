@@ -38,9 +38,9 @@
 * Melee weapons
 * Ranged weapons
 * Fix bug where moves can be saved up
+* Minimap
 
 # TODO
-* Minimap
 * Food system (and regeneration)
 * Magic system
 * More monster types
