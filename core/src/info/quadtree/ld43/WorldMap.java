@@ -84,7 +84,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         }
 
         if (minDensityTile != null) {
-            System.out.println("Best density tile is " + minDensityTile);
+            System.out.println("Best density tile is " + minDensityTile + " " + bestDensity);
             // we assume we got one
             for (int i = 0; i < 10000; ++i) {
                 TilePos ret = TilePos.create(
@@ -107,6 +107,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     void setTile(TilePos tp, TerrainType tt){
         if (tp.x >= WORLD_WIDTH || tp.x < 0 || tp.y >= WORLD_HEIGHT || tp.y < 0) return;
+
+        if (tt == TerrainType.Floor && (tp.x >= WORLD_WIDTH - 1 || tp.x < 1 || tp.y >= WORLD_HEIGHT - 1 || tp.y < 1)) return;
 
         if (!terrain[tp.x][tp.y].equals(tt)){
             if (tt == TerrainType.Floor){
@@ -132,7 +134,9 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
         terrain[WORLD_WIDTH / 2][1] = TerrainType.Floor;
 
-        for (int i=0;i<100;++i){
+        TilePos endBossRoom = null;
+
+        for (int i=0;i<10000;++i){
             TilePos nxt = getMinDensityOpenSpace();
             if (Util.randInt(4) == 0){
                 TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
@@ -143,19 +147,39 @@ public class WorldMap implements IndexedGraph<TilePos> {
                     }
                 }
             } else {
-                TilePos delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
-                if (delta.manhattanDistance() > 1){
-                    if (Util.randInt(2) == 0)
-                        delta = TilePos.create(delta.x, 0);
-                    else
-                        delta = TilePos.create(0, delta.y);
-                }
+                TilePos delta = generateCorridorDelta();
 
                 while(Util.randInt(20) != 0){
                     nxt = nxt.add(delta);
+                    if (Util.randInt(10) == 0) delta = generateCorridorDelta();
                     setTile(nxt, TerrainType.Floor);
                 }
             }
+
+            // see if we can find the end boss room
+            for (int x=0;x<WORLD_WIDTH;++x){
+                for (int y=WORLD_HEIGHT - 20;y<WORLD_HEIGHT;++y){
+
+                    boolean isTotallyClear = true;
+
+                    for (int cx=x;cx<x + 4;++cx){
+                        for (int cy=y;cy<y + 4;++cy){
+                            if (!isPassable(TilePos.create(cx,cy))){
+                                isTotallyClear = false;
+                                break;
+                            }
+                        }
+                        if (!isTotallyClear) break;
+                    }
+
+                    if (isTotallyClear){
+                        endBossRoom = TilePos.create(x,y);
+                        break;
+                    }
+                }
+                if (endBossRoom != null) break;
+            }
+            if (endBossRoom != null) break;
         }
 
         Pixmap debugPixmap = new Pixmap(WORLD_WIDTH, WORLD_HEIGHT, Pixmap.Format.RGBA8888);
@@ -168,6 +192,17 @@ public class WorldMap implements IndexedGraph<TilePos> {
             }
         }
         PixmapIO.writePNG(Gdx.files.absolute("C:/tmp/debug_pixmap.png"), debugPixmap);
+    }
+
+    public TilePos generateCorridorDelta() {
+        TilePos delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
+        if (delta.manhattanDistance() > 1){
+            if (Util.randInt(2) == 0)
+                delta = TilePos.create(delta.x, 0);
+            else
+                delta = TilePos.create(0, delta.y);
+        }
+        return delta;
     }
 
     public void render(){
