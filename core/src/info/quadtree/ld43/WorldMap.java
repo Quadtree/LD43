@@ -131,14 +131,16 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     public boolean canSee(TilePos start, TilePos end, float within){
-
-        if (losCache == null) losCache = new HashMap<>();
+        /*if (losCache == null) losCache = new HashMap<>();
         if (!losCache.containsKey(start)) losCache.put(start, new HashMap<>());
         if (!losCache.get(start).containsKey(end)){
             losCache.get(start).put(end, canSeeImpl(start, end, within));
         }
 
-        return losCache.get(start).get(end);
+        return losCache.get(start).get(end);*/
+
+        // todo: Optimize me
+        return canSeeImpl(start, end, within);
     }
 
     private boolean canSeeImpl(TilePos start, TilePos end, float within) {
