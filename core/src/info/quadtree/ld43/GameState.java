@@ -60,24 +60,28 @@ public class GameState {
 
         Util.indexIterate(items, Item::render);
         Util.indexIterate(creatures, Creature::render);
+    }
 
+    Texture minimapTexture = null;
+
+    public void renderMinimap(){
         Pixmap minimap = new Pixmap(WorldMap.WORLD_WIDTH, WorldMap.WORLD_HEIGHT, Pixmap.Format.RGBA8888);
         for (int x=0;x<WorldMap.WORLD_WIDTH;++x){
             for (int y=0;y<WorldMap.WORLD_HEIGHT;++y){
                 if (LD43.s.gameState.worldMap.tileSeen[x][y]){
                     if (LD43.s.gameState.worldMap.isPassable(TilePos.create(x,y))){
-                        minimap.drawPixel(x,y, Color.rgba8888(Color.WHITE));
+                        minimap.drawPixel(x,WorldMap.WORLD_HEIGHT - y, Color.rgba8888(Color.WHITE));
                     } else {
-                        minimap.drawPixel(x,y, Color.rgba8888(Color.BLACK));
+                        minimap.drawPixel(x,WorldMap.WORLD_HEIGHT - y, Color.rgba8888(Color.BLACK));
                     }
                 }
             }
         }
+        if (minimapTexture != null) minimapTexture.dispose();
         Texture tx = new Texture(minimap);
-        //minimap.dispose();
+        minimap.dispose();
 
-        LD43.s.batch.draw(tx, Gdx.graphics.getWidth() - 100, 20);
-        //tx.dispose();
+        LD43.s.batch.draw(tx, Gdx.graphics.getWidth() - 280, 30);
     }
 
     public void tick(){

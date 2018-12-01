@@ -133,6 +133,10 @@ public class LD43 extends ApplicationAdapter {
 		batch.end();
 
 		mainStage.draw();
+
+		batch.begin();
+		gameState.renderMinimap();
+		batch.end();
 	}
 	
 	@Override

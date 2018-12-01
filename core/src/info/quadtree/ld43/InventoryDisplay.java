@@ -28,7 +28,7 @@ public class InventoryDisplay extends Table {
         clear();
 
         for (Item itm : LD43.s.gameState.pc.inventory){
-            add(Util.lbl(itm.name));
+            add(Util.lbl(itm.name)).padLeft(50);
 
             if (itm.slot != null){
                 if (LD43.s.gameState.pc.isEquipped(itm)){
