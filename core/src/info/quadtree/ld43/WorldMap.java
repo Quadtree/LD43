@@ -15,7 +15,7 @@ import java.util.*;
 
 public class WorldMap implements IndexedGraph<TilePos> {
 
-    public static final int DENSITY_TILE_SIZE = 16;
+    public static final int DENSITY_TILE_SIZE = 24;
 
     public enum TerrainType {
         Floor("floor1"),
@@ -147,7 +147,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 corridorEndPoints.remove(nxt);
             }
 
-            if (Util.randInt(4) == 0){
+            if (Util.randInt(7) == 0){
                 TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
 
                 for (int x=nxt.x;x<nxt.x+farExt.x;++x){
@@ -161,7 +161,9 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 while(Util.randInt(20) != 0){
                     nxt = nxt.add(delta);
                     if (Util.randInt(10) == 0) delta = generateCorridorDelta();
+                    if (isPassable(nxt)) break;
                     setTile(nxt, TerrainType.Floor);
+                    if (!isPassable(nxt)) break;
                 }
 
                 corridorEndPoints.add(nxt);
