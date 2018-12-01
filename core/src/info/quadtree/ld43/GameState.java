@@ -42,6 +42,7 @@ public class GameState {
 
         Items.createItemAt(Items.createSword(), pc.pos.add(TilePos.create(1,1)));
         Items.createItemAt(Items.createPlateMail(), pc.pos.add(TilePos.create(2,1)));
+        Items.createItemAt(Items.createBow(), pc.pos.add(TilePos.create(1,0)));
 
         // test monsters
         for (int i=0;i<10;++i){

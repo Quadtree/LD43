@@ -11,51 +11,58 @@ armor1
   orig: 32, 32
   offset: 0, 0
   index: -1
-door_closed
+bow1
   rotate: false
   xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-door_open
+door_closed
   rotate: false
   xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-enemy1
+door_open
   rotate: false
   xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-floor1
+enemy1
   rotate: false
   xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-pc1
+floor1
   rotate: false
   xy: 172, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-sword1
+pc1
   rotate: false
   xy: 206, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-wall1
+sword1
   rotate: false
   xy: 240, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wall1
+  rotate: false
+  xy: 274, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

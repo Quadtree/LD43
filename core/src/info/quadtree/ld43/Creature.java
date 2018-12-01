@@ -23,6 +23,8 @@ public class Creature {
 
     public int naturalArmor = 0;
 
+    boolean naturalRangedAttack = false;
+
     public String name = "???";
 
     public int getMaxDamageOnAttack(){
@@ -186,6 +188,13 @@ public class Creature {
 
     private float getPowerMultiplier(){
         return statPower / 100f;
+    }
+
+    public boolean hasRangedAttack(){
+        if (naturalRangedAttack || (equippedItems.containsKey(Item.EquipSlot.Weapon) && equippedItems.get(Item.EquipSlot.Weapon).allowsRangedAttack)){
+            return true;
+        }
+        return false;
     }
 
     public void meleeAttack(Creature trg){
