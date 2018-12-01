@@ -3,6 +3,7 @@ package info.quadtree.ld43;
 import com.badlogic.gdx.ai.pfa.*;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -31,6 +32,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
     transient IndexedAStarPathFinder<TilePos> pathFinder;
 
     TerrainType[][] terrain;
+    boolean[][] tileSeen;
 
     transient TilePos currentPathFindTarget = null;
 
@@ -75,10 +77,13 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     public WorldMap(){
         terrain = new TerrainType[WORLD_WIDTH][];
+        tileSeen = new boolean[WORLD_WIDTH][];
         for (int i=0;i<WORLD_WIDTH;++i){
             terrain[i] = new TerrainType[WORLD_HEIGHT];
+            tileSeen[i] = new boolean[WORLD_HEIGHT];
             for (int j=0;j<WORLD_HEIGHT;++j){
                 terrain[i][j] = TerrainType.CornerWall;
+                tileSeen[i][j] = false;
             }
         }
 
@@ -86,13 +91,22 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
         for (int i=0;i<50;++i){
             TilePos nxt = getOpenSpace();
-            if (Util.randInt(2) == 0){
+            if (Util.randInt(3) == 0){
                 TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
 
                 for (int x=nxt.x;x<nxt.x+farExt.x;++x){
                     for (int y=nxt.y;y<nxt.y+farExt.y;++y){
                         setTile(TilePos.create(x,y), TerrainType.Floor);
                     }
+                }
+            } else {
+                TilePos delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
+                if (delta.manhattanDistance() > 1) delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
+                if (delta.manhattanDistance() > 1) delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
+
+                while(Util.randInt(10) != 0){
+                    nxt = nxt.add(delta);
+                    setTile(nxt, TerrainType.Floor);
                 }
             }
         }
@@ -101,7 +115,13 @@ public class WorldMap implements IndexedGraph<TilePos> {
     public void render(){
         for (int i=0;i<WORLD_WIDTH;++i){
             for (int j=0;j<WORLD_HEIGHT;++j){
-                if (canSee(LD43.s.gameState.pc.pos, TilePos.create(i,j), 1.5f)) LD43.s.cam.drawOnTile(terrain[i][j].graphic, TilePos.create(i,j));
+
+                boolean withinLOS = canSee(LD43.s.gameState.pc.pos, TilePos.create(i,j), 1.1f);
+                if (withinLOS) tileSeen[i][j] = true;
+
+                if (tileSeen[i][j] || withinLOS){
+                    LD43.s.cam.drawOnTile(terrain[i][j].graphic, TilePos.create(i,j), withinLOS ? Color.WHITE : Color.GRAY);
+                }
             }
         }
     }

@@ -31,12 +31,15 @@
 
 # TODO
 * More correct map generation
+* Persistence of tiles that have been seen
+* Openable doors
 * Ability to restart
 * Melee weapons
 * Ranged weapons
-* More monster types
 * Magic system
+* More monster types
 * End boss
+* Final tile graphics
 * Opening screen, help text
 
 ## Nice to Have

@@ -43,7 +43,9 @@ public class Creature {
     }
 
     public void render(){
-        LD43.s.cam.drawOnTile(graphicName, pos);
+        if (LD43.s.gameState.worldMap.canSee(LD43.s.gameState.pc.pos, pos, 0)) {
+            LD43.s.cam.drawOnTile(graphicName, pos);
+        }
     }
 
     public void tick(){
