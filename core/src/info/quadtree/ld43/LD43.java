@@ -41,6 +41,7 @@ public class LD43 extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 
 		gameState = new GameState();
+		cam.pos = new TilePos(WorldMap.WORLD_WIDTH / 2, 1);
 	}
 
 	@Override

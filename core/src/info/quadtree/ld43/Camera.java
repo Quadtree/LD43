@@ -22,7 +22,7 @@ public class Camera {
     }
 
     public Vector2 realToScreen(TilePos real){
-        return new Vector2(real.x - pos.x * TILE_SIZE + Gdx.graphics.getWidth() / 2, real.y - pos.y * TILE_SIZE + Gdx.graphics.getHeight() / 2);
+        return new Vector2((real.x - pos.x) * TILE_SIZE + Gdx.graphics.getWidth() / 2, (real.y - pos.y) * TILE_SIZE + Gdx.graphics.getHeight() / 2);
     }
 
     public TilePos screenToReal(Vector2 screenPos){
