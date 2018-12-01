@@ -33,7 +33,12 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     TerrainType[][] terrain;
 
+    TilePos currentPathFindTarget = null;
+
     public List<TilePos> findPath(TilePos start, TilePos end){
+        start = start.nor();
+        end = end.nor();
+        currentPathFindTarget = end;
         if (pathFinder == null) pathFinder = new IndexedAStarPathFinder<TilePos>(this);
 
         GraphPath<TilePos> outPath = new DefaultGraphPath<>();
@@ -117,7 +122,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         for (int dx=-1;dx<2;++dx){
             for (int dy=-1;dy<2;++dy){
                 TilePos np = fromNode.add(dx,dy);
-                if (isPassable(np)) ret.add(new DefaultConnection<>(fromNode, np));
+                if (isPassable(np) && (np.equals(currentPathFindTarget) || !getCreatureOnTile(np).isPresent())) ret.add(new DefaultConnection<>(fromNode, np));
             }
         }
 

@@ -33,6 +33,10 @@ public class TilePos {
         return create(this.x + x, this.y + y);
     }
 
+    public TilePos nor(){
+        return TilePos.create(x,y);
+    }
+
     @Override
     public String toString() {
         return "TilePos{" +
