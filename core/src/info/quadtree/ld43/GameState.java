@@ -31,7 +31,7 @@ public class GameState {
             if (pc.statPower + pc.statSpeed + pc.statEndurance + pc.statMagic >= 80) break;
         }
 
-        pc.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
+        pc.pos = worldMap.startSpot;
         pc.name = "The Sacrifice";
 
         creatures.add(pc);

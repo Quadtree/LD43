@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class WorldMap implements IndexedGraph<TilePos> {
 
@@ -179,7 +180,14 @@ public class WorldMap implements IndexedGraph<TilePos> {
         return connectedRooms.contains(new TilePosPair(a,b)) || connectedRooms.contains(new TilePosPair(b,a));
     }
 
+    int conRadius;
+
+    public TilePos startSpot;
+    public TilePos endSpot;
+
     private void generateMap() {
+        startSpot = null;
+        endSpot = null;
         connectedRooms = new ArrayList<>();
         previousRooms = new ArrayList<>();
         densityTiles = new HashMap<>();
@@ -210,50 +218,63 @@ public class WorldMap implements IndexedGraph<TilePos> {
             roomCenters.add(roomTopLeft.add(roomSize.x / 2, roomSize.y / 2));
         }
 
-        TilePos startSpot = roomCenters.stream().filter(this::isPassable).min(Comparator.comparingInt(it -> it.y)).get();
-        TilePos endSpot = roomCenters.stream().filter(this::isPassable).max(Comparator.comparingInt(it -> it.y)).get();
+        startSpot = roomCenters.stream().filter(this::isPassable).min(Comparator.comparingInt(it -> it.y)).get();
+        endSpot = roomCenters.stream().filter(this::isPassable).max(Comparator.comparingInt(it -> it.y)).get();
 
         int n = 0;
+        conRadius = 40;
 
         while(findPath(startSpot, endSpot).size() == 0){
             TilePos roomToAddConn = roomCenters.get(Util.randInt(roomCenters.size()));
 
-            Optional<TilePos> trgRoom = roomCenters.stream()
+            List<TilePos> trgRooms = roomCenters.stream()
                     .filter(it -> !areRoomsConnected(roomToAddConn, it))
-                    .min(Comparator.comparingInt(roomToAddConn::manhattanDistance));
+                    .filter(it -> it.manhattanDistance(roomToAddConn) < conRadius)
+                    .collect(Collectors.toList());
 
-            if (trgRoom.isPresent()){
-                System.out.println("Connecting " + roomToAddConn + " --> " + trgRoom.get() + " || " + connectedRooms.size());
+            if (trgRooms.size() == 0) continue;
 
-                boolean xMode = MathUtils.randomBoolean();
-                boolean yMode = MathUtils.randomBoolean();
+            TilePos trgRoom = trgRooms.get(Util.randInt(trgRooms.size()));
 
-                TilePos cp = roomToAddConn;
-                while(!cp.equals(trgRoom.get())){
+            System.out.println("Connecting " + roomToAddConn + " --> " + trgRoom + " || " + connectedRooms.size());
+
+            boolean xMode = MathUtils.randomBoolean();
+            boolean yMode = MathUtils.randomBoolean();
+
+            float jaggedness = MathUtils.random();
+            jaggedness += (trgRoom.y / (float)WORLD_HEIGHT) * 0.5f;
+            jaggedness = Math.min(jaggedness, 0.8f);
+
+            TilePos cp = roomToAddConn;
+            while(!cp.equals(trgRoom)){
+                if (!MathUtils.randomBoolean(jaggedness)) {
                     if (xMode) {
-                        if (trgRoom.get().x < cp.x) cp = TilePos.create(cp.x - 1, cp.y);
-                        if (trgRoom.get().x > cp.x) cp = TilePos.create(cp.x + 1, cp.y);
+                        if (trgRoom.x < cp.x) cp = TilePos.create(cp.x - 1, cp.y);
+                        if (trgRoom.x > cp.x) cp = TilePos.create(cp.x + 1, cp.y);
                         setTile(cp, TerrainType.Floor);
                     }
-                    if (yMode){
-                        if (trgRoom.get().y < cp.y) cp = TilePos.create(cp.x, cp.y - 1);
-                        if (trgRoom.get().y > cp.y) cp = TilePos.create(cp.x, cp.y + 1);
+                    if (yMode) {
+                        if (trgRoom.y < cp.y) cp = TilePos.create(cp.x, cp.y - 1);
+                        if (trgRoom.y > cp.y) cp = TilePos.create(cp.x, cp.y + 1);
                         setTile(cp, TerrainType.Floor);
                     }
-
-                    if (Util.randInt(10) == 0) xMode = MathUtils.randomBoolean();
-                    if (Util.randInt(10) == 0) yMode = MathUtils.randomBoolean();
-
-                    //System.out.println(cp + " --> " + trgRoom.get());
-
-
+                } else {
+                    cp = TilePos.create(cp.x + MathUtils.random(-1, 1), cp.y);
+                    setTile(cp, TerrainType.Floor);
+                    cp = TilePos.create(cp.x, cp.y + MathUtils.random(-1, 1));
+                    setTile(cp, TerrainType.Floor);
                 }
-                connectedRooms.add(new TilePosPair(roomToAddConn, trgRoom.get()));
-                //drawDebugPixmap(n++);
-            } else {
-                //System.err.println("ERRRRRRROR!");
-                //break;
+
+                if (Util.randInt(10) == 0) xMode = MathUtils.randomBoolean();
+                if (Util.randInt(10) == 0) yMode = MathUtils.randomBoolean();
+
+                //System.out.println(cp + " --> " + trgRoom.get());
+
+
             }
+            connectedRooms.add(new TilePosPair(roomToAddConn, trgRoom));
+            //drawDebugPixmap(n++);
+            conRadius++;
         }
     }
 
