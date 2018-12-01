@@ -13,7 +13,11 @@ public class Util {
 
     public static <T> void indexIterate(List<T> list, Consumer<T> consumer){
         for (int i=0;i<list.size();++i){
+            int startSize = list.size();
             consumer.accept(list.get(i));
+            if (list.size() < startSize){
+                i -= startSize - list.size();
+            }
         }
     }
 }

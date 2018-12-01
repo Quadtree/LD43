@@ -94,11 +94,26 @@ public class Creature {
             int damage = Math.round(Util.randInt(getMaxDamageOnAttack()) * getPowerMultiplier()) - trg.getArmor();
 
             LD43.s.gameState.addCombatLogMessage(trg.pos, name + " hits " + trg.name + " for " + damage);
+
+            if (trg.takeDamage(damage)){
+                this.xp += trg.xp;
+            }
         } else {
             LD43.s.gameState.addCombatLogMessage(trg.pos, name + " misses " + trg.name);
         }
 
         ticksTillNextAction += 20 * getSpeedModifier();
+    }
+
+    public boolean takeDamage(int amt){
+        hp -= amt;
+
+        if (hp <= 0){
+            LD43.s.gameState.creatures.remove(this);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean canAct(){

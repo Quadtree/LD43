@@ -5,10 +5,12 @@ public class Monsters {
         Creature ret = new Creature();
         ret.statPower = 10;
         ret.statSpeed = 5;
-        ret.statEndurance = 20;
+        ret.statEndurance = 10;
         ret.graphicName = "enemy1";
+        ret.xp = 10;
 
         ret.pos = pos;
+        ret.init();
         LD43.s.gameState.creatures.add(ret);
     }
 }
