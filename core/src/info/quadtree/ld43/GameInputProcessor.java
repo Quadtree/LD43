@@ -14,7 +14,7 @@ public class GameInputProcessor implements InputProcessor {
         if (keycode == Input.Keys.NUMPAD_2){ LD43.s.gameState.pc.move(0, -1); return true; }
         if (keycode == Input.Keys.NUMPAD_3){ LD43.s.gameState.pc.move(1, -1); return true; }
         if (keycode == Input.Keys.NUMPAD_4){ LD43.s.gameState.pc.move(-1, 0); return true; }
-        //if (keycode == Input.Keys.NUMPAD_5){ LD43.s.gameState.pc.move(-1, 1); return true; }
+        if (keycode == Input.Keys.NUMPAD_5){ LD43.s.gameState.pc.stand(); return true; }
         if (keycode == Input.Keys.NUMPAD_6){ LD43.s.gameState.pc.move(1, 0); return true; }
         if (keycode == Input.Keys.NUMPAD_7){ LD43.s.gameState.pc.move(-1, 1); return true; }
         if (keycode == Input.Keys.NUMPAD_8){ LD43.s.gameState.pc.move(0, 1); return true; }

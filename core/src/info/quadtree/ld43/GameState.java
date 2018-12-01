@@ -8,6 +8,7 @@ public class GameState {
     public Creature pc;
 
     public ArrayList<Creature> creatures = new ArrayList<>();
+    public ArrayList<Item> items = new ArrayList<>();
 
     public int tick;
 
@@ -39,8 +40,7 @@ public class GameState {
         pc.init();
         creatures.add(pc);
 
-
-
+        Items.createItemAt(Items.createSword(), pc.pos.add(TilePos.create(1,1)));
 
         // test monsters
         for (int i=0;i<10;++i){
@@ -51,6 +51,7 @@ public class GameState {
     public void render(){
         worldMap.render();
 
+        Util.indexIterate(items, Item::render);
         Util.indexIterate(creatures, Creature::render);
     }
 

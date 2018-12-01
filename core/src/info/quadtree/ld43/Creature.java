@@ -3,6 +3,7 @@ package info.quadtree.ld43;
 import info.quadtree.ld43.action.BaseAction;
 import info.quadtree.ld43.action.MoveAction;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class Creature {
@@ -36,6 +37,8 @@ public class Creature {
     public String graphicName;
 
     public BaseAction currentAction;
+
+    ArrayList<Item> inventory = new ArrayList<>();
 
     public void init(){
         hp = statEndurance;
@@ -87,6 +90,16 @@ public class Creature {
                 LD43.s.gameState.worldMap.setTile(np, WorldMap.TerrainType.OpenDoor, null);
                 ticksTillNextAction += 10 * getSpeedModifier();
             }
+        }
+    }
+
+    public void stand(){
+        Optional<Item> toPickUp = LD43.s.gameState.items.stream().filter(it -> it.onGroundLocation.equals(pos)).findFirst();
+
+        if (toPickUp.isPresent()){
+            inventory.add(toPickUp.get());
+            LD43.s.gameState.items.remove(toPickUp.get());
+            LD43.s.gameState.addCombatLogMessage(pos, name + " picks up " + toPickUp.get().name);
         }
     }
 

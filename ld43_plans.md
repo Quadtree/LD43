@@ -39,7 +39,8 @@
 # TODO
 * Melee weapons
 * Ranged weapons
-* Food system
+* Fix bug where moves can be saved up
+* Food system (and regeneration)
 * Magic system
 * More monster types
 * End boss
