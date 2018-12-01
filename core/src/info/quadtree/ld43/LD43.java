@@ -56,7 +56,7 @@ public class LD43 extends ApplicationAdapter {
 	public void render () {
 		while (!gameState.pc.canAct()){
 			gameState.tick();
-			gameState.pc.tickActions();
+			gameState.tickActions();
 		}
 
 		gameState.pc.tickActions();

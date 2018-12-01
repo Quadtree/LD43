@@ -1,6 +1,7 @@
 package info.quadtree.ld43;
 
 import info.quadtree.ld43.action.BaseAction;
+import info.quadtree.ld43.action.MoveAction;
 
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ public class Creature {
     public String name = "???";
 
     public int getMaxDamageOnAttack(){
-        return 8;
+        return 16;
     }
 
     public int getArmor(){
@@ -53,6 +54,12 @@ public class Creature {
         if (currentAction != null){
             if (!currentAction.tick()) currentAction = null;
         }
+
+        if (!isPC()){
+            if (LD43.s.gameState.worldMap.canSee(pos, LD43.s.gameState.pc.pos)){
+                currentAction = new MoveAction(this, LD43.s.gameState.pc.pos);
+            }
+        }
     }
 
     public boolean justMeleeAttackedDueToMove = false;
@@ -76,11 +83,11 @@ public class Creature {
     }
 
     private float getSpeedModifier() {
-        return 1 + ((100 - statSpeed) / 100f);
+        return 0.2f + ((100 - statSpeed) / 100f);
     }
 
     private float getPowerMultiplier(){
-        return 1 + (statPower / 100f);
+        return statPower / 100f;
     }
 
     public void meleeAttack(Creature trg){
