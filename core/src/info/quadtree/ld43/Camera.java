@@ -26,6 +26,9 @@ public class Camera {
     }
 
     public TilePos screenToReal(Vector2 screenPos){
-        return null; // @todo
+        return TilePos.create(
+                (int)(pos.x - ((Gdx.graphics.getWidth() - 2 * screenPos.x) / (2 * TILE_SIZE))),
+                (int)(pos.y - ((Gdx.graphics.getHeight() - 2 * (Gdx.graphics.getHeight() - screenPos.y)) / (2 * TILE_SIZE)))
+        );
     }
 }

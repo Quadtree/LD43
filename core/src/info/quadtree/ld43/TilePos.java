@@ -31,4 +31,12 @@ public class TilePos {
     public TilePos add(int x, int y){
         return create(this.x + x, this.y + y);
     }
+
+    @Override
+    public String toString() {
+        return "TilePos{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
