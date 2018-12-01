@@ -6,6 +6,12 @@ public class Creature {
     int statEndurance;
     int statMagic;
 
+    int hp;
+    int sp;
+
+    int xp;
+    int level = 1;
+
     String graphicName;
 
 
