@@ -16,8 +16,16 @@ public class Creature {
     public int xp;
     public int level = 1;
 
+    public int naturalArmor = 0;
+
+    public String name = "???";
+
     public int getMaxDamageOnAttack(){
         return 8;
+    }
+
+    public int getArmor(){
+        return naturalArmor;
     }
 
     public float ticksTillNextAction = 0;
@@ -49,7 +57,7 @@ public class Creature {
                 pos = np;
                 ticksTillNextAction = 10 * getSpeedModifier();
             } else {
-
+                meleeAttack(onTile.get());
             }
         }
     }
@@ -58,13 +66,37 @@ public class Creature {
         return 1 + ((100 - statSpeed) / 100f);
     }
 
+    private float getPowerMultiplier(){
+        return 1 + (statPower / 100f);
+    }
+
     public void meleeAttack(Creature trg){
         if (!canAct()) return;
+        if (!hostileTowards(trg)) return;
 
+        int attackRoll = statSpeed + Util.randInt(30) - 15;
+        int defense = trg.statSpeed;
 
+        if (attackRoll >= defense){
+            int damage = Math.round(Util.randInt(getMaxDamageOnAttack()) * getPowerMultiplier()) - trg.getArmor();
+
+            LD43.s.gameState.addCombatLogMessage(trg.pos, name + " hits " + trg.name + " for " + damage);
+        } else {
+            LD43.s.gameState.addCombatLogMessage(trg.pos, name + " misses " + trg.name);
+        }
+
+        ticksTillNextAction = 20 * getSpeedModifier();
     }
 
     public boolean canAct(){
         return ticksTillNextAction <= 0;
+    }
+
+    public boolean isPC(){
+        return this == LD43.s.gameState.pc;
+    }
+
+    public boolean hostileTowards(Creature other){
+        return this.isPC() != other.isPC();
     }
 }
