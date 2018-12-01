@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Camera {
     public static final int TILE_SIZE = 32;
-    public TilePos pos = new TilePos(0,0);
+    public TilePos pos = TilePos.create(0,0);
 
     public void drawOnTile(String graphic, TilePos tp){
         drawOnTile(graphic, tp, Color.WHITE);

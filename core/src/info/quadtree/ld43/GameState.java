@@ -14,7 +14,7 @@ public class GameState {
 
         pc = new Creature();
         pc.graphicName = "pc1";
-        pc.pos = new TilePos(WorldMap.WORLD_WIDTH / 2, 1);
+        pc.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
 
         creatures.add(pc);
     }

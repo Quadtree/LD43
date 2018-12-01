@@ -25,7 +25,7 @@ public class WorldMap {
 
     public TilePos getOpenSpace(){
         while(true){
-            TilePos ret = new TilePos(
+            TilePos ret = TilePos.create(
                     Util.randInt(WORLD_WIDTH),
                     Util.randInt(WORLD_HEIGHT)
             );
@@ -58,11 +58,11 @@ public class WorldMap {
         for (int i=0;i<50;++i){
             TilePos nxt = getOpenSpace();
             if (Util.randInt(2) == 0){
-                TilePos farExt = new TilePos(Util.randInt(15), Util.randInt(15));
+                TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
 
                 for (int x=nxt.x;x<nxt.x+farExt.x;++x){
                     for (int y=nxt.y;y<nxt.y+farExt.y;++y){
-                        setTile(new TilePos(x,y), TerrainType.Floor);
+                        setTile(TilePos.create(x,y), TerrainType.Floor);
                     }
                 }
             }
@@ -72,7 +72,7 @@ public class WorldMap {
     public void render(){
         for (int i=0;i<WORLD_WIDTH;++i){
             for (int j=0;j<WORLD_HEIGHT;++j){
-                LD43.s.cam.drawOnTile(terrain[i][j].graphic, new TilePos(i,j));
+                LD43.s.cam.drawOnTile(terrain[i][j].graphic, TilePos.create(i,j));
             }
         }
     }

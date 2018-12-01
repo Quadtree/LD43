@@ -27,6 +27,10 @@ public class Creature {
     }
 
     public void move(int dx, int dy){
-        TilePos np = new TilePos()
+        TilePos np = pos.add(dx, dy);
+        if (LD43.s.gameState.worldMap.isPassable(np)){
+            pos = np;
+            ticksTillNextAction = 10 * (1 + ((100 - statSpeed) / 100f));
+        }
     }
 }
