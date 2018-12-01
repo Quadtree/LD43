@@ -42,6 +42,7 @@
 
 # TODO
 * Food system (and regeneration)
+* Leveling up
 * Magic system
 * More monster types
 * End boss

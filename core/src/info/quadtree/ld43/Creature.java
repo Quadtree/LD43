@@ -23,7 +23,15 @@ public class Creature {
 
     public int naturalArmor = 0;
 
+    final static int MAX_FOOD = 6000;
+    final static int STARTING_FOOD = 1500;
+
+    int food = STARTING_FOOD;
+
     boolean naturalRangedAttack = false;
+
+    int healthRegenTime;
+    int magicRegenTime;
 
     public String name = "???";
 
@@ -67,6 +75,29 @@ public class Creature {
     public void tick(){
         ticksTillNextAction -= 1;
         if (ticksTillNextAction < 0) ticksTillNextAction = 0;
+
+        if (isPC()){
+            if (food <= -200){
+                food += 200;
+                takeDamage(1);
+                LD43.s.gameState.addCombatLogMessage(pos, "You are starving!");
+            }
+
+            if (food > 0){
+                healthRegenTime -= getEffectiveEndurance();
+                magicRegenTime -= getEffectiveMagic();
+
+                if (healthRegenTime <= 0){
+                    healthRegenTime = 5000;
+                    hp = Math.min(hp + 1, getEffectiveEndurance());
+                }
+
+                if (magicRegenTime <= 0){
+                    magicRegenTime = 5000;
+                    sp = Math.min(sp + 1, getEffectiveMagic());
+                }
+            }
+        }
     }
 
     public void tickActions(){
@@ -142,6 +173,7 @@ public class Creature {
                 if (!onTile.isPresent()){
                     pos = np;
                     takeTime(10);
+                    food -= 10;
                 } else {
                     justMeleeAttackedDueToMove = true;
                     meleeAttack(onTile.get());
@@ -150,6 +182,7 @@ public class Creature {
                 justMeleeAttackedDueToMove = true;
                 LD43.s.gameState.worldMap.setTile(np, WorldMap.TerrainType.OpenDoor, null);
                 takeTime(10);
+                food -= 10;
             }
         }
     }
@@ -159,6 +192,7 @@ public class Creature {
     }
 
     public void stand(){
+        food -= 1;
         Optional<Item> toPickUp = LD43.s.gameState.items.stream().filter(it -> it.onGroundLocation.equals(pos)).findFirst();
 
         if (toPickUp.isPresent()){
@@ -169,8 +203,42 @@ public class Creature {
         }
     }
 
+    public int getEffectivePower(){
+        int ret = statPower;
+
+        for (Item itm : equippedItems.values()){
+            ret += itm.powerMod;
+        }
+
+        return ret;
+    }
+
+    public int getEffectiveMagic(){
+        int ret = statMagic;
+
+        for (Item itm : equippedItems.values()){
+            ret += itm.magicMod;
+        }
+
+        return ret;
+    }
+
+    public int getEffectiveEndurance(){
+        int ret = statEndurance;
+
+        for (Item itm : equippedItems.values()){
+            ret += itm.enduranceMod;
+        }
+
+        return ret;
+    }
+
     public int getEffectiveSpeed(){
         int ret = statSpeed;
+
+        for (Item itm : equippedItems.values()){
+            ret += itm.speedMod;
+        }
 
         for (Item itm : equippedItems.values()){
             if (itm.speedSoftCap != null){
@@ -201,6 +269,8 @@ public class Creature {
     public void meleeAttack(Creature trg){
         if (!canAct()) return;
         if (!hostileTowards(trg)) return;
+
+        food -= 20;
 
         int attackRoll = getEffectiveSpeed() + Util.randInt(30) - 15;
         int defense = trg.getEffectiveSpeed();
