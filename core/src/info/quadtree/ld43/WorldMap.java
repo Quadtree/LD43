@@ -7,6 +7,7 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -46,6 +47,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     Map<TilePos, Integer> densityTiles;
     ArrayList<TilePos> corridorEndPoints;
+    ArrayList<Rectangle> previousRooms;
 
     public List<TilePos> findPath(TilePos start, TilePos end){
         start = start.nor();
@@ -145,6 +147,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     private void generateMap() {
+        previousRooms = new ArrayList<>();
         densityTiles = new HashMap<>();
         corridorEndPoints = new ArrayList<>();
         terrain = new TerrainType[WORLD_WIDTH][];
@@ -175,10 +178,20 @@ public class WorldMap implements IndexedGraph<TilePos> {
             if (Util.randInt(7) == 0){
                 TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
 
-                for (int x=nxt.x;x<nxt.x+farExt.x;++x){
-                    for (int y=nxt.y;y<nxt.y+farExt.y;++y){
-                        setTile(TilePos.create(x,y), TerrainType.Floor);
+                Rectangle roomRect = new Rectangle(
+                        nxt.x,
+                        nxt.y,
+                        farExt.x,
+                        farExt.y
+                );
+
+                if (previousRooms.stream().noneMatch(it -> it.overlaps(roomRect))) {
+                    for (int x = nxt.x; x < nxt.x + farExt.x; ++x) {
+                        for (int y = nxt.y; y < nxt.y + farExt.y; ++y) {
+                            setTile(TilePos.create(x, y), TerrainType.Floor);
+                        }
                     }
+                    previousRooms.add(roomRect);
                 }
             } else {
                 TilePos delta = generateCorridorDelta();
