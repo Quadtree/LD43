@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import javafx.util.Pair;
 
 import java.util.*;
 
@@ -137,7 +138,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
             System.out.println("maxTile=" + maxTile + " minTile=" + minTile);
 
-            if (maxTile < 200){
+            if (true || maxTile < 200){
                 drawDebugPixmap(0);
                 return;
             }
@@ -146,7 +147,39 @@ public class WorldMap implements IndexedGraph<TilePos> {
         System.err.println("Couldn't generate world we liked");
     }
 
+    class TilePosPair
+    {
+        public TilePosPair(TilePos a, TilePos b) {
+            this.a = a;
+            this.b = b;
+        }
+
+        TilePos a;
+        TilePos b;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            TilePosPair that = (TilePosPair) o;
+            return Objects.equals(a, that.a) &&
+                    Objects.equals(b, that.b);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(a, b);
+        }
+    }
+
+    private ArrayList<TilePosPair> connectedRooms;
+
+    private boolean areRoomsConnected(TilePos a, TilePos b){
+        return connectedRooms.contains(new TilePosPair(a,b)) || connectedRooms.contains(new TilePosPair(b,a));
+    }
+
     private void generateMap() {
+        connectedRooms = new ArrayList<>();
         previousRooms = new ArrayList<>();
         densityTiles = new HashMap<>();
         corridorEndPoints = new ArrayList<>();
@@ -161,6 +194,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
             }
         }
 
+        ArrayList<TilePos> roomCenters = new ArrayList<>();
+
         for (int i=0;i<40;++i){
             TilePos roomTopLeft = TilePos.create(Util.randInt(WORLD_WIDTH), Util.randInt(WORLD_HEIGHT));
             TilePos roomSize = TilePos.create(Util.randInt(15)+3, Util.randInt(15)+3);
@@ -169,6 +204,40 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 for (int y=roomTopLeft.y;y<roomTopLeft.y+roomSize.y;++y){
                     setTile(TilePos.create(x,y), TerrainType.Floor);
                 }
+            }
+
+            roomCenters.add(roomTopLeft.add(roomSize.x / 2, roomSize.y / 2));
+        }
+
+        TilePos startSpot = roomCenters.stream().min(Comparator.comparingInt(it -> it.y)).get();
+        TilePos endSpot = roomCenters.stream().max(Comparator.comparingInt(it -> it.y)).get();
+
+
+
+        while(findPath(startSpot, endSpot).size() == 0){
+            TilePos roomToAddConn = roomCenters.get(Util.randInt(roomCenters.size()));
+
+            Optional<TilePos> trgRoom = roomCenters.stream()
+                    .filter(it -> !areRoomsConnected(roomToAddConn, it))
+                    .min(Comparator.comparingInt(roomToAddConn::manhattanDistance));
+
+            if (trgRoom.isPresent()){
+                System.out.println("Connecting " + roomToAddConn + " --> " + trgRoom.get() + " || " + connectedRooms.size());
+                TilePos cp = roomToAddConn;
+                while(!cp.equals(trgRoom.get())){
+                    if (trgRoom.get().x < cp.x) cp = TilePos.create(cp.x - 1, cp.y);
+                    if (trgRoom.get().y < cp.y) cp = TilePos.create(cp.x, cp.y - 1);
+                    if (trgRoom.get().x > cp.x) cp = TilePos.create(cp.x + 1, cp.y);
+                    if (trgRoom.get().y > cp.y) cp = TilePos.create(cp.x, cp.y + 1);
+
+                    //System.out.println(cp + " --> " + trgRoom.get());
+
+                    setTile(cp, TerrainType.Floor);
+                }
+                connectedRooms.add(new TilePosPair(roomToAddConn, trgRoom.get()));
+            } else {
+                System.err.println("ERRRRRRROR!");
+                break;
             }
         }
     }
