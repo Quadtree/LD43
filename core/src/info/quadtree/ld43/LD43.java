@@ -85,7 +85,7 @@ public class LD43 extends ApplicationAdapter {
 
 		ScrollPane invDisplayPane = new ScrollPane(inventoryDisplay);
 		mainStage.addActor(invDisplayPane);
-		invDisplayPane.setBounds(Gdx.graphics.getWidth() - 300, 0, 300, Gdx.graphics.getHeight());
+		invDisplayPane.setBounds(Gdx.graphics.getWidth() - 400, 0, 400, Gdx.graphics.getHeight());
 
 
 

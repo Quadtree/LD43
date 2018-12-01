@@ -10,8 +10,8 @@ public class DesktopLauncher {
 		TexturePacker.processIfModified("../../raw_assets", ".", "main");
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1024;
-		config.height = 768;
+		config.width = 1800;
+		config.height = 1000;
 		new LwjglApplication(new LD43(), config);
 	}
 }
