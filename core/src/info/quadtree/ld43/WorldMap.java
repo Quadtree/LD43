@@ -24,8 +24,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
         HorizontalWall("wall1"),
         VerticalWall("wall1"),
         CornerWall("wall1"),
-        ClosedDoor("wall1"),
-        OpenDoor("wall1");
+        ClosedDoor("door_closed"),
+        OpenDoor("door_open");
 
         public final String graphic;
 
@@ -110,7 +110,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         return terrain[tp.x][tp.y] == TerrainType.Floor;
     }
 
-    void setTile(TilePos tp, TerrainType tt, float jaggednessLevel){
+    void setTile(TilePos tp, TerrainType tt, Float jaggednessLevel){
         if (tp.x >= WORLD_WIDTH || tp.x < 0 || tp.y >= WORLD_HEIGHT || tp.y < 0) return;
 
         if (tt == TerrainType.Floor && (tp.x >= WORLD_WIDTH - 1 || tp.x < 1 || tp.y >= WORLD_HEIGHT - 1 || tp.y < 1)) return;
@@ -122,7 +122,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
             }
 
             terrain[tp.x][tp.y] = tt;
-            jaggednessLevelGrid[tp.x][tp.y] = (byte)(jaggednessLevel * 100);
+            if (jaggednessLevel != null) jaggednessLevelGrid[tp.x][tp.y] = (byte)(jaggednessLevel * 100);
         }
     }
 
@@ -296,6 +296,23 @@ public class WorldMap implements IndexedGraph<TilePos> {
             connectedRooms.add(new TilePosPair(roomToAddConn, trgRoom));
             //drawDebugPixmap(n++);
             conRadius++;
+        }
+
+        for (int x=1;x<WORLD_WIDTH - 1;++x){
+            for (int y=1;y<WORLD_HEIGHT - 1;++y){
+
+                TilePos ctp = TilePos.create(x,y);
+
+                if (isPassable(ctp)){
+                    if (isPassable(ctp.add(-1, 1)) &&
+                        isPassable(ctp.add(0, 1)) &&
+                        isPassable(ctp.add(1, 1)) &&
+                        !isPassable(ctp.add(-1, 0)) &&
+                        !isPassable(ctp.add(1, 0))){
+                        setTile(ctp, TerrainType.ClosedDoor, null);
+                    }
+                }
+            }
         }
     }
 
