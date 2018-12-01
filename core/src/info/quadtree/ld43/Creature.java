@@ -56,7 +56,7 @@ public class Creature {
         }
 
         if (!isPC()){
-            if (LD43.s.gameState.worldMap.canSee(pos, LD43.s.gameState.pc.pos)){
+            if (LD43.s.gameState.worldMap.canSee(pos, LD43.s.gameState.pc.pos, 0)){
                 currentAction = new MoveAction(this, LD43.s.gameState.pc.pos);
             }
         }

@@ -101,7 +101,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
     public void render(){
         for (int i=0;i<WORLD_WIDTH;++i){
             for (int j=0;j<WORLD_HEIGHT;++j){
-                LD43.s.cam.drawOnTile(terrain[i][j].graphic, TilePos.create(i,j));
+                if (canSee(LD43.s.gameState.pc.pos, TilePos.create(i,j), 1.5f)) LD43.s.cam.drawOnTile(terrain[i][j].graphic, TilePos.create(i,j));
             }
         }
     }
@@ -130,12 +130,12 @@ public class WorldMap implements IndexedGraph<TilePos> {
         return ret;
     }
 
-    public boolean canSee(TilePos start, TilePos end){
+    public boolean canSee(TilePos start, TilePos end, float within){
         Vector2 pos = new Vector2(start.x, start.y);
         Vector2 endVec = new Vector2(end.x, end.y);
         Vector2 delta = endVec.cpy().sub(pos).nor();
 
-        int steps = Math.round(pos.dst(endVec));
+        int steps = Math.round(pos.dst(endVec) - within);
 
         for (int i=0;i<steps;++i){
             pos.x += delta.x;
