@@ -24,6 +24,10 @@ public class TilePos {
         this.y = y;
     }
 
+    public int manhattanDistance(TilePos other){
+        return Math.abs(x - other.x) + Math.abs(y - other.y);
+    }
+
     public TilePos add(int x, int y){
         return create(this.x + x, this.y + y);
     }

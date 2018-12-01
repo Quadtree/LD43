@@ -1,8 +1,15 @@
 package info.quadtree.ld43;
 
+import com.badlogic.gdx.ai.pfa.*;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
+import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
-public class WorldMap {
+import java.util.ArrayList;
+import java.util.List;
+
+public class WorldMap implements IndexedGraph<TilePos> {
     public enum TerrainType {
         Floor("floor1"),
         HorizontalWall("wall1"),
@@ -21,7 +28,21 @@ public class WorldMap {
     final static int WORLD_HEIGHT = 128;
     final static int WORLD_WIDTH = 48;
 
+    IndexedAStarPathFinder<TilePos> pathFinder;
+
     TerrainType[][] terrain;
+
+    List<TilePos> findPath(TilePos start, TilePos end){
+        if (pathFinder == null) pathFinder = new IndexedAStarPathFinder<TilePos>(this);
+
+        GraphPath<TilePos> outPath = new DefaultGraphPath<>();
+
+        pathFinder.searchNodePath(start, end, (node, endNode) -> node.manhattanDistance(endNode), outPath);
+
+        ArrayList<TilePos> ret = new ArrayList<>();
+        outPath.forEach(ret::add);
+        return ret;
+    }
 
     public TilePos getOpenSpace(){
         while(true){
@@ -75,5 +96,29 @@ public class WorldMap {
                 LD43.s.cam.drawOnTile(terrain[i][j].graphic, TilePos.create(i,j));
             }
         }
+    }
+
+    @Override
+    public int getIndex(TilePos node) {
+        return node.x + node.y * WORLD_WIDTH;
+    }
+
+    @Override
+    public int getNodeCount() {
+        return WORLD_WIDTH * WORLD_HEIGHT;
+    }
+
+    @Override
+    public Array<Connection<TilePos>> getConnections(TilePos fromNode) {
+        Array<Connection<TilePos>> ret = new Array<>();
+
+        for (int dx=0;dx<3;++dx){
+            for (int dy=0;dy<3;++dy){
+                TilePos np = fromNode.add(dx,dy);
+                if (isPassable(np)) ret.add(new DefaultConnection<>(fromNode, np));
+            }
+        }
+
+        return ret;
     }
 }
