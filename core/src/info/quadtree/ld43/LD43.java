@@ -33,7 +33,7 @@ public class LD43 extends ApplicationAdapter {
 	public void create () {
 		s = this;
 
-		atlas = new TextureAtlas(Gdx.files.internal("main"));
+		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
