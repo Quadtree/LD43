@@ -84,6 +84,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         }
 
         if (minDensityTile != null) {
+            System.out.println("Best density tile is " + minDensityTile);
             // we assume we got one
             for (int i = 0; i < 10000; ++i) {
                 TilePos ret = TilePos.create(
@@ -131,9 +132,9 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
         terrain[WORLD_WIDTH / 2][1] = TerrainType.Floor;
 
-        for (int i=0;i<200;++i){
+        for (int i=0;i<100;++i){
             TilePos nxt = getMinDensityOpenSpace();
-            if (Util.randInt(3) == 0){
+            if (Util.randInt(4) == 0){
                 TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
 
                 for (int x=nxt.x;x<nxt.x+farExt.x;++x){
@@ -146,7 +147,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 if (delta.manhattanDistance() > 1) delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
                 if (delta.manhattanDistance() > 1) delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
 
-                while(Util.randInt(10) != 0){
+                while(Util.randInt(20) != 0){
                     nxt = nxt.add(delta);
                     setTile(nxt, TerrainType.Floor);
                 }
