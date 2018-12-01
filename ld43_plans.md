@@ -35,10 +35,10 @@
 * Ability to restart
 * Fix weird freeze issue
 * Openable doors
-
-# TODO
 * Melee weapons
 * Ranged weapons
+
+# TODO
 * Fix bug where moves can be saved up
 * Food system (and regeneration)
 * Magic system
