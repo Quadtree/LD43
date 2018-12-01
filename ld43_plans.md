@@ -30,3 +30,16 @@
 # Decision: Roguelike Game
 
 # TODO
+* More correct map generation
+* Ability to restart
+* Melee weapons
+* Ranged weapons
+* More monster types
+* Magic system
+* End boss
+* Opening screen, help text
+
+## Nice to Have
+* Save/Load system
+* Sound?
+* Music?
