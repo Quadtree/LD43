@@ -35,7 +35,7 @@ public class GameInputProcessor implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         TilePos rp = LD43.s.cam.screenToReal(new Vector2(screenX, screenY));
 
-        
+
 
         return false;
     }

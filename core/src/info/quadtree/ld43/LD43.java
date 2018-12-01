@@ -22,7 +22,7 @@ public class LD43 extends ApplicationAdapter {
 
 	Camera cam = new Camera();
 
-	GameState gameState;
+	public GameState gameState;
 
 	Map<String, Sprite> graphics = new HashMap<String, Sprite>();
 

@@ -32,7 +32,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     TerrainType[][] terrain;
 
-    List<TilePos> findPath(TilePos start, TilePos end){
+    public List<TilePos> findPath(TilePos start, TilePos end){
         if (pathFinder == null) pathFinder = new IndexedAStarPathFinder<TilePos>(this);
 
         GraphPath<TilePos> outPath = new DefaultGraphPath<>();
