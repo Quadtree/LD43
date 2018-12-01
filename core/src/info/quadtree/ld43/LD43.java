@@ -53,14 +53,14 @@ public class LD43 extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		cam.pos = gameState.pc.pos;
-
 		while (!gameState.pc.canAct()){
 			gameState.tick();
 			gameState.pc.tickActions();
 		}
 
 		gameState.pc.tickActions();
+
+		cam.pos = gameState.pc.pos;
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

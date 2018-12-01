@@ -113,8 +113,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
     public Array<Connection<TilePos>> getConnections(TilePos fromNode) {
         Array<Connection<TilePos>> ret = new Array<>();
 
-        for (int dx=0;dx<3;++dx){
-            for (int dy=0;dy<3;++dy){
+        for (int dx=-1;dx<2;++dx){
+            for (int dy=-1;dy<2;++dy){
                 TilePos np = fromNode.add(dx,dy);
                 if (isPassable(np)) ret.add(new DefaultConnection<>(fromNode, np));
             }
