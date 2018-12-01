@@ -19,6 +19,18 @@ public class Items {
         return ret;
     }
 
+    public static Item createBow(){
+        Item ret = new Item();
+        ret.name = "Bow";
+        ret.attackDamage = 30;
+        ret.graphic = "bow1";
+        ret.weight = 3;
+        ret.slot = Item.EquipSlot.Weapon;
+        ret.allowsRangedAttack = true;
+
+        return ret;
+    }
+
     public static Item createPlateMail(){
         Item ret = new Item();
         ret.name = "Steel Plate Mail";

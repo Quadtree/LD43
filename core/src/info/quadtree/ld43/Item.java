@@ -20,6 +20,7 @@ public class Item {
 
     Integer speedSoftCap;
     int armorMod;
+    boolean allowsRangedAttack;
 
     int attackDamage;
     int attackSpeedMod;
