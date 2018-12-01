@@ -299,7 +299,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     private float computeJagedness(TilePos trgRoom) {
-        float jaggedness = MathUtils.random() * 0.5f * ((trgRoom.y / (float)WORLD_HEIGHT) + 0.15f);
+        float jaggedness = (MathUtils.random() * 0.5f + 0.5f) * 0.5f * ((trgRoom.y / (float)WORLD_HEIGHT) + 0.15f);
+        System.err.println(jaggedness);
         //jaggedness +=  * 0.45f;
         jaggedness = Math.min(jaggedness, 0.8f);
         return jaggedness;
@@ -414,7 +415,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         if (j < 10){
             return c1;
         } else if (j <= 30) {
-            float a = (j - 10f) / 20f;
+            float a = (j - 5f) / 15f;
             return new Color(
                     MathUtils.lerp(c1.r, c2.r, a),
                     MathUtils.lerp(c1.g, c2.g, a),
@@ -422,7 +423,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                     1f
             );
         } else {
-            float a = (j - 30f) / 20f;
+            float a = (j - 20f) / 15f;
             return new Color(
                     MathUtils.lerp(c2.r, c3.r, a),
                     MathUtils.lerp(c2.g, c3.g, a),
