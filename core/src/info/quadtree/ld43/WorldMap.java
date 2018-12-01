@@ -310,7 +310,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         for (int i=0;i<WORLD_WIDTH;++i) {
             for (int j = 0; j < WORLD_HEIGHT; ++j) {
                 if (isPassable(TilePos.create(i,j)))
-                    debugPixmap.drawPixel(i,WORLD_HEIGHT - j, Color.rgba8888(Color.WHITE));
+                    debugPixmap.drawPixel(i,WORLD_HEIGHT - j, Color.rgba8888(getTileColor(TilePos.create(i,j))));
                 else
                     debugPixmap.drawPixel(i,WORLD_HEIGHT - j, Color.rgba8888(Color.BLACK));
             }
@@ -399,5 +399,36 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     public Optional<Creature> getCreatureOnTile(TilePos tp){
         return LD43.s.gameState.creatures.stream().filter(it -> it.pos.equals(tp)).findAny();
+    }
+
+    final Color c1 = new Color(1,1,1,1);
+    final Color c2 = new Color(0x5c3d25ff);
+    final Color c3 = new Color(0x482d3fff);
+
+    public Color getTileColor(TilePos tp){
+        int x = MathUtils.clamp(tp.x, 0, WORLD_WIDTH - 1);
+        int y = MathUtils.clamp(tp.y, 0, WORLD_HEIGHT - 1);
+
+        byte j = jaggednessLevelGrid[x][y];
+
+        if (j < 10){
+            return c1;
+        } else if (j <= 30) {
+            float a = (j - 10f) / 20f;
+            return new Color(
+                    MathUtils.lerp(c1.r, c2.r, a),
+                    MathUtils.lerp(c1.g, c2.g, a),
+                    MathUtils.lerp(c1.b, c2.b, a),
+                    1f
+            );
+        } else {
+            float a = (j - 30f) / 20f;
+            return new Color(
+                    MathUtils.lerp(c2.r, c3.r, a),
+                    MathUtils.lerp(c2.g, c3.g, a),
+                    MathUtils.lerp(c2.b, c3.b, a),
+                    1f
+            );
+        }
     }
 }
