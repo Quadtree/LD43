@@ -359,7 +359,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     public void drawDebugPixmap(int n) {
-        Pixmap debugPixmap = new Pixmap(WORLD_WIDTH, WORLD_HEIGHT, Pixmap.Format.RGBA8888);
+        /*Pixmap debugPixmap = new Pixmap(WORLD_WIDTH, WORLD_HEIGHT, Pixmap.Format.RGBA8888);
         for (int i=0;i<WORLD_WIDTH;++i) {
             for (int j = 0; j < WORLD_HEIGHT; ++j) {
                 if (isPassable(TilePos.create(i,j)))
@@ -368,7 +368,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                     debugPixmap.drawPixel(i,WORLD_HEIGHT - j, Color.rgba8888(Color.BLACK));
             }
         }
-        PixmapIO.writePNG(Gdx.files.absolute("C:/tmp/debug_pixmap_"+n+".png"), debugPixmap);
+        PixmapIO.writePNG(Gdx.files.absolute("C:/tmp/debug_pixmap_"+n+".png"), debugPixmap);*/
     }
 
     public TilePos generateCorridorDelta() {
