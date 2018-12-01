@@ -197,11 +197,14 @@ public class Creature {
 
         if (attackRoll >= defense){
             int damage = Math.round(Util.randInt(getMaxDamageOnAttack()) * getPowerMultiplier()) - trg.getArmor();
+            if (damage > 0){
+                LD43.s.gameState.addCombatLogMessage(trg.pos, name + " hits " + trg.name + " for " + damage);
 
-            LD43.s.gameState.addCombatLogMessage(trg.pos, name + " hits " + trg.name + " for " + damage);
-
-            if (trg.takeDamage(damage)){
-                gainXP(trg.xp);
+                if (trg.takeDamage(damage)){
+                    gainXP(trg.xp);
+                }
+            } else {
+                LD43.s.gameState.addCombatLogMessage(trg.pos, name + "'s attack glances off of " + trg.name);
             }
         } else {
             LD43.s.gameState.addCombatLogMessage(trg.pos, name + " misses " + trg.name);
