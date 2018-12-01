@@ -451,6 +451,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
         int steps = Math.round(pos.dst(endVec) - within);
 
+        if (steps > 13) return false;
+
         for (int i=0;i<steps;++i){
             pos.x += delta.x;
             pos.y += delta.y;

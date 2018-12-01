@@ -77,11 +77,26 @@ public class GameState {
                 }
             }
         }
+
+        for (Creature c : creatures){
+            if (c == pc){
+                minimap.drawPixel(c.pos.x,WorldMap.WORLD_HEIGHT - c.pos.y, Color.rgba8888(Color.SKY));
+                minimap.drawPixel(c.pos.x-1,WorldMap.WORLD_HEIGHT - c.pos.y, Color.rgba8888(Color.SKY));
+                minimap.drawPixel(c.pos.x+1,WorldMap.WORLD_HEIGHT - c.pos.y, Color.rgba8888(Color.SKY));
+                minimap.drawPixel(c.pos.x,WorldMap.WORLD_HEIGHT - (c.pos.y-1), Color.rgba8888(Color.SKY));
+                minimap.drawPixel(c.pos.x,WorldMap.WORLD_HEIGHT - (c.pos.y+1), Color.rgba8888(Color.SKY));
+            } else {
+                if (worldMap.canSee(pc.pos, c.pos, 0)){
+                    minimap.drawPixel(c.pos.x,WorldMap.WORLD_HEIGHT - c.pos.y, Color.rgba8888(Color.RED));
+                }
+            }
+        }
+
         if (minimapTexture != null) minimapTexture.dispose();
         Texture tx = new Texture(minimap);
         minimap.dispose();
 
-        LD43.s.batch.draw(tx, Gdx.graphics.getWidth() - 280, 30);
+        LD43.s.batch.draw(tx, Gdx.graphics.getWidth() - 300, 0, WorldMap.WORLD_WIDTH * 2, WorldMap.WORLD_HEIGHT * 2);
     }
 
     public void tick(){
