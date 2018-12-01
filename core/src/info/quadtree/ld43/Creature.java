@@ -96,7 +96,7 @@ public class Creature {
             LD43.s.gameState.addCombatLogMessage(trg.pos, name + " hits " + trg.name + " for " + damage);
 
             if (trg.takeDamage(damage)){
-                this.xp += trg.xp;
+                gainXP(trg.xp);
             }
         } else {
             LD43.s.gameState.addCombatLogMessage(trg.pos, name + " misses " + trg.name);
@@ -126,5 +126,9 @@ public class Creature {
 
     public boolean hostileTowards(Creature other){
         return this.isPC() != other.isPC();
+    }
+
+    void gainXP(int amt){
+        this.xp += amt;
     }
 }
