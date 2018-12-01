@@ -78,7 +78,11 @@ public class LD43 extends ApplicationAdapter {
 				20, 20);
 
 		bitmapFont.draw(batch,
-				"Tick: " + gameState.tick,
+				"Tick: " + gameState.tick +
+					"    HP: " + gameState.pc.hp + "/" + gameState.pc.statEndurance +
+					"    SP: " + gameState.pc.sp + "/" + gameState.pc.statMagic +
+					"    XP: " + gameState.pc.xp +
+					"    Level: " + gameState.pc.level,
 				20, 40);
 
 		batch.end();
