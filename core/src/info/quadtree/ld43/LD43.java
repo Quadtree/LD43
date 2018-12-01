@@ -42,6 +42,8 @@ public class LD43 extends ApplicationAdapter {
 
 		gameState = new GameState();
 		cam.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
+
+		Gdx.input.setInputProcessor(new GameInputProcessor());
 	}
 
 	@Override
