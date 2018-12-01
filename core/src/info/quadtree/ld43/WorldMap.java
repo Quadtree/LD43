@@ -45,6 +45,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
     transient Map<TilePos, Map<TilePos, Boolean>> losCache;
 
     Map<TilePos, Integer> densityTiles = new HashMap<>();
+    ArrayList<TilePos> corridorEndPoints = new ArrayList<>();
 
     public List<TilePos> findPath(TilePos start, TilePos end){
         start = start.nor();
@@ -137,7 +138,15 @@ public class WorldMap implements IndexedGraph<TilePos> {
         TilePos endBossRoom = null;
 
         for (int i=0;i<10000;++i){
-            TilePos nxt = getMinDensityOpenSpace();
+            TilePos nxt = null;
+
+            if (corridorEndPoints.size() == 0) {
+                nxt = getMinDensityOpenSpace();
+            } else {
+                nxt = corridorEndPoints.get(Util.randInt(corridorEndPoints.size()));
+                corridorEndPoints.remove(nxt);
+            }
+
             if (Util.randInt(4) == 0){
                 TilePos farExt = TilePos.create(Util.randInt(15), Util.randInt(15));
 
@@ -154,6 +163,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
                     if (Util.randInt(10) == 0) delta = generateCorridorDelta();
                     setTile(nxt, TerrainType.Floor);
                 }
+
+                corridorEndPoints.add(nxt);
             }
 
             // see if we can find the end boss room
