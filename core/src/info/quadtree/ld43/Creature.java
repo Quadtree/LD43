@@ -16,5 +16,7 @@ public class Creature {
 
     public String graphicName;
 
-
+    public void render(){
+        LD43.s.cam.drawOnTile(graphicName, pos);
+    }
 }

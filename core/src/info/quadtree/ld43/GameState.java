@@ -13,10 +13,15 @@ public class GameState {
         this.worldMap = new WorldMap();
 
         pc = new Creature();
+        pc.graphicName = "pc1";
         pc.pos = new TilePos(WorldMap.WORLD_WIDTH / 2, 1);
+
+        creatures.add(pc);
     }
 
     public void render(){
         worldMap.render();
+
+        Util.indexIterate(creatures, Creature::render);
     }
 }
