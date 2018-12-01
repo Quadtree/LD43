@@ -135,9 +135,9 @@ public class WorldMap implements IndexedGraph<TilePos> {
         Vector2 endVec = new Vector2(end.x, end.y);
         Vector2 delta = endVec.cpy().sub(pos).nor();
 
-        while(true){
-            if (pos.dst2(endVec) < 2*2) break;
+        int steps = Math.round(pos.dst(endVec));
 
+        for (int i=0;i<steps;++i){
             pos.x += delta.x;
             pos.y += delta.y;
 
