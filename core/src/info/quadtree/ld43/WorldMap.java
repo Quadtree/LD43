@@ -3,6 +3,7 @@ package info.quadtree.ld43;
 import com.badlogic.gdx.ai.pfa.*;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
@@ -130,7 +131,20 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     public boolean canSee(TilePos start, TilePos end){
-        return true; // @todo: Actual system
+        Vector2 pos = new Vector2(start.x, start.y);
+        Vector2 endVec = new Vector2(end.x, end.y);
+        Vector2 delta = endVec.cpy().sub(pos).nor();
+
+        while(true){
+            if (pos.dst2(endVec) < 2*2) break;
+
+            pos.x += delta.x;
+            pos.y += delta.y;
+
+            if (!isPassable(TilePos.create(Math.round(pos.x), Math.round(pos.y)))) return false;
+        }
+
+        return true;
     }
 
     public Optional<Creature> getCreatureOnTile(TilePos tp){
