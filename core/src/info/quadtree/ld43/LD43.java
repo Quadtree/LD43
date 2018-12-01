@@ -2,12 +2,16 @@ package info.quadtree.ld43;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +32,10 @@ public class LD43 extends ApplicationAdapter {
 
 	BitmapFont bitmapFont;
 
+	Stage mainStage;
+
+	Label.LabelStyle defaultLabelStyle;
+
 	public Sprite getGraphic(String name){
 		if (!graphics.containsKey(name)) graphics.put(name, atlas.createSprite(name));
 
@@ -39,6 +47,25 @@ public class LD43 extends ApplicationAdapter {
 		s = this;
 
 		bitmapFont = new BitmapFont();
+		defaultLabelStyle = new Label.LabelStyle(LD43.s.bitmapFont, Color.WHITE);
+
+		mainStage = new Stage();
+		Label lowerStatusLabel = Util.createDynamicLabel(() -> "PWR: " + gameState.pc.statPower +
+						" SPD: " + gameState.pc.statSpeed +
+						" END: " + gameState.pc.statEndurance +
+						" MGC: " + gameState.pc.statMagic
+		);
+		mainStage.addActor(lowerStatusLabel);
+		lowerStatusLabel.setPosition(20, 20);
+
+		Label upperStatusLabel = Util.createDynamicLabel(() -> "Tick: " + gameState.tick +
+				"    HP: " + gameState.pc.hp + "/" + gameState.pc.statEndurance +
+				"    SP: " + gameState.pc.sp + "/" + gameState.pc.statMagic +
+				"    XP: " + gameState.pc.xp +
+				"    Level: " + gameState.pc.level
+		);
+		mainStage.addActor(upperStatusLabel);
+		upperStatusLabel.setPosition(20, 40);
 
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
@@ -48,7 +75,11 @@ public class LD43 extends ApplicationAdapter {
 		resetGameState();
 		cam.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
 
-		Gdx.input.setInputProcessor(new GameInputProcessor());
+		InputMultiplexer mp = new InputMultiplexer();
+		mp.addProcessor(mainStage);
+		mp.addProcessor(new GameInputProcessor());
+
+		Gdx.input.setInputProcessor(mp);
 	}
 
 	public void resetGameState() {
@@ -77,26 +108,9 @@ public class LD43 extends ApplicationAdapter {
 		batch.begin();
 		//batch.draw(img, 0, 0);
 		gameState.render();
-
-
-		bitmapFont.draw(batch,
-				"PWR: " + gameState.pc.statPower +
-					" SPD: " + gameState.pc.statSpeed +
-					" END: " + gameState.pc.statEndurance +
-					" MGC: " + gameState.pc.statMagic,
-				20, 20);
-
-		bitmapFont.draw(batch,
-				"Tick: " + gameState.tick +
-					"    HP: " + gameState.pc.hp + "/" + gameState.pc.statEndurance +
-					"    SP: " + gameState.pc.sp + "/" + gameState.pc.statMagic +
-					"    XP: " + gameState.pc.xp +
-					"    Level: " + gameState.pc.level,
-				20, 40);
-
 		batch.end();
 
-
+		mainStage.draw();
 	}
 	
 	@Override
