@@ -33,9 +33,9 @@
 * More correct map generation
 * Persistence of tiles that have been seen
 * Ability to restart
+* Fix weird freeze issue
 
 # TODO
-* Fix weird freeze issue
 * Openable doors
 * Melee weapons
 * Ranged weapons

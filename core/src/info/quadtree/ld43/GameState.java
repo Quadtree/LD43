@@ -19,7 +19,9 @@ public class GameState {
 
         if (Util.randInt(3) == 0) pc.statMagic = Util.randInt(40);
 
-        pc.statEndurance++;
+        pc.statEndurance = 10;
+        pc.statSpeed = 10;
+        pc.statPower = 10;
 
         while(true){
             switch(Util.randInt(3)){
@@ -34,6 +36,7 @@ public class GameState {
         pc.pos = worldMap.startSpot;
         pc.name = "The Sacrifice";
 
+        pc.init();
         creatures.add(pc);
 
 

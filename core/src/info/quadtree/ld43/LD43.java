@@ -61,6 +61,11 @@ public class LD43 extends ApplicationAdapter {
 		while (!gameState.pc.canAct()){
 			gameState.tick();
 			gameState.tickActions();
+
+			if (!gameState.creatures.contains(gameState.pc)){
+				System.err.println("Player has died!!!");
+				resetGameState();
+			}
 		}
 
 		gameState.pc.tickActions();

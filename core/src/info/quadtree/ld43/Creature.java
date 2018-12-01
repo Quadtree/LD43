@@ -84,8 +84,12 @@ public class Creature {
         }
     }
 
+    public int getEffectiveSpeed(){
+        return statSpeed;
+    }
+
     private float getSpeedModifier() {
-        return 0.2f + ((100 - statSpeed) / 100f);
+        return 1f / (getEffectiveSpeed() / 100f);
     }
 
     private float getPowerMultiplier(){
