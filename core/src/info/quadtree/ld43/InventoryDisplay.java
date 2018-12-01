@@ -2,9 +2,14 @@ package info.quadtree.ld43;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class InventoryDisplay extends Table {
     boolean needsRefresh = true;
+
+    public InventoryDisplay() {
+        setBackground(new SpriteDrawable(LD43.s.getGraphic("floor1")));
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

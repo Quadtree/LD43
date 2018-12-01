@@ -1,5 +1,10 @@
 package info.quadtree.ld43;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+
 import java.util.ArrayList;
 
 public class GameState {
@@ -55,6 +60,24 @@ public class GameState {
 
         Util.indexIterate(items, Item::render);
         Util.indexIterate(creatures, Creature::render);
+
+        Pixmap minimap = new Pixmap(WorldMap.WORLD_WIDTH, WorldMap.WORLD_HEIGHT, Pixmap.Format.RGBA8888);
+        for (int x=0;x<WorldMap.WORLD_WIDTH;++x){
+            for (int y=0;y<WorldMap.WORLD_HEIGHT;++y){
+                if (LD43.s.gameState.worldMap.tileSeen[x][y]){
+                    if (LD43.s.gameState.worldMap.isPassable(TilePos.create(x,y))){
+                        minimap.drawPixel(x,y, Color.rgba8888(Color.WHITE));
+                    } else {
+                        minimap.drawPixel(x,y, Color.rgba8888(Color.BLACK));
+                    }
+                }
+            }
+        }
+        Texture tx = new Texture(minimap);
+        //minimap.dispose();
+
+        LD43.s.batch.draw(tx, Gdx.graphics.getWidth() - 100, 20);
+        //tx.dispose();
     }
 
     public void tick(){
