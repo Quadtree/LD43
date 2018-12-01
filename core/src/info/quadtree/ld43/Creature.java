@@ -33,4 +33,8 @@ public class Creature {
             ticksTillNextAction = 10 * (1 + ((100 - statSpeed) / 100f));
         }
     }
+
+    public boolean canAct(){
+        return ticksTillNextAction <= 0;
+    }
 }

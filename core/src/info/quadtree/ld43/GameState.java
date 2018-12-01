@@ -19,11 +19,13 @@ public class GameState {
 
         if (Util.randInt(3) == 0) pc.statMagic = Util.randInt(40);
 
+        pc.statEndurance++;
+
         while(true){
             switch(Util.randInt(3)){
-                case 0: pc.statPower += Util.randInt(15); break;
-                case 1: pc.statSpeed += Util.randInt(15); break;
-                case 2: pc.statEndurance += Util.randInt(15); break;
+                case 0: pc.statPower += Util.randInt(6); break;
+                case 1: pc.statSpeed += Util.randInt(6); break;
+                case 2: pc.statEndurance += Util.randInt(6); break;
             }
 
             if (pc.statPower + pc.statSpeed + pc.statEndurance + pc.statMagic >= 80) break;
@@ -38,5 +40,10 @@ public class GameState {
         worldMap.render();
 
         Util.indexIterate(creatures, Creature::render);
+    }
+
+    public void tick(){
+        Util.indexIterate(creatures, Creature::tick);
+        tick++;
     }
 }
