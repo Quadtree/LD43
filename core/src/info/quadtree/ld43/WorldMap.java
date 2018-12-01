@@ -33,7 +33,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         }
     }
 
-    final static int WORLD_HEIGHT = 128;
+    final static int WORLD_HEIGHT = 384;
     final static int WORLD_WIDTH = 48;
 
     transient IndexedAStarPathFinder<TilePos> pathFinder;
@@ -137,7 +137,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
             System.out.println("maxTile=" + maxTile + " minTile=" + minTile);
 
-            if (true || maxTile < 250 && minTile > 40){
+            if (maxTile < 200){
                 drawDebugPixmap(0);
                 return;
             }
@@ -172,7 +172,6 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 nxt = getMinDensityOpenSpace();
             } else {
                 nxt = corridorEndPoints.get(Util.randInt(corridorEndPoints.size()));
-                corridorEndPoints.remove(nxt);
             }
 
             if (Util.randInt(2) == 0){
@@ -192,13 +191,15 @@ public class WorldMap implements IndexedGraph<TilePos> {
                         }
                     }
                     previousRooms.add(roomRect);
+                    corridorEndPoints.remove(nxt);
                 }
             } else {
+                corridorEndPoints.remove(nxt);
                 TilePos delta = generateCorridorDelta();
 
-                while(Util.randInt(20) != 0){
+                while(Util.randInt(30) != 0){
                     nxt = nxt.add(delta);
-                    if (Util.randInt(10) == 0) delta = generateCorridorDelta();
+                    if (Util.randInt(30) == 0) delta = generateCorridorDelta();
                     if (isPassable(nxt)) break;
                     setTile(nxt, TerrainType.Floor);
                     if (!isPassable(nxt)) break;
