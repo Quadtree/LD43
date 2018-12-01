@@ -22,7 +22,7 @@ public class MoveAction extends BaseAction {
 
         if (moves.size() > 1){
             actor.move(moves.get(1).x - actor.pos.x, moves.get(1).y - actor.pos.y);
-            return true;
+            return !actor.justMeleeAttackedDueToMove;
         } else {
             return false;
         }

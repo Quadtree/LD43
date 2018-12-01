@@ -45,11 +45,18 @@ public class Creature {
     }
 
     public void tickActions(){
-        if (currentAction != null) currentAction.tick();
+        if (currentAction != null){
+            if (!currentAction.tick()) currentAction = null;
+        }
     }
+
+    public boolean justMeleeAttackedDueToMove = false;
 
     public void move(int dx, int dy){
         if (!canAct()) return;
+
+        justMeleeAttackedDueToMove = false;
+
         TilePos np = pos.add(dx, dy);
         if (LD43.s.gameState.worldMap.isPassable(np)){
             Optional<Creature> onTile = LD43.s.gameState.worldMap.getCreatureOnTile(np);
@@ -57,6 +64,7 @@ public class Creature {
                 pos = np;
                 ticksTillNextAction += 10 * getSpeedModifier();
             } else {
+                justMeleeAttackedDueToMove = true;
                 meleeAttack(onTile.get());
             }
         }
