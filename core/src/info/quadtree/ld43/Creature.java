@@ -75,16 +75,28 @@ public class Creature {
     Map<Item.EquipSlot, Item> equippedItems = new HashMap<>();
 
     public void unequip(Item item){
+        if (!canAct()) return;
+
         if (equippedItems.containsValue(item)){
             equippedItems.remove(item.slot);
+            takeTime(5);
+            LD43.s.gameState.addCombatLogMessage(pos, name + " unequips " + item.name);
         }
     }
 
     public void equip(Item item){
-        if (item.slot != null) equippedItems.put(item.slot, item);
+        if (!canAct()) return;
+
+        if (item.slot != null){
+            equippedItems.put(item.slot, item);
+            takeTime(5);
+            LD43.s.gameState.addCombatLogMessage(pos, name + " equips " + item.name);
+        }
     }
 
     public void drop(Item item){
+        if (!canAct()) return;
+
         if (equippedItems.containsValue(item)){
             equippedItems.remove(item.slot);
         }
@@ -100,6 +112,7 @@ public class Creature {
         item.onGroundLocation = dropPos;
         LD43.s.gameState.items.add(item);
         LD43.s.gameState.addCombatLogMessage(pos, name + " drops " + item.name);
+        takeTime(5);
     }
 
     public boolean isEquipped(Item item){
@@ -117,7 +130,7 @@ public class Creature {
                 Optional<Creature> onTile = LD43.s.gameState.worldMap.getCreatureOnTile(np);
                 if (!onTile.isPresent()){
                     pos = np;
-                    ticksTillNextAction += 10 * getSpeedModifier();
+                    takeTime(10);
                 } else {
                     justMeleeAttackedDueToMove = true;
                     meleeAttack(onTile.get());
@@ -125,9 +138,13 @@ public class Creature {
             } else {
                 justMeleeAttackedDueToMove = true;
                 LD43.s.gameState.worldMap.setTile(np, WorldMap.TerrainType.OpenDoor, null);
-                ticksTillNextAction += 10 * getSpeedModifier();
+                takeTime(10);
             }
         }
+    }
+
+    private void takeTime(int amt){
+        ticksTillNextAction += amt * getSpeedModifier();
     }
 
     public void stand(){
