@@ -169,6 +169,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 corridorEndPoints.add(nxt);
             }
 
+            if (i % 10 == 0) drawDebugPixmap(i);
+
             // see if we can find the end boss room
             for (int x=0;x<WORLD_WIDTH;++x){
                 for (int y=WORLD_HEIGHT - 20;y<WORLD_HEIGHT;++y){
@@ -194,7 +196,9 @@ public class WorldMap implements IndexedGraph<TilePos> {
             }
             if (endBossRoom != null) break;
         }
+    }
 
+    public void drawDebugPixmap(int n) {
         Pixmap debugPixmap = new Pixmap(WORLD_WIDTH, WORLD_HEIGHT, Pixmap.Format.RGBA8888);
         for (int i=0;i<WORLD_WIDTH;++i) {
             for (int j = 0; j < WORLD_HEIGHT; ++j) {
@@ -204,7 +208,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                     debugPixmap.drawPixel(i,WORLD_HEIGHT - j, Color.rgba8888(Color.BLACK));
             }
         }
-        PixmapIO.writePNG(Gdx.files.absolute("C:/tmp/debug_pixmap.png"), debugPixmap);
+        PixmapIO.writePNG(Gdx.files.absolute("C:/tmp/debug_pixmap_"+n+".png"), debugPixmap);
     }
 
     public TilePos generateCorridorDelta() {
