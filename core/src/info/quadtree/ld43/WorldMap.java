@@ -32,7 +32,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         }
     }
 
-    final static int WORLD_HEIGHT = 128;
+    final static int WORLD_HEIGHT = 384;
     final static int WORLD_WIDTH = 48;
 
     transient IndexedAStarPathFinder<TilePos> pathFinder;
@@ -44,8 +44,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     transient Map<TilePos, Map<TilePos, Boolean>> losCache;
 
-    Map<TilePos, Integer> densityTiles = new HashMap<>();
-    ArrayList<TilePos> corridorEndPoints = new ArrayList<>();
+    Map<TilePos, Integer> densityTiles;
+    ArrayList<TilePos> corridorEndPoints;
 
     public List<TilePos> findPath(TilePos start, TilePos end){
         start = start.nor();
@@ -85,7 +85,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
         }
 
         if (minDensityTile != null) {
-            System.out.println("Best density tile is " + minDensityTile + " " + bestDensity);
+            //System.out.println("Best density tile is " + minDensityTile + " " + bestDensity);
             // we assume we got one
             for (int i = 0; i < 10000; ++i) {
                 TilePos ret = TilePos.create(
@@ -97,7 +97,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
             }
         }
 
-        System.err.println("Fallback!!!");
+        //System.err.println("Fallback!!!");
         return getOpenSpace();
     }
 
@@ -122,6 +122,31 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     public WorldMap(){
+        for(int i=0;i<10000;++i) {
+            generateMap();
+
+            int minTile = 100000;
+            int maxTile = 0;
+
+            for (Map.Entry<TilePos, Integer> ent : densityTiles.entrySet()){
+                minTile = Math.min(ent.getValue(), minTile);
+                maxTile = Math.max(ent.getValue(), maxTile);
+            }
+
+            System.out.println("maxTile=" + maxTile + " minTile=" + minTile);
+
+            if (true || maxTile < 250 && minTile > 40){
+                drawDebugPixmap(0);
+                return;
+            }
+        }
+
+        System.err.println("Couldn't generate world we liked");
+    }
+
+    private void generateMap() {
+        densityTiles = new HashMap<>();
+        corridorEndPoints = new ArrayList<>();
         terrain = new TerrainType[WORLD_WIDTH][];
         tileSeen = new boolean[WORLD_WIDTH][];
         for (int i=0;i<WORLD_WIDTH;++i){
@@ -169,7 +194,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 corridorEndPoints.add(nxt);
             }
 
-            if (i % 10 == 0) drawDebugPixmap(i);
+            //if (i % 10 == 0) drawDebugPixmap(i);
 
             // see if we can find the end boss room
             for (int x=0;x<WORLD_WIDTH;++x){
@@ -195,6 +220,10 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 if (endBossRoom != null) break;
             }
             if (endBossRoom != null) break;
+        }
+
+        if (endBossRoom == null){
+            System.err.println("No end boss room!");
         }
     }
 
