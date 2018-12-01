@@ -21,6 +21,8 @@ public class LD43 extends ApplicationAdapter {
 
 	Camera cam = new Camera();
 
+	GameState gameState;
+
 	Map<String, Sprite> graphics = new HashMap<String, Sprite>();
 
 	public Sprite getGraphic(String name){
@@ -37,6 +39,8 @@ public class LD43 extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+
+		gameState = new GameState();
 	}
 
 	@Override
@@ -45,6 +49,7 @@ public class LD43 extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		//batch.draw(img, 0, 0);
+		gameState.render();
 		batch.end();
 	}
 	

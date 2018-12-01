@@ -4,12 +4,18 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class WorldMap {
     public enum TerrainType {
-        Floor,
-        HorizontalWall,
-        VerticalWall,
-        CornerWall,
-        ClosedDoor,
-        OpenDoor
+        Floor("floor1"),
+        HorizontalWall("wall1"),
+        VerticalWall("wall1"),
+        CornerWall("wall1"),
+        ClosedDoor("wall1"),
+        OpenDoor("wall1");
+
+        public final String graphic;
+
+        TerrainType(String graphic) {
+            this.graphic = graphic;
+        }
     }
 
     final static int WORLD_HEIGHT = 128;
@@ -64,6 +70,10 @@ public class WorldMap {
     }
 
     public void render(){
-
+        for (int i=0;i<WORLD_WIDTH;++i){
+            for (int j=0;j<WORLD_HEIGHT;++j){
+                LD43.s.cam.drawOnTile(terrain[i][j].graphic, new TilePos(i,j));
+            }
+        }
     }
 }
