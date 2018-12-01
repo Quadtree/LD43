@@ -26,6 +26,8 @@ public class Creature {
     public String name = "???";
 
     public int getMaxDamageOnAttack(){
+        if (equippedItems.containsKey(Item.EquipSlot.Weapon)) return equippedItems.get(Item.EquipSlot.Weapon).attackDamage;
+
         return 16;
     }
 

@@ -9,7 +9,7 @@ public class Items {
     public static Item createSword(){
         Item ret = new Item();
         ret.name = "Steel Sword";
-        ret.attackDamage = 20;
+        ret.attackDamage = 50;
         ret.defenseSpeedMod = 14;
         ret.attackSpeedMod = 10;
         ret.graphic = "sword1";
