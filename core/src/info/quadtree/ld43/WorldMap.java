@@ -122,4 +122,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
         return ret;
     }
+
+    public boolean canSee(TilePos start, TilePos end){
+        return true; // @todo: Actual system
+    }
 }
