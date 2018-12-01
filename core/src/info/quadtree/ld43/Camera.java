@@ -19,6 +19,7 @@ public class Camera {
         gr.setBounds(tv.x, tv.y, TILE_SIZE, TILE_SIZE);
         gr.setColor(color);
         gr.draw(LD43.s.batch);
+        gr.setColor(Color.WHITE);
     }
 
     public Vector2 realToScreen(TilePos real){

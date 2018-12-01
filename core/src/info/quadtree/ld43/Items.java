@@ -18,4 +18,17 @@ public class Items {
 
         return ret;
     }
+
+    public static Item createPlateMail(){
+        Item ret = new Item();
+        ret.name = "Steel Plate Mail";
+        ret.graphic = "armor1";
+        ret.weight = 30;
+        ret.armorMod = 7;
+        ret.speedSoftCap = 10;
+
+        ret.slot = Item.EquipSlot.Armor;
+
+        return ret;
+    }
 }

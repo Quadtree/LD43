@@ -30,7 +30,13 @@ public class Creature {
     }
 
     public int getArmor(){
-        return naturalArmor;
+        int ret = naturalArmor;
+
+        for (Item itm : equippedItems.values()){
+            ret += itm.armorMod;
+        }
+
+        return ret;
     }
 
     public float ticksTillNextAction = 0;
@@ -159,7 +165,17 @@ public class Creature {
     }
 
     public int getEffectiveSpeed(){
-        return statSpeed;
+        int ret = statSpeed;
+
+        for (Item itm : equippedItems.values()){
+            if (itm.speedSoftCap != null){
+                if (ret > itm.speedSoftCap){
+                    ret -= (ret - itm.speedSoftCap) / 2;
+                }
+            }
+        }
+
+        return ret;
     }
 
     private float getSpeedModifier() {
@@ -174,8 +190,8 @@ public class Creature {
         if (!canAct()) return;
         if (!hostileTowards(trg)) return;
 
-        int attackRoll = statSpeed + Util.randInt(30) - 15;
-        int defense = trg.statSpeed;
+        int attackRoll = getEffectiveSpeed() + Util.randInt(30) - 15;
+        int defense = trg.getEffectiveSpeed();
 
         if (attackRoll >= defense){
             int damage = Math.round(Util.randInt(getMaxDamageOnAttack()) * getPowerMultiplier()) - trg.getArmor();

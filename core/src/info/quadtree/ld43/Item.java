@@ -18,7 +18,8 @@ public class Item {
     int enduranceMod;
     int magicMod;
 
-    int speedSoftCap;
+    Integer speedSoftCap;
+    int armorMod;
 
     int attackDamage;
     int attackSpeedMod;
