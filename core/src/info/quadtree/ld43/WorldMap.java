@@ -107,7 +107,17 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     public boolean isPassable(TilePos tp){
         if (tp.x >= WORLD_WIDTH || tp.x < 0 || tp.y >= WORLD_HEIGHT || tp.y < 0) return false;
-        return terrain[tp.x][tp.y] == TerrainType.Floor;
+        return terrain[tp.x][tp.y] == TerrainType.Floor || terrain[tp.x][tp.y] == TerrainType.OpenDoor || terrain[tp.x][tp.y] == TerrainType.ClosedDoor;
+    }
+
+    public boolean isOpenable(TilePos tp){
+        if (tp.x >= WORLD_WIDTH || tp.x < 0 || tp.y >= WORLD_HEIGHT || tp.y < 0) return false;
+        return terrain[tp.x][tp.y] == TerrainType.ClosedDoor;
+    }
+
+    public boolean isLOSPassable(TilePos tp){
+        if (tp.x >= WORLD_WIDTH || tp.x < 0 || tp.y >= WORLD_HEIGHT || tp.y < 0) return false;
+        return terrain[tp.x][tp.y] == TerrainType.Floor || terrain[tp.x][tp.y] == TerrainType.OpenDoor;
     }
 
     void setTile(TilePos tp, TerrainType tt, Float jaggednessLevel){
@@ -421,7 +431,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
             pos.x += delta.x;
             pos.y += delta.y;
 
-            if (!isPassable(TilePos.create(Math.round(pos.x), Math.round(pos.y)))) return false;
+            if (!isLOSPassable(TilePos.create(Math.round(pos.x), Math.round(pos.y)))) return false;
         }
 
         return true;

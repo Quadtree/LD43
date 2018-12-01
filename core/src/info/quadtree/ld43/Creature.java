@@ -73,13 +73,19 @@ public class Creature {
 
         TilePos np = pos.add(dx, dy);
         if (LD43.s.gameState.worldMap.isPassable(np)){
-            Optional<Creature> onTile = LD43.s.gameState.worldMap.getCreatureOnTile(np);
-            if (!onTile.isPresent()){
-                pos = np;
-                ticksTillNextAction += 10 * getSpeedModifier();
+            if (!LD43.s.gameState.worldMap.isOpenable(np)){
+                Optional<Creature> onTile = LD43.s.gameState.worldMap.getCreatureOnTile(np);
+                if (!onTile.isPresent()){
+                    pos = np;
+                    ticksTillNextAction += 10 * getSpeedModifier();
+                } else {
+                    justMeleeAttackedDueToMove = true;
+                    meleeAttack(onTile.get());
+                }
             } else {
                 justMeleeAttackedDueToMove = true;
-                meleeAttack(onTile.get());
+                LD43.s.gameState.worldMap.setTile(np, WorldMap.TerrainType.OpenDoor, null);
+                ticksTillNextAction += 10 * getSpeedModifier();
             }
         }
     }
