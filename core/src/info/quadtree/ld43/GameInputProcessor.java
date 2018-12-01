@@ -24,6 +24,11 @@ public class GameInputProcessor implements InputProcessor {
             LD43.s.resetGameState();
         }
 
+        if (LD43.CHEATS){
+            if (keycode == Input.Keys.F) LD43.s.gameState.pc.food += 1000;
+            if (keycode == Input.Keys.X) LD43.s.gameState.pc.gainXP(50);
+        }
+
         return false;
     }
 

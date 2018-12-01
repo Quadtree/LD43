@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LD43 extends ApplicationAdapter {
+	static boolean CHEATS = true;
+
 	SpriteBatch batch;
 	Texture img;
 
