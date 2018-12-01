@@ -37,7 +37,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
         GraphPath<TilePos> outPath = new DefaultGraphPath<>();
 
-        pathFinder.searchNodePath(start, end, (node, endNode) -> node.manhattanDistance(endNode), outPath);
+        pathFinder.searchNodePath(start, end, TilePos::manhattanDistance, outPath);
 
         ArrayList<TilePos> ret = new ArrayList<>();
         outPath.forEach(ret::add);
