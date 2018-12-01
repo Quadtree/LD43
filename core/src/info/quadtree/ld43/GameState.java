@@ -32,6 +32,7 @@ public class GameState {
         }
 
         pc.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
+        pc.name = "The Sacrifice";
 
         creatures.add(pc);
 

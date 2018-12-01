@@ -8,6 +8,7 @@ public class Monsters {
         ret.statEndurance = 10;
         ret.graphicName = "enemy1";
         ret.xp = 10;
+        ret.name = "Slime";
 
         ret.pos = pos;
         ret.init();
