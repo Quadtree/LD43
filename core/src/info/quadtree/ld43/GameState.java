@@ -125,6 +125,8 @@ public class GameState {
     }
 
     public void addCombatLogMessage(TilePos loc, String message){
+        message = message.substring(0, 1).toUpperCase() + message.substring(1);
+
         System.err.println(loc + " " + message);
 
         if (worldMap.canSee(pc.pos, loc, 0)) combatLogMessages.add(message);

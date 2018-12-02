@@ -2,7 +2,6 @@ package info.quadtree.ld43;
 
 import com.badlogic.gdx.graphics.Color;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,11 +11,11 @@ public enum Spell {
         int healAmt = (int)(Util.randInt(200) * power);
         caster.healedFor(healAmt);
 
-        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " heals themselves for " + healAmt);
+        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " heals themselves for " + healAmt);
     }),
     Fireball("Fireball", Color.ORANGE, 20, false, false, (spell,power, caster, target) -> {
         if (target == null) throw new RuntimeException("Target can't be null");
-        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " casts fireball");
+        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " casts fireball");
 
         List<Creature> hit = LD43.s.gameState.creatures.stream()
                 .filter(it -> it.pos.dst2(target) <= 2)
@@ -25,7 +24,7 @@ public enum Spell {
 
         hit.forEach(it -> {
             int damage = Math.round(Util.randInt(150) * power);
-            LD43.s.gameState.addCombatLogMessage(it.pos, it.name + " takes " + damage + " damage");
+            LD43.s.gameState.addCombatLogMessage(it.pos, it.sname() + " " + it.gv("take", "takes") + " " + damage + " damage");
             it.takeDamage(damage);
         });
     }),
@@ -36,20 +35,20 @@ public enum Spell {
     Sleep("Sleep", Color.WHITE, 12, false, true, (spell, power, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             if (!it.isImmuneToSleep){
-                LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
+                LD43.s.gameState.addCombatLogMessage(it.pos, caster.sname() + " " + caster.gv("cast", "casts") + " " + spell.name + " on " + it.name);
                 it.sleepTime = 500;
             } else {
-                LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name + " but it is immune!");
+                LD43.s.gameState.addCombatLogMessage(it.pos, caster.sname() + " " + caster.gv("cast", "casts") + " " + spell.name + " on " + it.name + " but it is immune!");
             }
         });
     }),
     Haste("Haste", Color.YELLOW, 14, true, false, ((spell, power, caster, target) -> {
         caster.hasteTime = 700;
-        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " is moving faster");
+        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " " + caster.gv("are", "is") + " moving faster");
     })),
     Slow("Slow", Color.MAROON, 14, false, true, ((spell, power, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
-            LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
+            LD43.s.gameState.addCombatLogMessage(it.pos, caster.sname() + " " + caster.gv("cast", "casts") + " " + spell.name + " on " + it.name);
             it.slowTime = 700;
         });
     }))
@@ -69,7 +68,7 @@ public enum Spell {
         int damage = Math.round(Util.randInt(maxDamage) * power);
 
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
-            LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name + " dealing " + damage + " damage");
+            LD43.s.gameState.addCombatLogMessage(it.pos, caster.sname() + " " + caster.gv("cast", "casts") + " " + spell.name + " on " + it.sname() + " dealing " + damage + " damage");
             it.takeDamage(damage);
         });
     }

@@ -292,6 +292,26 @@ public class Creature {
         takeTime(5);
     }
 
+    public String sname(){
+        if (isPC()){
+            return "you";
+        } else {
+            return name;
+        }
+    }
+
+    public String getPossessive(){
+        return isPC() ? "your" : name + "'s";
+    }
+
+    public String getAreIs(){
+        return isPC() ? "are" : "is";
+    }
+
+    public String gv(String ifPlayer, String ifNotPlayer){
+        return isPC() ? ifPlayer : ifNotPlayer;
+    }
+
     public int getEffectivePower(){
         int ret = statPower;
 
