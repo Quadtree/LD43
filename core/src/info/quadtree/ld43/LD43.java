@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Align;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -116,6 +117,9 @@ public class LD43 extends ApplicationAdapter {
 		ScrollPane invDisplayPane = new ScrollPane(inventoryDisplay);
 		mainStage.addActor(invDisplayPane);
 		invDisplayPane.setBounds(Gdx.graphics.getWidth() - 400, 0, 400, Gdx.graphics.getHeight());
+		inventoryDisplay.setFillParent(true);
+		inventoryDisplay.align(Align.topLeft);
+		inventoryDisplay.pad(20);
 
 		combatLog = new Table();
 
