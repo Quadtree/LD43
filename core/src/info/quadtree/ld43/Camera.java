@@ -2,6 +2,7 @@ package info.quadtree.ld43;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,6 +21,15 @@ public class Camera {
         gr.setColor(color);
         gr.draw(LD43.s.batch);
         gr.setColor(Color.WHITE);
+    }
+
+    public void drawTextOnTile(String text, TilePos tp){
+        Vector2 tv = realToScreen(tp);
+
+        GlyphLayout gl = new GlyphLayout();
+        gl.setText(LD43.s.bitmapFont, text);
+
+        LD43.s.bitmapFont.draw(LD43.s.batch, gl, tv.x - gl.width / 2, tv.y - gl.height - 2);
     }
 
     public Vector2 realToScreen(TilePos real){

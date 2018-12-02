@@ -32,7 +32,7 @@ public class LD43 extends ApplicationAdapter {
 
 	public static LD43 s;
 
-	Camera cam = new Camera();
+	public Camera cam = new Camera();
 
 	public GameState gameState;
 
