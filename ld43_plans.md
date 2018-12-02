@@ -46,9 +46,10 @@
 * Monster respawns
 * Some monsters patrol
 * Stop action when see enemy
+* End boss
 
 # TODO
-* End boss
+* Carry weight
 * Final tile graphics
 * Opening screen, help text
 
