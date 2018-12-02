@@ -1,6 +1,7 @@
 package info.quadtree.ld43;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -32,7 +33,9 @@ public class InventoryDisplay extends Table {
 
 
         for (Item itm : LD43.s.gameState.pc.inventory){
-            add(new Image(new SpriteDrawable(LD43.s.getGraphic(itm.graphic)))).padBottom(6);
+            Sprite sp = new Sprite(LD43.s.getGraphic(itm.graphic));
+            sp.setColor(itm.tint);
+            add(new Image(new SpriteDrawable(sp))).padBottom(6);
 
             add(Util.lbl(itm.name)).fill().expandX().padLeft(12).padBottom(6);
 
