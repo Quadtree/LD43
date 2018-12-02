@@ -12,7 +12,7 @@ public class InventoryDisplay extends Table {
     boolean needsRefresh = true;
 
     public InventoryDisplay() {
-        setBackground(new NinePatchDrawable(LD43.s.buttonDark));
+
     }
 
     @Override

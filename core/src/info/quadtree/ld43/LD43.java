@@ -43,6 +43,7 @@ public class LD43 extends ApplicationAdapter {
 	Map<String, Sprite> graphics = new HashMap<String, Sprite>();
 
 	BitmapFont bitmapFont;
+	BitmapFont bigFont;
 
 	Stage mainStage;
 
@@ -73,7 +74,8 @@ public class LD43 extends ApplicationAdapter {
 	public void create () {
 		s = this;
 
-		bitmapFont = new BitmapFont();
+		bitmapFont = new BitmapFont(Gdx.files.internal("font_18.fnt"));
+		bigFont = new BitmapFont(Gdx.files.internal("font_90.fnt"));
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
 		buttonDark = new NinePatchDrawable(atlas.createPatch("toolbar"));
@@ -103,7 +105,7 @@ public class LD43 extends ApplicationAdapter {
 				"    " + ((gameState.pc.food < 1000) ? "Hungry" : "")
 		);
 		mainStage.addActor(upperStatusLabel);
-		upperStatusLabel.setPosition(20, 40);
+		upperStatusLabel.setPosition(20, 45);
 
 		Label mouseOverLabel = Util.createDynamicLabel(() -> {
 			TilePos tp = cam.screenToReal(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
@@ -121,7 +123,7 @@ public class LD43 extends ApplicationAdapter {
 			return "";
 		});
 		mainStage.addActor(mouseOverLabel);
-		mouseOverLabel.setPosition(20, 60);
+		mouseOverLabel.setPosition(20, 70);
 
 		inventoryDisplay = new InventoryDisplay();
 
@@ -131,6 +133,7 @@ public class LD43 extends ApplicationAdapter {
 		inventoryDisplay.pad(20);
 
 		Table rightToolbar = new Table();
+		rightToolbar.setBackground(new NinePatchDrawable(LD43.s.buttonDark));
 		rightToolbar.add(invDisplayPane).expand().fill().colspan(2);
 		rightToolbar.setBounds(Gdx.graphics.getWidth() - 400, 0, 400, Gdx.graphics.getHeight());
 
@@ -155,6 +158,11 @@ public class LD43 extends ApplicationAdapter {
 		cam.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
 
 		modalScreen = new Stage();
+
+		Label titleLabel = new Label("Pit of " + LD43.EVIL_GOD_NAME, new Label.LabelStyle(LD43.s.bigFont, Color.WHITE));
+		modalScreen.addActor(titleLabel);
+		titleLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() * 0.75f, Align.center);
+
 		Label titleScreenLabel = Util.lbl("To placate the fel demigod " + EVIL_GOD_NAME + " the city of " + TOWN_NAME + " sends a sacrifice to the ever-shifting tunnels and caves that make up his home each year. This year, you were chosen...");
 		modalScreen.addActor(titleScreenLabel);
 		titleScreenLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
