@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.Align;
 import info.quadtree.ld43.action.RestAction;
 import info.quadtree.ld43.vfx.BaseVisualEffect;
@@ -194,7 +195,7 @@ public class LD43 extends ApplicationAdapter {
 
 	private void addBackgroundCloud(){
 		if (modalScreen != null){
-			Image bkg = new Image(new TextureRegionDrawable(new TextureRegion(backgroundCloud)));
+			Image bkg = new Image(new TiledDrawable(new TextureRegion(backgroundCloud)));
 
 			modalScreen.addActor(bkg);
 			bkg.setFillParent(true);
