@@ -32,6 +32,12 @@ public class GameInputProcessor implements InputProcessor {
             if (keycode == Input.Keys.F) LD43.s.gameState.pc.food += 1000;
             if (keycode == Input.Keys.X) LD43.s.gameState.pc.gainXP(400);
             if (keycode == Input.Keys.B) LD43.s.gameState.pc.pos = LD43.s.gameState.worldMap.shiftToClear(LD43.s.gameState.worldMap.endSpot);
+            if (keycode == Input.Keys.S){
+                LD43.s.gameState.pc.statMagic += 50;
+                for (Spell s : Spell.values()){
+                    LD43.s.gameState.pc.inventory.add(Items.createSpellBook(s));
+                }
+            }
         }
 
         return false;

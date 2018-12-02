@@ -188,44 +188,51 @@ shield
   orig: 32, 32
   offset: 0, 0
   index: -1
-slime
+sleep
   rotate: false
   xy: 274, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-slow
+slime
   rotate: false
   xy: 308, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-spell_book
+slow
   rotate: false
   xy: 274, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-sword1
+spell_book
   rotate: false
   xy: 308, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-take_damage
+sword1
   rotate: false
   xy: 342, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-toolbar
+take_damage
   rotate: false
   xy: 308, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toolbar
+  rotate: false
+  xy: 342, 36
   size: 32, 32
   split: 5, 2, 1, 1
   orig: 32, 32
@@ -233,21 +240,21 @@ toolbar
   index: -1
 wall1
   rotate: false
-  xy: 342, 36
+  xy: 376, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 wall_h
   rotate: false
-  xy: 376, 70
+  xy: 342, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 wall_v
   rotate: false
-  xy: 342, 2
+  xy: 376, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

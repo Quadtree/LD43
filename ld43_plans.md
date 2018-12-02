@@ -54,6 +54,7 @@
 * VFX
 
 # TODO
+* Reduce regeneration speed
 * Opening screen, help text
 * Ending screen
 
