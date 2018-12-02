@@ -6,10 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import java.util.HashMap;
@@ -51,6 +49,9 @@ public class LD43 extends ApplicationAdapter {
 	Table combatLog;
 	ScrollPane combatLogPane;
 
+	NinePatchDrawable buttonDark;
+	NinePatchDrawable buttonLight;
+
 	public Sprite getGraphic(String name){
 		if (!graphics.containsKey(name)) graphics.put(name, atlas.createSprite(name));
 
@@ -64,11 +65,13 @@ public class LD43 extends ApplicationAdapter {
 		bitmapFont = new BitmapFont();
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
+		buttonDark = new NinePatchDrawable(atlas.createPatch("toolbar"));
+
 		defaultLabelStyle = new Label.LabelStyle(LD43.s.bitmapFont, Color.WHITE);
 		defaultTextButtonStyle = new TextButton.TextButtonStyle(
-				new SpriteDrawable(getGraphic("floor1")),
-				new SpriteDrawable(getGraphic("floor1")),
-				new SpriteDrawable(getGraphic("floor1")),
+				new NinePatchDrawable(atlas.createPatch("button")),
+				new NinePatchDrawable(atlas.createPatch("button_light")),
+				new NinePatchDrawable(atlas.createPatch("button_light")),
 				LD43.s.bitmapFont
 		);
 

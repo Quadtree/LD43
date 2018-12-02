@@ -65,6 +65,7 @@ public class Util {
                 onClick.run();
             }
         });
+        ((TextButton) btn).getLabelCell().padLeft(12).padRight(12).padTop(6).padBottom(6);
         return btn;
     }
 }
