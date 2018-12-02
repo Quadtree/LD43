@@ -34,14 +34,13 @@ public class Monsters {
         ret.statPower = 10;
         ret.statSpeed = 5;
         ret.statEndurance = 10;
-        ret.graphicName = "enemy1";
+        ret.graphicName = "slime";
         ret.xp = 10;
         ret.name = "Slime";
 
         ret.corpseFood = 800;
         ret.corpseToxicity = 60;
         ret.corpseWeight = 20;
-        ret.tint = Color.GREEN;
 
         ret.pos = pos;
         ret.init();
@@ -53,14 +52,13 @@ public class Monsters {
         ret.statPower = 6;
         ret.statSpeed = 25;
         ret.statEndurance = 5;
-        ret.graphicName = "enemy1";
+        ret.graphicName = "imp";
         ret.xp = 15;
         ret.name = "Imp";
 
         ret.corpseFood = 300;
         ret.corpseToxicity = 10;
         ret.corpseWeight = 10;
-        ret.tint = Color.RED;
         ret.naturalRangedAttack = true;
 
         ret.pos = pos;
