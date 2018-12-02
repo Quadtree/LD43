@@ -29,6 +29,24 @@
 
 # Decision: Roguelike Game
 
+# Demigod Name
+* Xanthar
+* Zathax
+* Merdax
+* Zastir
+* Zaxar
+* Zha-xivin
+* Lsh-dirax
+* Xav-dar
+
+# Game Name
+* Mountain Offering
+* Offering to the Mountain
+* Tithe to the Mountain
+* Doomed to Die
+* Doomed to be Sacrificed
+*
+
 # DONE
 * More correct map generation
 * Persistence of tiles that have been seen
