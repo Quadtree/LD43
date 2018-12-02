@@ -62,6 +62,15 @@
 * Sacrifice to Xav
 * Offering to Xav
 * Tharburg's Chosen
+* Offering to the Caves
+* Cave Offering
+* Yearly Sacrifice
+* Caves of Doom
+* Mountain Lair
+* Offering to the Pit
+* Pit of Xav
+* Ever Downward
+* 
 
 # DONE
 * More correct map generation
@@ -98,6 +107,7 @@
 * Cap on food in stomach
 
 # TODO
+* Fix glowing button issue
 
 ## Nice to Have
 * Save/Load system

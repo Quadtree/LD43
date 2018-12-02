@@ -26,8 +26,8 @@ import java.util.Optional;
 public class LD43 extends ApplicationAdapter {
 	static boolean CHEATS = true;
 
-	public static final String EVIL_GOD_NAME = "EvilGod";
-	public static final String TOWN_NAME = "SomeTown";
+	public static final String EVIL_GOD_NAME = "Xav";
+	public static final String TOWN_NAME = "Tharburg";
 
 	public SpriteBatch batch;
 	Texture img;
