@@ -381,7 +381,7 @@ public class Creature {
 
         food -= 20;
 
-        int attackRoll = getEffectiveSpeed() + MathUtils.random(-30, 30);
+        int attackRoll = getEffectiveSpeed() + MathUtils.random(0, 35);
         int defense = trg.getEffectiveSpeed();
 
         if ((attackRoll >= defense || Util.randInt(8) == 0) && Util.randInt(8) != 0){

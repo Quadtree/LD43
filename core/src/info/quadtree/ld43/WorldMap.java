@@ -21,8 +21,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     public enum TerrainType {
         Floor("floor1"),
-        HorizontalWall("wall1"),
-        VerticalWall("wall1"),
+        HorizontalWall("wall_h"),
+        VerticalWall("wall_v"),
         CornerWall("wall1"),
         ClosedDoor("door_closed"),
         OpenDoor("door_open");
@@ -344,6 +344,32 @@ public class WorldMap implements IndexedGraph<TilePos> {
                         !isPassable(ctp.add(0, -1)) &&
                         !isPassable(ctp.add(0, 1))){
                         setTile(ctp, TerrainType.ClosedDoor, null);
+                    }
+                }
+            }
+        }
+
+        for (int x=1;x<WORLD_WIDTH - 1;++x) {
+            for (int y = 1; y < WORLD_HEIGHT - 1; ++y) {
+                TilePos ctp = TilePos.create(x,y);
+
+                if (terrain[x][y] == TerrainType.CornerWall){
+                    if (!isLOSPassable(ctp.add(0, 1)) &&
+                        !isLOSPassable(ctp.add(0, -1)) && (
+                            isLOSPassable(ctp.add(1, 0)) ||
+                            isLOSPassable(ctp.add(-1, 0))
+                        )
+                    ){
+                        setTile(ctp, TerrainType.VerticalWall, null);
+                    }
+
+                    if (!isLOSPassable(ctp.add(1, 0)) &&
+                        !isLOSPassable(ctp.add(-1, 0)) && (
+                            isLOSPassable(ctp.add(0, 1)) ||
+                            isLOSPassable(ctp.add(0, -1))
+                    )
+                    ){
+                        setTile(ctp, TerrainType.HorizontalWall, null);
                     }
                 }
             }
