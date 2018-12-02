@@ -1,5 +1,9 @@
 package info.quadtree.ld43;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum Spell {
     AstralBolt("Astral Bolt", 5, false, true, (spell, caster, target) -> Spell.damagingSpellAttack(caster, target, spell, 80)),
     Heal("Heal", 15, true, true, (spell, caster, target) -> {
@@ -7,7 +11,22 @@ public enum Spell {
         caster.healedFor(healAmt);
 
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " heals themselves for " + healAmt);
-    })
+    }),
+    Fireball("Fireball", 20, false, false, (spell, caster, target) -> {
+        if (target == null) throw new RuntimeException("Target can't be null");
+        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " casts fireball");
+
+        List<Creature> hit = LD43.s.gameState.creatures.stream()
+                .filter(it -> it.pos.dst2(target) <= 2)
+                .filter(it -> LD43.s.gameState.worldMap.canSee(target, it.pos, 0))
+                .collect(Collectors.toList());
+
+        hit.forEach(it -> {
+            int damage = Math.round(Util.randInt(150) * caster.getPowerMultiplier());
+            LD43.s.gameState.addCombatLogMessage(it.pos, it.name + " takes " + damage + " damage");
+            it.takeDamage(damage);
+        });
+    }),
     ;
     String name;
     int spCost;
