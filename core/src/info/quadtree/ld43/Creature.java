@@ -91,6 +91,10 @@ public class Creature {
     public void render(){
         if (LD43.s.gameState.worldMap.canSee(LD43.s.gameState.pc.pos, pos, 0) && invisibleTime <= 0) {
             LD43.s.cam.drawOnTile(graphicName, pos, tint);
+
+            if (slowTime > 0) LD43.s.cam.drawOnTile("slow", pos, tint);
+            if (hasteTime > 0) LD43.s.cam.drawOnTile("haste", pos, tint);
+            if (sleepTime > 0) LD43.s.cam.drawOnTile("sleep", pos, tint);
         }
     }
 
