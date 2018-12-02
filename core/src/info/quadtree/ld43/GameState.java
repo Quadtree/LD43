@@ -189,8 +189,8 @@ public class GameState {
 
         if (worldMap.canSee(pc.pos, loc, 0)) combatLogMessages.add(message);
 
-        if (combatLogMessages.size() > 1000){
-            combatLogMessages = combatLogMessages.subList(950, combatLogMessages.size());
+        if (combatLogMessages.size() > 5){
+            combatLogMessages.remove(0);
         }
 
         // todo: Consider re-adding this!

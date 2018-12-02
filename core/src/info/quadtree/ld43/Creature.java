@@ -180,7 +180,7 @@ public class Creature {
             }
         }
 
-        if (!isPC() && currentAction == null && getEffectiveSpeed() > 10 && Util.randInt(1000) == 0){
+        /*if (!isPC() && currentAction == null && getEffectiveSpeed() > 10 && Util.randInt(1000) == 0){
             TilePos trgDest = TilePos.create(-1,-1);
 
             while(!LD43.s.gameState.worldMap.canSee(pos, trgDest, 0)){
@@ -188,7 +188,7 @@ public class Creature {
             }
 
             currentAction = new MoveAction(this, trgDest);
-        }
+        }*/
     }
 
     public boolean justMeleeAttackedDueToMove = false;
