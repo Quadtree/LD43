@@ -33,8 +33,12 @@ public enum Spell {
     }),
     Sleep("Sleep", 12, false, true, (spell, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
-            LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
-            it.sleepTime = 200;
+            if (!it.isImmuneToSleep){
+                LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
+                it.sleepTime = 200;
+            } else {
+                LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name + " but it is immune!");
+            }
         });
     }),
     Haste("Haste", 14, true, false, ((spell, caster, target) -> {
