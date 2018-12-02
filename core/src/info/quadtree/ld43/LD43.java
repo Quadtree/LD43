@@ -125,11 +125,14 @@ public class LD43 extends ApplicationAdapter {
 		inventoryDisplay = new InventoryDisplay();
 
 		ScrollPane invDisplayPane = new ScrollPane(inventoryDisplay);
-		mainStage.addActor(invDisplayPane);
-		invDisplayPane.setBounds(Gdx.graphics.getWidth() - 400, 0, 400, Gdx.graphics.getHeight());
 		inventoryDisplay.setFillParent(true);
 		inventoryDisplay.align(Align.topLeft);
 		inventoryDisplay.pad(20);
+
+		Table rightToolbar = new Table();
+		rightToolbar.add(invDisplayPane).expand().fill();
+		rightToolbar.setBounds(Gdx.graphics.getWidth() - 400, 0, 400, Gdx.graphics.getHeight());
+		mainStage.addActor(rightToolbar);
 
 		combatLog = new Table();
 
@@ -197,11 +200,6 @@ public class LD43 extends ApplicationAdapter {
 		while (activeVisualEffects.size() == 0 && !gameState.pc.canAct()) {
 			gameState.tick();
 			gameState.tickActions();
-
-			if (!gameState.creatures.contains(gameState.pc)) {
-				System.err.println("Player has died!!!");
-				resetGameState();
-			}
 
 			updateDisplays();
 		}
