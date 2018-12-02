@@ -45,6 +45,9 @@
 
 # TODO
 * More monster types
+* Monster respawns
+* Some monsters patrol
+* Stop action when see enemy
 * End boss
 * Final tile graphics
 * Opening screen, help text
