@@ -16,6 +16,12 @@ public class ModalScreenCloser implements InputProcessor {
         LD43.s.modalScreen = null;
 
         Gdx.input.setInputProcessor(LD43.s.mp);
+
+        if (!LD43.s.bgm.isPlaying()){
+            LD43.s.bgm.setVolume(LD43.MUSIC_VOLUME);
+            LD43.s.bgm.play();
+            LD43.s.loopMusic = true;
+        }
     }
 
     @Override

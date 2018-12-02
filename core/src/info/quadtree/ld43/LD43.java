@@ -3,6 +3,7 @@ package info.quadtree.ld43;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -30,6 +31,8 @@ public class LD43 extends ApplicationAdapter {
 
 	public static final String EVIL_GOD_NAME = "Gathar";
 	public static final String TOWN_NAME = "Tharburg";
+
+	public static final float MUSIC_VOLUME = 0.5f;
 
 	public SpriteBatch batch;
 	Texture img;
@@ -70,6 +73,10 @@ public class LD43 extends ApplicationAdapter {
 
 	Map<String, Sound> soundMap = new HashMap<>();
 
+	Music bgm;
+
+	public boolean loopMusic = false;
+
 	public void playSound(String name){
 		if (!soundMap.containsKey(name)) soundMap.put(name, Gdx.audio.newSound(Gdx.files.internal(name + ".wav")));
 
@@ -89,6 +96,8 @@ public class LD43 extends ApplicationAdapter {
 	@Override
 	public void create () {
 		s = this;
+
+		bgm = Gdx.audio.newMusic(Gdx.files.internal("bgm.ogg"));
 
 		backgroundCloud = new Texture(Gdx.files.internal("background_cloud.png"));
 
@@ -233,6 +242,14 @@ public class LD43 extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		if (loopMusic && !bgm.isPlaying()){
+			bgm.stop();
+			bgm.dispose();
+			bgm = Gdx.audio.newMusic(Gdx.files.internal("bgm.ogg"));
+			LD43.s.bgm.setVolume(LD43.MUSIC_VOLUME);
+			bgm.play();
+		}
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
