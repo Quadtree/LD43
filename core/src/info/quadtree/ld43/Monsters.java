@@ -71,7 +71,7 @@ public class Monsters {
         ret.statPower = 30;
         ret.statSpeed = 12;
         ret.statEndurance = 15;
-        ret.graphicName = "enemy1";
+        ret.graphicName = "lesser_demon";
         ret.xp = 30;
         ret.name = "Lesser Demon";
 
@@ -79,7 +79,6 @@ public class Monsters {
         ret.corpseToxicity = 15;
         ret.corpseWeight = 15;
         ret.naturalArmor = 3;
-        ret.tint = Color.ORANGE;
 
         ret.pos = pos;
         ret.init();
@@ -91,7 +90,7 @@ public class Monsters {
         ret.statPower = 20;
         ret.statSpeed = 10;
         ret.statEndurance = 20;
-        ret.graphicName = "enemy1";
+        ret.graphicName = "grk";
         ret.xp = 35;
         ret.name = "Grk";
 
