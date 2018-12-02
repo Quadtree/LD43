@@ -57,10 +57,10 @@
 * Opening screen, help text
 * Ending screen
 * Increase all damage
-
-# TODO
 * Powerful enemies cannot drop crappy gear
 * Increase monster damage
+
+# TODO
 * Rest until healed option
 * Reset game button
 * Cap on food in stomach

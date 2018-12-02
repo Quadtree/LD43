@@ -31,7 +31,7 @@ public class Monsters {
 
     public static void spawnSlimeAt(TilePos pos){
         Creature ret = new Creature();
-        ret.statPower = 10;
+        ret.statPower = 15;
         ret.statSpeed = 5;
         ret.statEndurance = 10;
         ret.graphicName = "slime";
@@ -49,8 +49,8 @@ public class Monsters {
 
     public static void spawnImpAt(TilePos pos){
         Creature ret = new Creature();
-        ret.statPower = 6;
-        ret.statSpeed = 25;
+        ret.statPower = 10;
+        ret.statSpeed = 30;
         ret.statEndurance = 5;
         ret.graphicName = "imp";
         ret.xp = 15;
@@ -68,8 +68,8 @@ public class Monsters {
 
     public static void spawnLesserDemonAt(TilePos pos){
         Creature ret = new Creature();
-        ret.statPower = 30;
-        ret.statSpeed = 12;
+        ret.statPower = 50;
+        ret.statSpeed = 20;
         ret.statEndurance = 15;
         ret.graphicName = "lesser_demon";
         ret.xp = 30;
@@ -87,8 +87,8 @@ public class Monsters {
 
     public static void spawnGrkAt(TilePos pos){
         Creature ret = new Creature();
-        ret.statPower = 20;
-        ret.statSpeed = 10;
+        ret.statPower = 30;
+        ret.statSpeed = 20;
         ret.statEndurance = 20;
         ret.graphicName = "grk";
         ret.xp = 35;
@@ -108,7 +108,7 @@ public class Monsters {
         Creature ret = new Creature();
         ret.statPower = 10;
         ret.statSpeed = 12;
-        ret.statEndurance = 15;
+        ret.statEndurance = 10;
         ret.graphicName = "giant_beetle";
         ret.xp = 25;
         ret.name = "Giant Beetle";
@@ -125,8 +125,8 @@ public class Monsters {
 
     public static void spawnDarkSpiritAt(TilePos pos){
         Creature ret = new Creature();
-        ret.statPower = 40;
-        ret.statSpeed = 30;
+        ret.statPower = 50;
+        ret.statSpeed = 60;
         ret.statEndurance = 10;
         ret.graphicName = "hero";
         ret.xp = 100;
@@ -142,8 +142,8 @@ public class Monsters {
 
     public static void spawnGreaterDemonAt(TilePos pos){
         Creature ret = new Creature();
-        ret.statPower = 60;
-        ret.statSpeed = 30;
+        ret.statPower = 120;
+        ret.statSpeed = 60;
         ret.statEndurance = 30;
         ret.graphicName = "greater_demon";
         ret.xp = 150;
@@ -161,9 +161,9 @@ public class Monsters {
 
     public static void spawnEndBossAt(TilePos pos){
         Creature ret = new Creature();
-        ret.statPower = 100;
-        ret.statSpeed = 20;
-        ret.statEndurance = 100;
+        ret.statPower = 140;
+        ret.statSpeed = 40;
+        ret.statEndurance = 150;
         ret.graphicName = "demigod";
         ret.xp = 0;
         ret.name = LD43.EVIL_GOD_NAME;

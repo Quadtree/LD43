@@ -447,7 +447,7 @@ public class Creature {
 
             for (int i=0;i<20;++i){
                 Item po = Items.randomItem();
-                if (po.value <= lootToDrop){
+                if (po.value <= lootToDrop && po.value >= xp / 8){
                     Items.createItemAt(po, LD43.s.gameState.worldMap.shiftToClear(pos));
                     lootToDrop -= po.value;
                 }
