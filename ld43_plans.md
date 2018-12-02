@@ -112,11 +112,11 @@
 * Cap on food in stomach
 * Decrease stomach size
 * Fix glowing button issue
+* Indication of current weight category
+* Sound?
+* Music?
 
 # TODO
-* Indication of current weight category
 
 ## Nice to Have
 * Save/Load system
-* Sound?
-* Music?
