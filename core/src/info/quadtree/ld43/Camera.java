@@ -37,7 +37,11 @@ public class Camera {
         return new Vector2((real.x - pos.x) * TILE_SIZE + getEffectiveScreenWidth() / 2, (real.y - pos.y) * TILE_SIZE + Gdx.graphics.getHeight() / 2);
     }
 
-    private int getEffectiveScreenWidth() {
+    public Vector2 realToScreen(Vector2 real){
+        return new Vector2((real.x - pos.x) * TILE_SIZE + getEffectiveScreenWidth() / 2, (real.y - pos.y) * TILE_SIZE + Gdx.graphics.getHeight() / 2);
+    }
+
+    public int getEffectiveScreenWidth() {
         return Gdx.graphics.getWidth() - 300;
     }
 

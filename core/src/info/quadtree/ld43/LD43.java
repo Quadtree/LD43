@@ -27,7 +27,7 @@ import java.util.Optional;
 public class LD43 extends ApplicationAdapter {
 	static boolean CHEATS = true;
 
-	SpriteBatch batch;
+	public SpriteBatch batch;
 	Texture img;
 
 	TextureAtlas atlas;
