@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import info.quadtree.ld43.vfx.BaseVisualEffect;
 
@@ -26,6 +24,9 @@ import java.util.Optional;
 
 public class LD43 extends ApplicationAdapter {
 	static boolean CHEATS = true;
+
+	public static final String EVIL_GOD_NAME = "EvilGod";
+	public static final String TOWN_NAME = "SomeTown";
 
 	public SpriteBatch batch;
 	Texture img;
@@ -56,6 +57,10 @@ public class LD43 extends ApplicationAdapter {
 	NinePatchDrawable buttonLight;
 
 	ArrayList<BaseVisualEffect> activeVisualEffects = new ArrayList<>();
+
+	Stage modalScreen;
+
+	InputMultiplexer mp;
 
 	public Sprite getGraphic(String name){
 		if (!graphics.containsKey(name)) graphics.put(name, atlas.createSprite(name));
@@ -138,11 +143,16 @@ public class LD43 extends ApplicationAdapter {
 		resetGameState();
 		cam.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
 
-		InputMultiplexer mp = new InputMultiplexer();
+		modalScreen = new Stage();
+
+		Label titleScreenLabel = Util.lbl("To placate the fel demigod " + EVIL_GOD_NAME + " the city of " + TOWN_NAME + " sends a sacrifice to the tunnels and caves that make up his home each year. This year, you were chosen...");
+		modalScreen.addActor(titleScreenLabel);
+		titleScreenLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
+		Gdx.input.setInputProcessor(new ModalScreenCloser());
+
+		mp = new InputMultiplexer();
 		mp.addProcessor(mainStage);
 		mp.addProcessor(new GameInputProcessor());
-
-		Gdx.input.setInputProcessor(mp);
 	}
 
 	public void resetGameState() {
@@ -152,6 +162,15 @@ public class LD43 extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		if (modalScreen != null){
+			modalScreen.act();
+			modalScreen.draw();
+			return;
+		}
+
 		if (activeVisualEffects.size() == 0) {
 			while (!gameState.pc.canAct()) {
 				gameState.tick();
@@ -180,8 +199,6 @@ public class LD43 extends ApplicationAdapter {
 
 		mainStage.act();
 
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		//batch.draw(img, 0, 0);
 		gameState.render();

@@ -32,29 +32,21 @@ astral_bolt
   orig: 32, 32
   offset: 0, 0
   index: -1
-bow1
+axe
   rotate: false
   xy: 36, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+bow1
+  rotate: false
+  xy: 70, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 button
-  rotate: false
-  xy: 70, 70
-  size: 32, 32
-  split: 2, 2, 2, 2
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-floor1
-  rotate: false
-  xy: 70, 70
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-button_light
   rotate: false
   xy: 36, 2
   size: 32, 32
@@ -62,177 +54,199 @@ button_light
   orig: 32, 32
   offset: 0, 0
   index: -1
-corpse1
+floor1
   rotate: false
-  xy: 70, 36
+  xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-demigod
+button_light
+  rotate: false
+  xy: 70, 36
+  size: 32, 32
+  split: 2, 2, 2, 2
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+club
   rotate: false
   xy: 104, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-door_closed
+corpse1
   rotate: false
   xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-door_open
+demigod
   rotate: false
   xy: 104, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-enemy1
+door_closed
   rotate: false
   xy: 138, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-firebolt
+door_open
   rotate: false
   xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-giant_beetle
+enemy1
   rotate: false
   xy: 138, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-greater_demon
+firebolt
   rotate: false
   xy: 172, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-grk
+giant_beetle
   rotate: false
   xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-haste
+greater_demon
   rotate: false
   xy: 172, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-heal
+grk
   rotate: false
   xy: 206, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-hero
+haste
   rotate: false
   xy: 172, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-imp
+heal
   rotate: false
   xy: 206, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-lesser_demon
+hero
   rotate: false
   xy: 240, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-miss
+imp
   rotate: false
   xy: 206, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-pc1
+lesser_demon
   rotate: false
   xy: 240, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-potion
+miss
   rotate: false
   xy: 274, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-shield
+pc1
   rotate: false
   xy: 240, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-sleep
+potion
   rotate: false
   xy: 274, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-slime
+shield
   rotate: false
   xy: 308, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-slow
+sleep
   rotate: false
   xy: 274, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-spell_book
+slime
   rotate: false
   xy: 308, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-sword1
+slow
   rotate: false
   xy: 342, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-take_damage
+spell_book
   rotate: false
   xy: 308, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-toolbar
+sword1
   rotate: false
   xy: 342, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+take_damage
+  rotate: false
+  xy: 376, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toolbar
+  rotate: false
+  xy: 342, 2
   size: 32, 32
   split: 5, 2, 1, 1
   orig: 32, 32
@@ -240,21 +254,21 @@ toolbar
   index: -1
 wall1
   rotate: false
-  xy: 376, 70
+  xy: 376, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 wall_h
   rotate: false
-  xy: 342, 2
+  xy: 410, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 wall_v
   rotate: false
-  xy: 376, 36
+  xy: 376, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

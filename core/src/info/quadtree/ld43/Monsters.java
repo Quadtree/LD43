@@ -166,7 +166,7 @@ public class Monsters {
         ret.statEndurance = 100;
         ret.graphicName = "demigod";
         ret.xp = 0;
-        ret.name = "Demigod";
+        ret.name = LD43.EVIL_GOD_NAME;
 
         ret.corpseFood = 2000;
         ret.corpseToxicity = 1000;

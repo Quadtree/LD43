@@ -53,9 +53,9 @@
 * Final tile graphics
 * VFX
 * Reduce regeneration speed
+* More item types
 
 # TODO
-* More item types
 * Opening screen, help text
 * Ending screen
 
