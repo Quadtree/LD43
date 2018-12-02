@@ -130,7 +130,7 @@ public class Items {
 
     public static Item createWeakBow(){
         Item ret = new Item();
-        ret.name = "Bow";
+        ret.name = "Weak Bow";
         ret.attackDamage = 30;
         ret.graphic = "bow1";
         ret.weight = 3;
@@ -144,7 +144,7 @@ public class Items {
 
     public static Item createCompositeBow(){
         Item ret = new Item();
-        ret.name = "Bow";
+        ret.name = "Composite Bow";
         ret.attackDamage = 120;
         ret.graphic = "bow1";
         ret.weight = 3;

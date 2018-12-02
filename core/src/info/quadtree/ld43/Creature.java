@@ -453,6 +453,14 @@ public class Creature {
                 }
             }
 
+            if (endBoss){
+                LD43.s.showWinScreen();
+            }
+
+            if (isPC()){
+                LD43.s.showLoseScreen();
+            }
+
             return true;
         } else {
             return false;

@@ -54,10 +54,11 @@
 * VFX
 * Reduce regeneration speed
 * More item types
-
-# TODO
 * Opening screen, help text
 * Ending screen
+
+# TODO
+* Increase all damage
 
 ## Nice to Have
 * Save/Load system
