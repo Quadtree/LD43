@@ -50,9 +50,10 @@
 * Carry weight
 * Loot drops
 * Mouseover info
+* Final tile graphics
 
 # TODO
-* Final tile graphics
+* VFX
 * Opening screen, help text
 * Ending screen
 
