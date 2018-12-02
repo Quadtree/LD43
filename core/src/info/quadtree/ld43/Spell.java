@@ -38,8 +38,8 @@ public enum Spell {
         }));
     }),
     Invisibility("Invisibility", Color.SKY, 25, true, false, (spell,power, caster, target) -> {
-        caster.invisibleTime = 300;
-        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " becomes invisible");
+        caster.invisibleTime = 220;
+        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " become"+caster.s()+" invisible");
         LD43.s.playSound("inviso");
     }),
     Sleep("Sleep", Color.WHITE, 12, false, true, (spell, power, caster, target) -> {
