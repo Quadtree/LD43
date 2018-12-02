@@ -9,11 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import info.quadtree.ld43.action.RestAction;
 import info.quadtree.ld43.vfx.BaseVisualEffect;
@@ -62,6 +61,8 @@ public class LD43 extends ApplicationAdapter {
 
 	Stage modalScreen;
 
+	Texture backgroundCloud;
+
 	InputMultiplexer mp;
 
 	public Sprite getGraphic(String name){
@@ -73,6 +74,8 @@ public class LD43 extends ApplicationAdapter {
 	@Override
 	public void create () {
 		s = this;
+
+		backgroundCloud = new Texture(Gdx.files.internal("background_cloud.png"));
 
 		bitmapFont = new BitmapFont(Gdx.files.internal("font_18.fnt"));
 		bigFont = new BitmapFont(Gdx.files.internal("font_90.fnt"));
@@ -158,6 +161,7 @@ public class LD43 extends ApplicationAdapter {
 		cam.pos = TilePos.create(WorldMap.WORLD_WIDTH / 2, 1);
 
 		modalScreen = new Stage();
+		addBackgroundCloud();
 
 		Label titleLabel = new Label("Pit of " + LD43.EVIL_GOD_NAME, new Label.LabelStyle(LD43.s.bigFont, Color.WHITE));
 		modalScreen.addActor(titleLabel);
@@ -188,8 +192,18 @@ public class LD43 extends ApplicationAdapter {
 		resetGameState();
 	}
 
+	private void addBackgroundCloud(){
+		if (modalScreen != null){
+			Image bkg = new Image(new TextureRegionDrawable(new TextureRegion(backgroundCloud)));
+
+			modalScreen.addActor(bkg);
+			bkg.setFillParent(true);
+		}
+	}
+
 	public void showModalText(String text){
 		modalScreen = new Stage();
+		addBackgroundCloud();
 		Label titleScreenLabel = Util.lbl(text);
 		modalScreen.addActor(titleScreenLabel);
 		titleScreenLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
