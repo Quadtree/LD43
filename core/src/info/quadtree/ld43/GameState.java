@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameState {
@@ -22,6 +23,34 @@ public class GameState {
     public Spell selectedSpell = null;
 
     public List<String> combatLogMessages = new ArrayList<>();
+
+    enum StatMessage {
+        Power("Power increases the effect of all your attacks and spells."),
+        Speed("Speed increases the speed of all your actions."),
+        Endurance("Endurance gives you more health and health regeneration, and helps you resist toxic foods."),
+        Magic("Magic increases your spell points and spell point regeneration. Find spellbooks and click cast, then click on a target.");
+
+        String message;
+
+        StatMessage(String message) {
+            this.message = message;
+        }
+    }
+
+    class StatOrder implements Comparable<StatOrder> {
+        public StatOrder(StatMessage message, int amount) {
+            this.message = message;
+            this.amount = amount;
+        }
+
+        @Override
+        public int compareTo(StatOrder o) {
+            return o.amount - amount;
+        }
+
+        StatMessage message;
+        int amount;
+    }
 
     public void init(){
         this.worldMap = new WorldMap();
@@ -50,6 +79,28 @@ public class GameState {
 
         pc.init();
         creatures.add(pc);
+
+        StatOrder[] ord = new StatOrder[]{
+                new StatOrder(StatMessage.Power, pc.statPower),
+                new StatOrder(StatMessage.Speed, pc.statSpeed),
+                new StatOrder(StatMessage.Endurance, pc.statEndurance),
+                new StatOrder(StatMessage.Magic, pc.statMagic),
+        };
+
+        String[] messages = {
+            "Your top stat is ",
+            "Your second to top stat is ",
+            "Your third to top stat is ",
+            "Your lowest stat is "
+        };
+
+        Arrays.sort(ord);
+
+        for (int i=0;i<4;++i){
+            if (ord[i].amount > 0) addCombatLogMessage(pc.pos, messages[i] + ord[i].message.toString() + ". " + ord[i].message.message);
+        }
+
+        addCombatLogMessage(pc.pos, "If you would like to roll again for stats, Press Ctrl+R or click Restart Game.");
 
         /*Items.createItemAt(Items.createSword(), pc.pos.add(TilePos.create(1,1)));
         Items.createItemAt(Items.createPlateMail(), pc.pos.add(TilePos.create(2,1)));
