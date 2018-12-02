@@ -353,9 +353,15 @@ public class Creature {
 
     public void castSpell(Spell spell, TilePos target){
         if (!canAct()) return;
-        if (sp < spell.spCost) return;
+        if (sp < spell.spCost){
+            if (isPC()) LD43.s.gameState.addCombatLogMessage(pos, "You do not have enough SP to cast that");
+            return;
+        }
 
-        if (spell.requiresTargetOnSpace && !LD43.s.gameState.worldMap.getCreatureOnTile(target).isPresent()) return;
+        if (spell.requiresTargetOnSpace && !LD43.s.gameState.worldMap.getCreatureOnTile(target).isPresent()){
+            if (isPC()) LD43.s.gameState.addCombatLogMessage(pos, "That spell requires a specific target");
+            return;
+        }
 
         spell.effect.cast(spell, this, target);
 
