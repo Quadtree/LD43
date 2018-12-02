@@ -42,9 +42,9 @@
 * Food system (and regeneration)
 * Leveling up
 * Magic system
+* More monster types
 
 # TODO
-* More monster types
 * Monster respawns
 * Some monsters patrol
 * Stop action when see enemy
