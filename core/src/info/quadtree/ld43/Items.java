@@ -53,4 +53,14 @@ public class Items {
 
         return ret;
     }
+
+    public static Item createPotion(Spell spell){
+        Item ret = new Item();
+        ret.name = "Potion of " + spell.name;
+        ret.graphic = "potion";
+        ret.weight = 2;
+        ret.potionSpell = spell;
+
+        return ret;
+    }
 }

@@ -50,6 +50,10 @@ public class InventoryDisplay extends Table {
                 }
             }
 
+            if (itm.potionSpell != null){
+                add(Util.btn("Cast", () -> LD43.s.gameState.pc.castSpell(itm.potionSpell, LD43.s.gameState.pc.pos)));
+            }
+
             add(Util.btn("Drop", () -> LD43.s.gameState.pc.drop(itm)));
 
             row();

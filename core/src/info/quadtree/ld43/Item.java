@@ -30,6 +30,7 @@ public class Item {
     int toxcitiy;
 
     Spell castSpell;
+    Spell potionSpell;
 
     public void render(){
         if (LD43.s.gameState.worldMap.canSee(LD43.s.gameState.pc.pos, onGroundLocation, 0)) {
