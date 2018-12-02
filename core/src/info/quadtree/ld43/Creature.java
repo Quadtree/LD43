@@ -109,19 +109,19 @@ public class Creature {
 
         boolean wasInvisible = invisibleTime > 0;
         invisibleTime--;
-        if (invisibleTime <= 0 && wasInvisible) LD43.s.gameState.addCombatLogMessage(pos, this.name + " appears");
+        if (invisibleTime <= 0 && wasInvisible) LD43.s.gameState.addCombatLogMessage(pos, this.sname() + " appear" + this.gv("", "s"));
 
         boolean wasSleeping = sleepTime > 0;
         sleepTime--;
-        if (sleepTime <= 0 && wasSleeping) LD43.s.gameState.addCombatLogMessage(pos, this.name + " wakes up");
+        if (sleepTime <= 0 && wasSleeping) LD43.s.gameState.addCombatLogMessage(pos, this.sname() + " wake"+this.gv("", "s")+" up");
 
         boolean wasHasted = hasteTime > 0;
         hasteTime--;
-        if (hasteTime <= 0 && wasHasted) LD43.s.gameState.addCombatLogMessage(pos, this.name + " slows down to normal speed");
+        if (hasteTime <= 0 && wasHasted) LD43.s.gameState.addCombatLogMessage(pos, this.sname() + " slow"+this.gv("", "s")+" down to normal speed");
 
         boolean wasSlowed = slowTime > 0;
         slowTime--;
-        if (slowTime <= 0 && wasSlowed) LD43.s.gameState.addCombatLogMessage(pos, this.name + " speeds up to normal speed");
+        if (slowTime <= 0 && wasSlowed) LD43.s.gameState.addCombatLogMessage(pos, this.sname() + " speed"+this.gv("", "s")+" up to normal speed");
 
         if (ticksTillNextAction < 0) ticksTillNextAction = 0;
 
