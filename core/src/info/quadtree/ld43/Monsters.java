@@ -98,7 +98,6 @@ public class Monsters {
         ret.corpseToxicity = 0;
         ret.corpseWeight = 22;
         ret.naturalArmor = 5;
-        ret.tint = Color.BROWN;
 
         ret.pos = pos;
         ret.init();
@@ -110,7 +109,7 @@ public class Monsters {
         ret.statPower = 10;
         ret.statSpeed = 12;
         ret.statEndurance = 15;
-        ret.graphicName = "enemy1";
+        ret.graphicName = "giant_beetle";
         ret.xp = 25;
         ret.name = "Giant Beetle";
 
@@ -118,7 +117,6 @@ public class Monsters {
         ret.corpseToxicity = 20;
         ret.corpseWeight = 15;
         ret.naturalArmor = 5;
-        ret.tint = Color.BLACK;
 
         ret.pos = pos;
         ret.init();
@@ -130,7 +128,7 @@ public class Monsters {
         ret.statPower = 40;
         ret.statSpeed = 30;
         ret.statEndurance = 10;
-        ret.graphicName = "enemy1";
+        ret.graphicName = "hero";
         ret.xp = 100;
         ret.name = "Former Sacrifice";
 
@@ -147,7 +145,7 @@ public class Monsters {
         ret.statPower = 60;
         ret.statSpeed = 30;
         ret.statEndurance = 30;
-        ret.graphicName = "enemy1";
+        ret.graphicName = "greater_demon";
         ret.xp = 150;
         ret.name = "Greater Demon";
 
@@ -155,7 +153,6 @@ public class Monsters {
         ret.corpseToxicity = 0;
         ret.corpseWeight = 22;
         ret.naturalArmor = 5;
-        ret.tint = Color.MAROON;
 
         ret.pos = pos;
         ret.init();
@@ -167,8 +164,8 @@ public class Monsters {
         ret.statPower = 100;
         ret.statSpeed = 20;
         ret.statEndurance = 100;
-        ret.graphicName = "enemy1";
-        ret.xp = 1000;
+        ret.graphicName = "demigod";
+        ret.xp = 0;
         ret.name = "Demigod";
 
         ret.corpseFood = 2000;

@@ -26,7 +26,7 @@ public class GameState {
         this.worldMap = new WorldMap();
 
         pc = new Creature();
-        pc.graphicName = "pc1";
+        pc.graphicName = "hero";
 
         if (Util.randInt(3) == 0) pc.statMagic = Util.randInt(40);
 
