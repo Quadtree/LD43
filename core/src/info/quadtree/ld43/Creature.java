@@ -209,6 +209,7 @@ public class Creature {
         }
 
         item.onGroundLocation = dropPos;
+        inventory.remove(item);
         LD43.s.gameState.items.add(item);
         LD43.s.gameState.addCombatLogMessage(pos, name + " drops " + item.name);
         takeTime(5);
