@@ -62,10 +62,11 @@ public class Util {
         btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                onClick.run();
+                onClick.run(); btn.setChecked(false);
             }
         });
         ((TextButton) btn).getLabelCell().padLeft(12).padRight(12).padTop(6).padBottom(6);
+
         return btn;
     }
 }

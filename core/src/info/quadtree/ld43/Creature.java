@@ -450,6 +450,8 @@ public class Creature {
 
             int lootToDrop = MathUtils.random(0, xp/2);
 
+            while (Util.randInt(3) == 0) lootToDrop += xp / 2;
+
             for (int i=0;i<20;++i){
                 Item po = Items.randomItem();
                 if (po.value <= lootToDrop && po.value >= xp / 8){

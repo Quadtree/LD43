@@ -112,6 +112,10 @@ public class GameState {
             Monsters.spawnMonsertAt(worldMap.getOpenSpace());
         }
 
+        for (int i=0;i<15;++i){
+            Items.createItemAt(Items.randomItem(), worldMap.getOpenSpace());
+        }
+
         Monsters.spawnEndBossAt(worldMap.shiftToClear(worldMap.endSpot));
         Monsters.spawnImpAt(worldMap.shiftToClear(worldMap.endSpot));
         Monsters.spawnImpAt(worldMap.shiftToClear(worldMap.endSpot));
