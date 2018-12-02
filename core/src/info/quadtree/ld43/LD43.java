@@ -137,12 +137,15 @@ public class LD43 extends ApplicationAdapter {
 				combatLog.add(Util.lbl(s));
 				combatLog.row();
 			}
+			combatLogPane.layout();
 			combatLogPane.setScrollY(100000);
 		}
 
 		gameState.pc.tickActions();
 
 		cam.pos = gameState.pc.pos;
+
+		mainStage.act();
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

@@ -129,6 +129,7 @@ public class GameState {
 
         if (worldMap.canSee(pc.pos, loc, 0)) combatLogMessages.add(message);
 
-        while (combatLogMessages.size() > 50) combatLogMessages.remove(0);
+        // todo: Consider re-adding this!
+        //while (combatLogMessages.size() > 50) combatLogMessages.remove(0);
     }
 }
