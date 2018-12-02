@@ -17,7 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
+import info.quadtree.ld43.vfx.BaseVisualEffect;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -52,6 +54,8 @@ public class LD43 extends ApplicationAdapter {
 
 	NinePatchDrawable buttonDark;
 	NinePatchDrawable buttonLight;
+
+	ArrayList<BaseVisualEffect> activeVisualEffects = new ArrayList<>();
 
 	public Sprite getGraphic(String name){
 		if (!graphics.containsKey(name)) graphics.put(name, atlas.createSprite(name));
@@ -147,27 +151,29 @@ public class LD43 extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		while (!gameState.pc.canAct()){
-			gameState.tick();
-			gameState.tickActions();
+		if (activeVisualEffects.size() == 0) {
+			while (!gameState.pc.canAct()) {
+				gameState.tick();
+				gameState.tickActions();
 
-			if (!gameState.creatures.contains(gameState.pc)){
-				System.err.println("Player has died!!!");
-				resetGameState();
+				if (!gameState.creatures.contains(gameState.pc)) {
+					System.err.println("Player has died!!!");
+					resetGameState();
+				}
+
+				inventoryDisplay.refresh();
+
+				combatLog.clear();
+				for (String s : gameState.combatLogMessages) {
+					combatLog.add(Util.lbl(s));
+					combatLog.row();
+				}
+				combatLogPane.layout();
+				combatLogPane.setScrollY(100000);
 			}
 
-			inventoryDisplay.refresh();
-
-			combatLog.clear();
-			for (String s : gameState.combatLogMessages){
-				combatLog.add(Util.lbl(s));
-				combatLog.row();
-			}
-			combatLogPane.layout();
-			combatLogPane.setScrollY(100000);
+			gameState.pc.tickActions();
 		}
-
-		gameState.pc.tickActions();
 
 		cam.pos = gameState.pc.pos;
 
@@ -178,6 +184,15 @@ public class LD43 extends ApplicationAdapter {
 		batch.begin();
 		//batch.draw(img, 0, 0);
 		gameState.render();
+
+		for (int i=0;i<activeVisualEffects.size();++i){
+			if (activeVisualEffects.get(i).keep()){
+				activeVisualEffects.get(i).render();
+			} else {
+				activeVisualEffects.remove(i--);
+			}
+		}
+
 		batch.end();
 
 		mainStage.draw();
