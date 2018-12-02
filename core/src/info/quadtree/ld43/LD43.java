@@ -81,7 +81,8 @@ public class LD43 extends ApplicationAdapter {
 		);
 
 		mainStage = new Stage();
-		Label lowerStatusLabel = Util.createDynamicLabel(() -> "PWR: " + gameState.pc.statPower +
+		Label lowerStatusLabel = Util.createDynamicLabel(() ->
+						"PWR: " + gameState.pc.statPower +
 						" SPD: " + gameState.pc.statSpeed +
 						" END: " + gameState.pc.statEndurance +
 						" MGC: " + gameState.pc.statMagic
