@@ -51,9 +51,9 @@
 * Loot drops
 * Mouseover info
 * Final tile graphics
+* VFX
 
 # TODO
-* VFX
 * Opening screen, help text
 * Ending screen
 
