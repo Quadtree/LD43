@@ -148,6 +148,11 @@ public class LD43 extends ApplicationAdapter {
 		Label titleScreenLabel = Util.lbl("To placate the fel demigod " + EVIL_GOD_NAME + " the city of " + TOWN_NAME + " sends a sacrifice to the tunnels and caves that make up his home each year. This year, you were chosen...");
 		modalScreen.addActor(titleScreenLabel);
 		titleScreenLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
+
+		Label copyrightLabel = Util.lbl("Made by Quadtree for Ludum Dare 43");
+		modalScreen.addActor(copyrightLabel);
+		copyrightLabel.setPosition(Gdx.graphics.getWidth() - 20, 20, Align.bottomRight);
+
 		Gdx.input.setInputProcessor(new ModalScreenCloser());
 
 		mp = new InputMultiplexer();
