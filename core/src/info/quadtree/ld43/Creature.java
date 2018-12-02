@@ -258,9 +258,6 @@ public class Creature {
                     pos = np;
                     takeTime(moveTime);
                     food -= 10;
-
-                    LD43.s.activeVisualEffects.add(new P2PVFX(pos, pos.add(5, 5), "potion"));
-
                 } else {
                     justMeleeAttackedDueToMove = true;
                     meleeAttack(onTile.get());
@@ -413,6 +410,10 @@ public class Creature {
     public boolean takeDamage(int amt){
         hp -= amt;
         if (sleepTime > 0) sleepTime = 1;
+
+        if (amt > 0){
+            LD43.s.activeVisualEffects.add(new TileVisualEffect(Integer.toString(amt), "take_damage", pos));
+        }
 
         if (hp <= 0){
             LD43.s.gameState.creatures.remove(this);

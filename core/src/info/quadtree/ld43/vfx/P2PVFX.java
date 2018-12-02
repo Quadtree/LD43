@@ -48,6 +48,9 @@ public class P2PVFX extends BaseVisualEffect {
         gr.setColor(Color.WHITE);
         gr.setRotation(angle * MathUtils.radiansToDegrees);
         gr.draw(LD43.s.batch);
+
+        gr.setColor(Color.WHITE);
+        gr.setRotation(0);
     }
 
     @Override
