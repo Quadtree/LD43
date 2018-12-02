@@ -371,7 +371,7 @@ public class Creature {
     }
 
     public float getPowerMultiplier(){
-        return statPower / 100f;
+        return getEffectivePower() / 100f;
     }
 
     public boolean hasRangedAttack(){
