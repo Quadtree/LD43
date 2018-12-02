@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class LD43 extends ApplicationAdapter {
 	static boolean CHEATS = true;
@@ -88,6 +90,24 @@ public class LD43 extends ApplicationAdapter {
 		);
 		mainStage.addActor(upperStatusLabel);
 		upperStatusLabel.setPosition(20, 40);
+
+		Label mouseOverLabel = Util.createDynamicLabel(() -> {
+			TilePos tp = cam.screenToReal(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+
+			Optional<Creature> trgCrt = gameState.worldMap.getCreatureOnTile(tp);
+			if (trgCrt.isPresent()){
+				return trgCrt.get().name;
+			}
+
+			Optional<Item> trgItm = gameState.worldMap.getItemOnTile(tp);
+			if (trgItm.isPresent()){
+				return trgItm.get().name;
+			}
+
+			return "";
+		});
+		mainStage.addActor(mouseOverLabel);
+		mouseOverLabel.setPosition(20, 60);
 
 		inventoryDisplay = new InventoryDisplay();
 

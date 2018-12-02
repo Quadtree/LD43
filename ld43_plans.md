@@ -49,11 +49,12 @@
 * End boss
 * Carry weight
 * Loot drops
+* Mouseover info
 
 # TODO
-* Mouseover info
 * Final tile graphics
 * Opening screen, help text
+* Ending screen
 
 ## Nice to Have
 * Save/Load system
