@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Creature {
+    public static final int XP_TO_LEVEL = 50;
     public int statPower;
     public int statSpeed;
     public int statEndurance;
@@ -453,8 +454,8 @@ public class Creature {
         if (isPC()) {
             this.xp += amt;
 
-            if (xp >= level*100){
-                xp -= level*100;
+            if (xp >= level* XP_TO_LEVEL){
+                xp -= level* XP_TO_LEVEL;
                 level++;
 
                 statPower += statPower / 5;
