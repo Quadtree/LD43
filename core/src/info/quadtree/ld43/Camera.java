@@ -23,13 +23,14 @@ public class Camera {
         gr.setColor(Color.WHITE);
     }
 
-    public void drawTextOnTile(String text, TilePos tp){
+    public void drawTextOnTile(String text, TilePos tp, Color color){
         Vector2 tv = realToScreen(tp);
 
         GlyphLayout gl = new GlyphLayout();
         gl.setText(LD43.s.bitmapFont, text);
 
-        LD43.s.bitmapFont.draw(LD43.s.batch, gl, tv.x - gl.width / 2, tv.y - gl.height - 2);
+        LD43.s.bitmapFont.setColor(color);
+        LD43.s.bitmapFont.draw(LD43.s.batch, gl, tv.x - gl.width / 2 + 16, tv.y + gl.height - 2 + 16);
     }
 
     public Vector2 realToScreen(TilePos real){

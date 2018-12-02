@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import info.quadtree.ld43.action.BaseAction;
 import info.quadtree.ld43.action.EatAction;
 import info.quadtree.ld43.action.MoveAction;
+import info.quadtree.ld43.vfx.TileVisualEffect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -256,6 +257,9 @@ public class Creature {
                     pos = np;
                     takeTime(moveTime);
                     food -= 10;
+
+                    LD43.s.activeVisualEffects.add(new TileVisualEffect("Moved!", "sword1", np));
+
                 } else {
                     justMeleeAttackedDueToMove = true;
                     meleeAttack(onTile.get());
