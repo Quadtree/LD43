@@ -10,9 +10,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
@@ -43,6 +45,9 @@ public class LD43 extends ApplicationAdapter {
 	TextButton.TextButtonStyle defaultTextButtonStyle;
 
 	InventoryDisplay inventoryDisplay;
+
+	Table combatLog;
+	ScrollPane combatLogPane;
 
 	public Sprite getGraphic(String name){
 		if (!graphics.containsKey(name)) graphics.put(name, atlas.createSprite(name));
@@ -90,7 +95,11 @@ public class LD43 extends ApplicationAdapter {
 		mainStage.addActor(invDisplayPane);
 		invDisplayPane.setBounds(Gdx.graphics.getWidth() - 400, 0, 400, Gdx.graphics.getHeight());
 
+		combatLog = new Table();
 
+		combatLogPane = new ScrollPane(combatLog);
+		mainStage.addActor(combatLogPane);
+		combatLogPane.setBounds(0, Gdx.graphics.getHeight() - 120, Gdx.graphics.getWidth() - 400, 120);
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
@@ -122,6 +131,13 @@ public class LD43 extends ApplicationAdapter {
 			}
 
 			inventoryDisplay.refresh();
+
+			combatLog.clear();
+			for (String s : gameState.combatLogMessages){
+				combatLog.add(Util.lbl(s));
+				combatLog.row();
+			}
+			combatLogPane.setScrollY(100000);
 		}
 
 		gameState.pc.tickActions();

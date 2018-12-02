@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GameState {
@@ -18,6 +19,8 @@ public class GameState {
     public int tick;
 
     public Spell selectedSpell = null;
+
+    public ArrayList<String> combatLogMessages = new ArrayList<>();
 
     public void init(){
         this.worldMap = new WorldMap();
@@ -122,7 +125,10 @@ public class GameState {
     }
 
     public void addCombatLogMessage(TilePos loc, String message){
-        // todo: Actual combat log
         System.err.println(loc + " " + message);
+
+        if (worldMap.canSee(pc.pos, loc, 0)) combatLogMessages.add(message);
+
+        while (combatLogMessages.size() > 50) combatLogMessages.remove(0);
     }
 }
