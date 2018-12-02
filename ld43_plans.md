@@ -42,6 +42,11 @@
 * Xav-xisal
 * Xav-vilas
 * **Xav**
+* Kronax
+* Duntrul
+* Akhthor
+* Kronghul
+* Narghul
 
 # Town Name
 * **Tharburg**
