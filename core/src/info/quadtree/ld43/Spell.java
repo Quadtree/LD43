@@ -11,11 +11,11 @@ public enum Spell {
         int healAmt = (int)(Util.randInt(200) * power);
         caster.healedFor(healAmt);
 
-        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " heals themselves for " + healAmt);
+        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " heal"+caster.s()+" themselves for " + healAmt);
     }),
     Fireball("Fireball", Color.ORANGE, 20, false, false, (spell,power, caster, target) -> {
         if (target == null) throw new RuntimeException("Target can't be null");
-        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " casts fireball");
+        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " cast"+caster.s()+" fireball");
 
         List<Creature> hit = LD43.s.gameState.creatures.stream()
                 .filter(it -> it.pos.dst2(target) <= 2)

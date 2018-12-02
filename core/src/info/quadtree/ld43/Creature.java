@@ -195,7 +195,7 @@ public class Creature {
         if (equippedItems.containsValue(item)){
             equippedItems.remove(item.slot);
             takeTime(5);
-            LD43.s.gameState.addCombatLogMessage(pos, name + " unequips " + item.name);
+            LD43.s.gameState.addCombatLogMessage(pos, sname() + " unequip" + s() + " " + item.name);
         }
     }
 
@@ -205,7 +205,7 @@ public class Creature {
         if (item.slot != null){
             equippedItems.put(item.slot, item);
             takeTime(5);
-            LD43.s.gameState.addCombatLogMessage(pos, name + " equips " + item.name);
+            LD43.s.gameState.addCombatLogMessage(pos, sname() + " equip"+s()+" " + item.name);
         }
     }
 
@@ -227,7 +227,7 @@ public class Creature {
         item.onGroundLocation = dropPos;
         inventory.remove(item);
         LD43.s.gameState.items.add(item);
-        LD43.s.gameState.addCombatLogMessage(pos, name + " drops " + item.name);
+        LD43.s.gameState.addCombatLogMessage(pos, sname() + " drop"+s()+" " + item.name);
         takeTime(5);
     }
 
@@ -286,7 +286,7 @@ public class Creature {
         if (toPickUp.isPresent()){
             inventory.add(toPickUp.get());
             LD43.s.gameState.items.remove(toPickUp.get());
-            LD43.s.gameState.addCombatLogMessage(pos, name + " picks up " + toPickUp.get().name);
+            LD43.s.gameState.addCombatLogMessage(pos, sname() + " pick"+s()+" up " + toPickUp.get().name);
         }
 
         takeTime(5);
@@ -390,16 +390,16 @@ public class Creature {
             if (damage == 0 && Util.randInt(5) == 0) damage = 1;
 
             if (damage > 0){
-                LD43.s.gameState.addCombatLogMessage(trg.pos, name + " hits " + trg.name + " for " + damage);
+                LD43.s.gameState.addCombatLogMessage(trg.pos, sname() + " hit"+s()+" " + trg.sname() + " for " + damage);
 
                 if (trg.takeDamage(damage)){
                     gainXP(trg.xp);
                 }
             } else {
-                LD43.s.gameState.addCombatLogMessage(trg.pos, name + "'s attack glances off of " + trg.name);
+                LD43.s.gameState.addCombatLogMessage(trg.pos, getPossessive() + " attack glances off of " + trg.sname());
             }
         } else {
-            LD43.s.gameState.addCombatLogMessage(trg.pos, name + " misses " + trg.name);
+            LD43.s.gameState.addCombatLogMessage(trg.pos, sname() + " miss"+gv("", "es")+" " + trg.sname());
         }
 
         takeTime(20);
@@ -460,7 +460,7 @@ public class Creature {
     public void drinkPotion(Item potion){
         if (!canAct()) return;
 
-        LD43.s.gameState.addCombatLogMessage(pos, this.name + " drinks a " + potion.name);
+        LD43.s.gameState.addCombatLogMessage(pos, this.sname() + " drink"+s()+" a " + potion.name);
 
         potion.potionSpell.effect.cast(potion.potionSpell, 0.25f, this, pos);
 
@@ -525,5 +525,9 @@ public class Creature {
     public void healedFor(int amt){
         hp += amt;
         if (hp > getEffectiveEndurance()) hp = getEffectiveEndurance();
+    }
+
+    public String s(){
+        return isPC() ? "" : "s";
     }
 }
