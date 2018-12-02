@@ -48,9 +48,9 @@
 * Stop action when see enemy
 * End boss
 * Carry weight
+* Loot drops
 
 # TODO
-* Loot drops
 * Mouseover info
 * Final tile graphics
 * Opening screen, help text

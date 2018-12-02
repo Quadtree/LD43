@@ -402,6 +402,16 @@ public class Creature {
                 Items.createItemAt(corpse, pos);
             }
 
+            int lootToDrop = MathUtils.random(0, xp/2);
+
+            for (int i=0;i<20;++i){
+                Item po = Items.randomItem();
+                if (po.value <= lootToDrop){
+                    Items.createItemAt(po, LD43.s.gameState.worldMap.shiftToClear(pos));
+                    lootToDrop -= po.value;
+                }
+            }
+
             return true;
         } else {
             return false;

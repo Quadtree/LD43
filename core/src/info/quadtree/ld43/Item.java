@@ -32,6 +32,8 @@ public class Item {
     int food;
     int toxcitiy;
 
+    int value;
+
     Spell castSpell;
     Spell potionSpell;
 

@@ -372,8 +372,10 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     public TilePos shiftToClear(TilePos tp){
-        while(!isPassable(tp) || getCreatureOnTile(tp).isPresent()){
+        int n = 0;
+        while(!isPassable(tp) || getCreatureOnTile(tp).isPresent() || getItemOnTile(tp).isPresent()){
             tp = tp.add(MathUtils.random(-1, 1), MathUtils.random(-1, 1));
+            if (++n > 5000) return tp;
         }
         return tp;
     }
@@ -468,6 +470,10 @@ public class WorldMap implements IndexedGraph<TilePos> {
         }
 
         return true;
+    }
+
+    public Optional<Item> getItemOnTile(TilePos tp){
+        return LD43.s.gameState.items.stream().filter(it -> it.onGroundLocation.equals(tp)).findAny();
     }
 
     public Optional<Creature> getCreatureOnTile(TilePos tp){
