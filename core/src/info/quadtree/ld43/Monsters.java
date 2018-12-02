@@ -173,6 +173,7 @@ public class Monsters {
         ret.corpseWeight = 80;
         ret.naturalArmor = 3;
         ret.endBoss = true;
+        ret.isImmuneToSleep = true;
         ret.tint = Color.PURPLE;
 
         ret.pos = pos;

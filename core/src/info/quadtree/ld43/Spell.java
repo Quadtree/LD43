@@ -16,12 +16,15 @@ public enum Spell {
         LD43.s.activeVisualEffects.add(new TileVisualEffect(Integer.toString(healAmt), "heal", caster.pos));
 
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " heal"+caster.s()+" "+caster.gv("yourself", "themselves")+" for " + healAmt);
+        LD43.s.playSound("heal");
     }),
     Fireball("Fireball", Color.ORANGE, 20, false, false, (spell,power, caster, target) -> {
         if (target == null) throw new RuntimeException("Target can't be null");
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " cast"+caster.s()+" fireball");
 
         LD43.s.activeVisualEffects.add(new P2PVFX(caster.pos, target, "firebolt", () -> {
+            LD43.s.playSound("Explosion342");
+
             List<Creature> hit = LD43.s.gameState.creatures.stream()
                     .filter(it -> it.pos.dst2(target) <= 2)
                     .filter(it -> LD43.s.gameState.worldMap.canSee(target, it.pos, 0))
@@ -37,12 +40,14 @@ public enum Spell {
     Invisibility("Invisibility", Color.SKY, 25, true, false, (spell,power, caster, target) -> {
         caster.invisibleTime = 300;
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " becomes invisible");
+        LD43.s.playSound("inviso");
     }),
     Sleep("Sleep", Color.WHITE, 12, false, true, (spell, power, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             if (!it.isImmuneToSleep){
                 LD43.s.gameState.addCombatLogMessage(it.pos, caster.sname() + " " + caster.gv("cast", "casts") + " " + spell.name + " on " + it.name);
                 it.sleepTime = 500;
+                LD43.s.playSound("sleep");
             } else {
                 LD43.s.gameState.addCombatLogMessage(it.pos, caster.sname() + " " + caster.gv("cast", "casts") + " " + spell.name + " on " + it.name + " but it is immune!");
             }
@@ -51,11 +56,13 @@ public enum Spell {
     Haste("Haste", Color.YELLOW, 14, true, false, ((spell, power, caster, target) -> {
         caster.hasteTime = 700;
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " " + caster.gv("are", "is") + " moving faster");
+        LD43.s.playSound("haste");
     })),
     Slow("Slow", Color.MAROON, 14, false, true, ((spell, power, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             LD43.s.gameState.addCombatLogMessage(it.pos, caster.sname() + " " + caster.gv("cast", "casts") + " " + spell.name + " on " + it.name);
             it.slowTime = 700;
+            LD43.s.playSound("slow");
         });
     }))
     ;
@@ -71,6 +78,8 @@ public enum Spell {
     }
 
     private static void damagingSpellAttack(Creature caster, float power, TilePos target, Spell spell, int maxDamage){
+        LD43.s.playSound("astral_bolt");
+
         int damage = Math.round(Util.randInt(maxDamage) * power);
 
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
