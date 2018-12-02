@@ -47,9 +47,9 @@
 * Some monsters patrol
 * Stop action when see enemy
 * End boss
+* Carry weight
 
 # TODO
-* Carry weight
 * Loot drops
 * Mouseover info
 * Final tile graphics
