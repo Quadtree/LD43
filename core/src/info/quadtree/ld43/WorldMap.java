@@ -269,7 +269,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
             TilePos trgRoom = trgRooms.get(Util.randInt(trgRooms.size()));
 
-            System.out.println("Connecting " + roomToAddConn + " --> " + trgRoom + " || " + connectedRooms.size());
+            //System.out.println("Connecting " + roomToAddConn + " --> " + trgRoom + " || " + connectedRooms.size());
 
             boolean xMode = MathUtils.randomBoolean();
             boolean yMode = MathUtils.randomBoolean();
@@ -352,7 +352,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
 
     private float computeJagedness(TilePos trgRoom) {
         float jaggedness = (MathUtils.random() * 0.5f + 0.5f) * 0.5f * ((trgRoom.y / (float)WORLD_HEIGHT) + 0.15f);
-        System.err.println(jaggedness);
+        //System.err.println(jaggedness);
         //jaggedness +=  * 0.45f;
         jaggedness = Math.min(jaggedness, 0.8f);
         return jaggedness;
