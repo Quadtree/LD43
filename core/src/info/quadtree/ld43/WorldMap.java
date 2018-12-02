@@ -372,7 +372,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     public TilePos shiftToClear(TilePos tp){
-        while(!isPassable(tp)){
+        while(!isPassable(tp) || getCreatureOnTile(tp).isPresent()){
             tp = tp.add(MathUtils.random(-1, 1), MathUtils.random(-1, 1));
         }
         return tp;
