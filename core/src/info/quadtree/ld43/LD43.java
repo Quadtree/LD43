@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class LD43 extends ApplicationAdapter {
-	public static final int INV_PANE_WIDTH = 440;
+	public static final int INV_PANE_WIDTH = 500;
 	static boolean CHEATS = true;
 
 	public static final String EVIL_GOD_NAME = "Narghul";
