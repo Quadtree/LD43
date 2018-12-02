@@ -383,12 +383,18 @@ public class Creature {
 
         food -= 20;
 
-        int attackRoll = getEffectiveSpeed() + MathUtils.random(0, 35);
-        int defense = trg.getEffectiveSpeed();
+        takeTime(20);
 
         if (hasRangedAttack()){
-            LD43.s.activeVisualEffects.add(new P2PVFX(pos, trg.pos, "arrow"));
+            LD43.s.activeVisualEffects.add(new P2PVFX(pos, trg.pos, "arrow", () -> finishAttack(trg)));
+        } else {
+            finishAttack(trg);
         }
+    }
+
+    private void finishAttack(Creature trg){
+        int attackRoll = getEffectiveSpeed() + MathUtils.random(0, 35);
+        int defense = trg.getEffectiveSpeed();
 
         if ((attackRoll >= defense || Util.randInt(8) == 0) && Util.randInt(8) != 0){
             int damage = Math.round(Util.randInt(getMaxDamageOnAttack()) * getPowerMultiplier()) - trg.getArmor();
@@ -409,8 +415,6 @@ public class Creature {
             LD43.s.activeVisualEffects.add(new TileVisualEffect("", "miss", pos));
             LD43.s.gameState.addCombatLogMessage(trg.pos, sname() + " miss"+gv("", "es")+" " + trg.sname());
         }
-
-        takeTime(20);
     }
 
     public boolean takeDamage(int amt){

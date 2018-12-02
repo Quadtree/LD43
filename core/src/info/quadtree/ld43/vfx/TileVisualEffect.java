@@ -13,8 +13,8 @@ public class TileVisualEffect extends BaseVisualEffect {
 
     float alpha=2f;
 
-    public TileVisualEffect(String text, String graphic, TilePos tp, Runnable onComplete) {
-        super(onComplete);
+    public TileVisualEffect(String text, String graphic, TilePos tp) {
+        super(null);
         this.text = text;
         this.graphic = graphic;
         this.tp = tp;
