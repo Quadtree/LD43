@@ -10,6 +10,7 @@ gwt {
     modules 'info.quadtree.ld43.GdxDefinition'
     devModules 'info.quadtree.ld43.GdxDefinitionSuperdev'
     project.webAppDirName = 'webapp'
+    compiler.style = "PRETTY"
 
     compiler {
         strict = true;

@@ -65,6 +65,6 @@ public class TilePos {
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return (x << 10) + y;
     }
 }
