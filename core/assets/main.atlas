@@ -88,3 +88,17 @@ wall1
   orig: 32, 32
   offset: 0, 0
   index: -1
+wall_h
+  rotate: false
+  xy: 410, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wall_v
+  rotate: false
+  xy: 444, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
