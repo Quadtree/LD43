@@ -311,8 +311,11 @@ public class Creature {
         int attackRoll = getEffectiveSpeed() + Util.randInt(30) - 15;
         int defense = trg.getEffectiveSpeed();
 
-        if (attackRoll >= defense){
+        if ((attackRoll >= defense || Util.randInt(8) == 0) && Util.randInt(8) != 0){
             int damage = Math.round(Util.randInt(getMaxDamageOnAttack()) * getPowerMultiplier()) - trg.getArmor();
+
+            if (damage == 0 && Util.randInt(5) == 0) damage = 1;
+
             if (damage > 0){
                 LD43.s.gameState.addCombatLogMessage(trg.pos, name + " hits " + trg.name + " for " + damage);
 

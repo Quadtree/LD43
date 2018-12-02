@@ -21,7 +21,9 @@ public class Monsters {
             Monsters::spawnGreaterDemonAt
     );
 
-    public static void spawnMonsertAt(TilePos pos, byte jaggedness){
+    public static void spawnMonsertAt(TilePos pos){
+        byte jaggedness = LD43.s.gameState.worldMap.jaggednessLevelGrid[pos.x][pos.y];
+
         int trgPos = MathUtils.clamp(jaggedness / 5 + MathUtils.random(-2, 2), 0, spawners.size() - 1);
 
         spawners.get(trgPos).accept(pos);

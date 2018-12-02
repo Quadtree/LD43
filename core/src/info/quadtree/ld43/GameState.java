@@ -54,8 +54,8 @@ public class GameState {
         Items.createItemAt(Items.createPotion(Spell.Heal), pc.pos.add(TilePos.create(1,-2)));
 
         // test monsters
-        for (int i=0;i<10;++i){
-            Monsters.spawnSlimeAt(worldMap.getOpenSpace());
+        for (int i=0;i<30;++i){
+            Monsters.spawnMonsertAt(worldMap.getOpenSpace());
         }
     }
 
