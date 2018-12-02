@@ -420,6 +420,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
     public void render(){
         for (int i=0;i<WORLD_WIDTH;++i){
             for (int j=0;j<WORLD_HEIGHT;++j){
+                if (Math.abs(i - LD43.s.gameState.pc.pos.x) > Gdx.graphics.getWidth() / 64) continue;
+                if (Math.abs(j - LD43.s.gameState.pc.pos.y) > Gdx.graphics.getHeight() / 64) continue;
 
                 boolean withinLOS = canSee(LD43.s.gameState.pc.pos, TilePos.create(i,j), 1.1f);
                 if (withinLOS) tileSeen[i][j] = true;
