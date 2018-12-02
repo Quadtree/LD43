@@ -53,7 +53,6 @@ public class GameState {
         Items.createItemAt(Items.createSpellBook(Spell.Haste), pc.pos.add(TilePos.create(1,-1)));
         Items.createItemAt(Items.createPotion(Spell.Heal), pc.pos.add(TilePos.create(1,-2)));
 
-        // test monsters
         for (int i=0;i<30;++i){
             Monsters.spawnMonsertAt(worldMap.getOpenSpace());
         }
@@ -106,6 +105,10 @@ public class GameState {
     public void tick(){
         Util.indexIterate(creatures, Creature::tick);
         tick++;
+
+        if (creatures.size() < 31 && Util.randInt(300) == 0){
+            Monsters.spawnMonsertAt(worldMap.getOpenSpace());
+        }
     }
 
     public void tickActions(){

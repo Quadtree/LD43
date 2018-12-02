@@ -43,9 +43,9 @@
 * Leveling up
 * Magic system
 * More monster types
+* Monster respawns
 
 # TODO
-* Monster respawns
 * Some monsters patrol
 * Stop action when see enemy
 * End boss
