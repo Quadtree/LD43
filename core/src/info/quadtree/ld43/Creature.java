@@ -44,6 +44,8 @@ public class Creature {
     int hasteTime = 0;
     int slowTime = 0;
 
+    boolean endBoss = false;
+
     public String name = "???";
 
     public int getMaxDamageOnAttack(){

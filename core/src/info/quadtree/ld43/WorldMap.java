@@ -371,6 +371,13 @@ public class WorldMap implements IndexedGraph<TilePos> {
         PixmapIO.writePNG(Gdx.files.absolute("C:/tmp/debug_pixmap_"+n+".png"), debugPixmap);*/
     }
 
+    public TilePos shiftToClear(TilePos tp){
+        while(!isPassable(tp)){
+            tp = tp.add(MathUtils.random(-1, 1), MathUtils.random(-1, 1));
+        }
+        return tp;
+    }
+
     public TilePos generateCorridorDelta() {
         TilePos delta = TilePos.create(Util.randInt(3) - 1, Util.randInt(3) - 1);
         if (delta.manhattanDistance() > 1){

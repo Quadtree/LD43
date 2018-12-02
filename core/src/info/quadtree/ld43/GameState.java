@@ -56,6 +56,12 @@ public class GameState {
         for (int i=0;i<30;++i){
             Monsters.spawnMonsertAt(worldMap.getOpenSpace());
         }
+
+        Monsters.spawnEndBossAt(worldMap.shiftToClear(worldMap.endSpot));
+        Monsters.spawnImpAt(worldMap.shiftToClear(worldMap.endSpot));
+        Monsters.spawnImpAt(worldMap.shiftToClear(worldMap.endSpot));
+        Monsters.spawnImpAt(worldMap.shiftToClear(worldMap.endSpot));
+        Monsters.spawnImpAt(worldMap.shiftToClear(worldMap.endSpot));
     }
 
     public void render(){

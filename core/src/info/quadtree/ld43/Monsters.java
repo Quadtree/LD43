@@ -164,4 +164,25 @@ public class Monsters {
         ret.init();
         LD43.s.gameState.creatures.add(ret);
     }
+
+    public static void spawnEndBossAt(TilePos pos){
+        Creature ret = new Creature();
+        ret.statPower = 100;
+        ret.statSpeed = 20;
+        ret.statEndurance = 100;
+        ret.graphicName = "enemy1";
+        ret.xp = 1000;
+        ret.name = "Demigod";
+
+        ret.corpseFood = 2000;
+        ret.corpseToxicity = 1000;
+        ret.corpseWeight = 80;
+        ret.naturalArmor = 3;
+        ret.endBoss = true;
+        ret.tint = Color.PURPLE;
+
+        ret.pos = pos;
+        ret.init();
+        LD43.s.gameState.creatures.add(ret);
+    }
 }
