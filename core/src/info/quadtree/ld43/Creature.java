@@ -38,6 +38,11 @@ public class Creature {
     int healthRegenTime;
     int magicRegenTime;
 
+    int sleepTime = 0;
+    int invisibleTime = 0;
+    int hasteTime = 0;
+    int slowTime = 0;
+
     public String name = "???";
 
     public int getMaxDamageOnAttack(){
@@ -64,6 +69,8 @@ public class Creature {
 
     public BaseAction currentAction;
 
+    boolean isImmuneToSleep = false;
+
     ArrayList<Item> inventory = new ArrayList<>();
 
     public void init(){
@@ -72,13 +79,30 @@ public class Creature {
     }
 
     public void render(){
-        if (LD43.s.gameState.worldMap.canSee(LD43.s.gameState.pc.pos, pos, 0)) {
+        if (LD43.s.gameState.worldMap.canSee(LD43.s.gameState.pc.pos, pos, 0) && invisibleTime <= 0) {
             LD43.s.cam.drawOnTile(graphicName, pos);
         }
     }
 
     public void tick(){
-        ticksTillNextAction -= 1;
+        if (sleepTime <= 0) ticksTillNextAction -= 1;
+
+        boolean wasInvisible = invisibleTime > 0;
+        invisibleTime--;
+        if (invisibleTime <= 0 && wasInvisible) LD43.s.gameState.addCombatLogMessage(pos, this.name + " appears");
+
+        boolean wasSleeping = sleepTime > 0;
+        sleepTime--;
+        if (sleepTime <= 0 && wasSleeping) LD43.s.gameState.addCombatLogMessage(pos, this.name + " wakes up");
+
+        boolean wasHasted = hasteTime > 0;
+        hasteTime--;
+        if (hasteTime <= 0 && wasHasted) LD43.s.gameState.addCombatLogMessage(pos, this.name + " slows down to normal speed");
+
+        boolean wasSlowed = slowTime > 0;
+        slowTime--;
+        if (slowTime <= 0 && wasSlowed) LD43.s.gameState.addCombatLogMessage(pos, this.name + " speeds up to normal speed");
+
         if (ticksTillNextAction < 0) ticksTillNextAction = 0;
 
         if (isPC()){
@@ -110,7 +134,7 @@ public class Creature {
             if (!currentAction.tick()) currentAction = null;
         }
 
-        if (!isPC()){
+        if (!isPC() && LD43.s.gameState.pc.invisibleTime <= 0){
             if (LD43.s.gameState.worldMap.canSee(pos, LD43.s.gameState.pc.pos, 0)){
                 currentAction = new MoveAction(this, LD43.s.gameState.pc.pos);
             }
@@ -193,7 +217,12 @@ public class Creature {
     }
 
     private void takeTime(int amt){
-        ticksTillNextAction += amt * getSpeedModifier();
+        float time = amt * getSpeedModifier();
+
+        if (slowTime > 0) time *= 2;
+        if (hasteTime > 0) time /= 2;
+
+        ticksTillNextAction += time;
     }
 
     public void stand(){
@@ -204,7 +233,7 @@ public class Creature {
             inventory.add(toPickUp.get());
             LD43.s.gameState.items.remove(toPickUp.get());
             LD43.s.gameState.addCombatLogMessage(pos, name + " picks up " + toPickUp.get().name);
-            ticksTillNextAction += 5 * getSpeedModifier();
+            takeTime(5);
         }
     }
 
@@ -295,11 +324,12 @@ public class Creature {
             LD43.s.gameState.addCombatLogMessage(trg.pos, name + " misses " + trg.name);
         }
 
-        ticksTillNextAction += 20 * getSpeedModifier();
+        takeTime(20);
     }
 
     public boolean takeDamage(int amt){
         hp -= amt;
+        if (sleepTime > 0) sleepTime = 1;
 
         if (hp <= 0){
             LD43.s.gameState.creatures.remove(this);
