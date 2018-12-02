@@ -363,10 +363,22 @@ public class Creature {
             return;
         }
 
-        spell.effect.cast(spell, this, target);
+        spell.effect.cast(spell, getPowerMultiplier(), this, target);
 
         sp -= spell.spCost;
         takeTime(30);
+    }
+
+    public void drinkPotion(Item potion){
+        if (!canAct()) return;
+
+        LD43.s.gameState.addCombatLogMessage(pos, this.name + " drinks a " + potion.name);
+
+        potion.potionSpell.effect.cast(potion.potionSpell, 0.25f, this, pos);
+
+        inventory.remove(potion);
+
+        takeTime(5);
     }
 
     public boolean canAct(){

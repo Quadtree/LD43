@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum Spell {
-    AstralBolt("Astral Bolt", 5, false, true, (spell, caster, target) -> Spell.damagingSpellAttack(caster, target, spell, 80)),
-    Heal("Heal", 15, true, true, (spell, caster, target) -> {
-        int healAmt = (int)(Util.randInt(200) * caster.getPowerMultiplier());
+    AstralBolt("Astral Bolt", 5, false, true, (spell, power, caster, target) -> Spell.damagingSpellAttack(caster, power, target, spell, 80)),
+    Heal("Healing", 15, true, true, (Spell spell, float power, Creature caster, TilePos target) -> {
+        int healAmt = (int)(Util.randInt(200) * power);
         caster.healedFor(healAmt);
 
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " heals themselves for " + healAmt);
     }),
-    Fireball("Fireball", 20, false, false, (spell, caster, target) -> {
+    Fireball("Fireball", 20, false, false, (spell,power, caster, target) -> {
         if (target == null) throw new RuntimeException("Target can't be null");
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " casts fireball");
 
@@ -22,16 +22,16 @@ public enum Spell {
                 .collect(Collectors.toList());
 
         hit.forEach(it -> {
-            int damage = Math.round(Util.randInt(150) * caster.getPowerMultiplier());
+            int damage = Math.round(Util.randInt(150) * power);
             LD43.s.gameState.addCombatLogMessage(it.pos, it.name + " takes " + damage + " damage");
             it.takeDamage(damage);
         });
     }),
-    Invisibility("Invisibility", 25, true, false, (spell, caster, target) -> {
+    Invisibility("Invisibility", 25, true, false, (spell,power, caster, target) -> {
         caster.invisibleTime = 300;
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " becomes invisible");
     }),
-    Sleep("Sleep", 12, false, true, (spell, caster, target) -> {
+    Sleep("Sleep", 12, false, true, (spell, power, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             if (!it.isImmuneToSleep){
                 LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
@@ -41,11 +41,11 @@ public enum Spell {
             }
         });
     }),
-    Haste("Haste", 14, true, false, ((spell, caster, target) -> {
+    Haste("Haste", 14, true, false, ((spell, power, caster, target) -> {
         caster.hasteTime = 700;
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " is moving faster");
     })),
-    Slow("Slow", 14, false, true, ((spell, caster, target) -> {
+    Slow("Slow", 14, false, true, ((spell, power, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
             it.slowTime = 700;
@@ -59,11 +59,11 @@ public enum Spell {
     SpellEffect effect;
 
     interface SpellEffect {
-        void cast(Spell spell, Creature caster, TilePos target);
+        void cast(Spell spell, float power, Creature caster, TilePos target);
     }
 
-    private static void damagingSpellAttack(Creature caster, TilePos target, Spell spell, int maxDamage){
-        int damage = Math.round(Util.randInt(maxDamage) * caster.getPowerMultiplier());
+    private static void damagingSpellAttack(Creature caster, float power, TilePos target, Spell spell, int maxDamage){
+        int damage = Math.round(Util.randInt(maxDamage) * power);
 
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name + " dealing " + damage + " damage");
