@@ -1,7 +1,13 @@
 package info.quadtree.ld43;
 
 public enum Spell {
-    AstralBolt("Astral Bolt", 5, false, true, (spell, caster, target) -> Spell.damagingSpellAttack(caster, target, spell, 80))
+    AstralBolt("Astral Bolt", 5, false, true, (spell, caster, target) -> Spell.damagingSpellAttack(caster, target, spell, 80)),
+    Heal("Heal", 15, true, true, (spell, caster, target) -> {
+        int healAmt = (int)(Util.randInt(200) * caster.getPowerMultiplier());
+        caster.healedFor(healAmt);
+
+        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " heals themselves for " + healAmt);
+    })
     ;
     String name;
     int spCost;

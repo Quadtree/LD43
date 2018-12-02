@@ -330,6 +330,7 @@ public class Creature {
         spell.effect.cast(spell, this, target);
 
         sp -= spell.spCost;
+        takeTime(30);
     }
 
     public boolean canAct(){
@@ -383,5 +384,10 @@ public class Creature {
                 takeDamage(MathUtils.random(12,24));
             }
         }
+    }
+
+    public void healedFor(int amt){
+        hp += amt;
+        if (hp > getEffectiveEndurance()) hp = getEffectiveEndurance();
     }
 }

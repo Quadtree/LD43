@@ -43,7 +43,11 @@ public class InventoryDisplay extends Table {
             }
 
             if (itm.castSpell != null){
-                add(Util.btn("Cast", () -> LD43.s.gameState.selectedSpell = itm.castSpell));
+                if (!itm.castSpell.selfCastOnly){
+                    add(Util.btn("Cast", () -> LD43.s.gameState.selectedSpell = itm.castSpell));
+                } else {
+                    add(Util.btn("Cast", () -> LD43.s.gameState.pc.castSpell(itm.castSpell, LD43.s.gameState.pc.pos)));
+                }
             }
 
             add(Util.btn("Drop", () -> LD43.s.gameState.pc.drop(itm)));
