@@ -147,6 +147,14 @@ public class Creature {
         if (!isPC() && LD43.s.gameState.pc.invisibleTime <= 0){
             if (LD43.s.gameState.worldMap.canSee(pos, LD43.s.gameState.pc.pos, 0)){
                 currentAction = new MoveAction(this, LD43.s.gameState.pc.pos);
+
+                if (endBoss && Util.randInt(100) == 0){
+                    switch(Util.randInt(3)){
+                        case 0: statPower += 10; LD43.s.gameState.addCombatLogMessage(pos, name + " looks stronger"); break;
+                        case 1: statSpeed += 10; LD43.s.gameState.addCombatLogMessage(pos, name + " looks faster"); break;
+                        case 2: statEndurance += 10; LD43.s.gameState.addCombatLogMessage(pos, name + " looks tougher"); break;
+                    }
+                }
             }
         }
 
