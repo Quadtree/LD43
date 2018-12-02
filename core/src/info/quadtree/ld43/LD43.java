@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class LD43 extends ApplicationAdapter {
+	public static final int INV_PANE_WIDTH = 440;
 	static boolean CHEATS = true;
 
 	public static final String EVIL_GOD_NAME = "Gathar";
@@ -152,7 +153,7 @@ public class LD43 extends ApplicationAdapter {
 		Table rightToolbar = new Table();
 		rightToolbar.setBackground(new NinePatchDrawable(LD43.s.buttonDark));
 		rightToolbar.add(invDisplayPane).expand().fill().colspan(2);
-		rightToolbar.setBounds(Gdx.graphics.getWidth() - 400, 0, 400, Gdx.graphics.getHeight());
+		rightToolbar.setBounds(Gdx.graphics.getWidth() - INV_PANE_WIDTH, 0, INV_PANE_WIDTH, Gdx.graphics.getHeight());
 
 		rightToolbar.row();
 		rightToolbar.add(Util.btn("Restart Game", this::resetGameState)).pad(6);
@@ -166,7 +167,7 @@ public class LD43 extends ApplicationAdapter {
 
 		combatLogPane = new ScrollPane(combatLog);
 		mainStage.addActor(combatLogPane);
-		combatLogPane.setBounds(0, Gdx.graphics.getHeight() - 120, Gdx.graphics.getWidth() - 400, 120);
+		combatLogPane.setBounds(0, Gdx.graphics.getHeight() - 120, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 120);
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
