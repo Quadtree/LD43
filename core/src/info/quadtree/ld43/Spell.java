@@ -1,18 +1,20 @@
 package info.quadtree.ld43;
 
+import com.badlogic.gdx.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public enum Spell {
-    AstralBolt("Astral Bolt", 5, false, true, (spell, power, caster, target) -> Spell.damagingSpellAttack(caster, power, target, spell, 80)),
-    Heal("Healing", 15, true, true, (Spell spell, float power, Creature caster, TilePos target) -> {
+    AstralBolt("Astral Bolt", Color.BLUE, 5, false, true, (spell, power, caster, target) -> Spell.damagingSpellAttack(caster, power, target, spell, 80)),
+    Heal("Healing", Color.GREEN, 15, true, true, (Spell spell, float power, Creature caster, TilePos target) -> {
         int healAmt = (int)(Util.randInt(200) * power);
         caster.healedFor(healAmt);
 
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " heals themselves for " + healAmt);
     }),
-    Fireball("Fireball", 20, false, false, (spell,power, caster, target) -> {
+    Fireball("Fireball", Color.ORANGE, 20, false, false, (spell,power, caster, target) -> {
         if (target == null) throw new RuntimeException("Target can't be null");
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " casts fireball");
 
@@ -27,11 +29,11 @@ public enum Spell {
             it.takeDamage(damage);
         });
     }),
-    Invisibility("Invisibility", 25, true, false, (spell,power, caster, target) -> {
+    Invisibility("Invisibility", Color.SKY, 25, true, false, (spell,power, caster, target) -> {
         caster.invisibleTime = 300;
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " becomes invisible");
     }),
-    Sleep("Sleep", 12, false, true, (spell, power, caster, target) -> {
+    Sleep("Sleep", Color.WHITE, 12, false, true, (spell, power, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             if (!it.isImmuneToSleep){
                 LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
@@ -41,11 +43,11 @@ public enum Spell {
             }
         });
     }),
-    Haste("Haste", 14, true, false, ((spell, power, caster, target) -> {
+    Haste("Haste", Color.YELLOW, 14, true, false, ((spell, power, caster, target) -> {
         caster.hasteTime = 700;
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " is moving faster");
     })),
-    Slow("Slow", 14, false, true, ((spell, power, caster, target) -> {
+    Slow("Slow", Color.MAROON, 14, false, true, ((spell, power, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
             it.slowTime = 700;
@@ -57,6 +59,7 @@ public enum Spell {
     boolean selfCastOnly;
     boolean requiresTargetOnSpace;
     SpellEffect effect;
+    Color color;
 
     interface SpellEffect {
         void cast(Spell spell, float power, Creature caster, TilePos target);
@@ -71,11 +74,12 @@ public enum Spell {
         });
     }
 
-    Spell(String name, int spCost, boolean selfCastOnly, boolean requiresTargetOnSpace, SpellEffect effect) {
+    Spell(String name, Color color, int spCost, boolean selfCastOnly, boolean requiresTargetOnSpace, SpellEffect effect) {
         this.name = name;
         this.spCost = spCost;
         this.selfCastOnly = selfCastOnly;
         this.requiresTargetOnSpace = requiresTargetOnSpace;
         this.effect = effect;
+        this.color = color;
     }
 }

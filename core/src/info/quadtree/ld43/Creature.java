@@ -1,5 +1,6 @@
 package info.quadtree.ld43;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import info.quadtree.ld43.action.BaseAction;
 import info.quadtree.ld43.action.EatAction;
@@ -66,6 +67,7 @@ public class Creature {
     public TilePos pos;
 
     public String graphicName;
+    public Color tint = Color.WHITE;
 
     public BaseAction currentAction;
 
@@ -80,7 +82,7 @@ public class Creature {
 
     public void render(){
         if (LD43.s.gameState.worldMap.canSee(LD43.s.gameState.pc.pos, pos, 0) && invisibleTime <= 0) {
-            LD43.s.cam.drawOnTile(graphicName, pos);
+            LD43.s.cam.drawOnTile(graphicName, pos, tint);
         }
     }
 

@@ -1,5 +1,7 @@
 package info.quadtree.ld43;
 
+import com.badlogic.gdx.graphics.Color;
+
 public class Item {
     public enum EquipSlot {
         Weapon,
@@ -9,6 +11,7 @@ public class Item {
 
     public int weight;
     String graphic;
+    public Color tint = Color.WHITE;
     String name;
     EquipSlot slot;
     TilePos onGroundLocation;
@@ -34,7 +37,7 @@ public class Item {
 
     public void render(){
         if (LD43.s.gameState.worldMap.canSee(LD43.s.gameState.pc.pos, onGroundLocation, 0)) {
-            LD43.s.cam.drawOnTile(graphic, onGroundLocation);
+            LD43.s.cam.drawOnTile(graphic, onGroundLocation, tint);
         }
     }
 }

@@ -50,6 +50,7 @@ public class Items {
         ret.graphic = "spell_book";
         ret.weight = 3;
         ret.castSpell = spell;
+        ret.tint = spell.color;
 
         return ret;
     }
@@ -60,6 +61,7 @@ public class Items {
         ret.graphic = "potion";
         ret.weight = 2;
         ret.potionSpell = spell;
+        ret.tint = spell.color;
 
         return ret;
     }
