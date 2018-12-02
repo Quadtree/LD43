@@ -386,6 +386,10 @@ public class Creature {
         int attackRoll = getEffectiveSpeed() + MathUtils.random(0, 35);
         int defense = trg.getEffectiveSpeed();
 
+        if (hasRangedAttack()){
+            LD43.s.activeVisualEffects.add(new P2PVFX(pos, trg.pos, "arrow"));
+        }
+
         if ((attackRoll >= defense || Util.randInt(8) == 0) && Util.randInt(8) != 0){
             int damage = Math.round(Util.randInt(getMaxDamageOnAttack()) * getPowerMultiplier()) - trg.getArmor();
 
@@ -398,9 +402,11 @@ public class Creature {
                     gainXP(trg.xp);
                 }
             } else {
+                LD43.s.activeVisualEffects.add(new TileVisualEffect("", "shield", pos));
                 LD43.s.gameState.addCombatLogMessage(trg.pos, getPossessive() + " attack glances off of " + trg.sname());
             }
         } else {
+            LD43.s.activeVisualEffects.add(new TileVisualEffect("", "miss", pos));
             LD43.s.gameState.addCombatLogMessage(trg.pos, sname() + " miss"+gv("", "es")+" " + trg.sname());
         }
 

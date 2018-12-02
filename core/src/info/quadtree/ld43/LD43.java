@@ -185,11 +185,11 @@ public class LD43 extends ApplicationAdapter {
 		//batch.draw(img, 0, 0);
 		gameState.render();
 
-		for (int i=0;i<activeVisualEffects.size();++i){
-			if (activeVisualEffects.get(i).keep()){
-				activeVisualEffects.get(i).render();
+		if (activeVisualEffects.size() > 0){
+			if (activeVisualEffects.get(0).keep()){
+				activeVisualEffects.get(0).render();
 			} else {
-				activeVisualEffects.remove(i--);
+				activeVisualEffects.remove(0);
 			}
 		}
 
