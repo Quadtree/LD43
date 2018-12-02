@@ -3,6 +3,7 @@ package info.quadtree.ld43;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -65,6 +66,18 @@ public class LD43 extends ApplicationAdapter {
 	Texture backgroundCloud;
 
 	InputMultiplexer mp;
+
+	Map<String, Sound> soundMap = new HashMap<>();
+
+	public void playSound(String name){
+		if (!soundMap.containsKey(name)) soundMap.put(name, Gdx.audio.newSound(Gdx.files.internal(name + ".wav")));
+
+		soundMap.get(name).play();
+	}
+
+	public void playSound(String name, int variants){
+		playSound(name + Util.randInt(variants));
+	}
 
 	public Sprite getGraphic(String name){
 		if (!graphics.containsKey(name)) graphics.put(name, atlas.createSprite(name));
