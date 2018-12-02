@@ -40,10 +40,10 @@
 * Fix bug where moves can be saved up
 * Minimap
 * Food system (and regeneration)
-
-# TODO
 * Leveling up
 * Magic system
+
+# TODO
 * More monster types
 * End boss
 * Final tile graphics
