@@ -51,11 +51,11 @@ public class GameState {
         pc.init();
         creatures.add(pc);
 
-        Items.createItemAt(Items.createSword(), pc.pos.add(TilePos.create(1,1)));
+        /*Items.createItemAt(Items.createSword(), pc.pos.add(TilePos.create(1,1)));
         Items.createItemAt(Items.createPlateMail(), pc.pos.add(TilePos.create(2,1)));
         Items.createItemAt(Items.createBow(), pc.pos.add(TilePos.create(1,0)));
         Items.createItemAt(Items.createSpellBook(Spell.Haste), pc.pos.add(TilePos.create(1,-1)));
-        Items.createItemAt(Items.createPotion(Spell.Heal), pc.pos.add(TilePos.create(1,-2)));
+        Items.createItemAt(Items.createPotion(Spell.Heal), pc.pos.add(TilePos.create(1,-2)));*/
 
         for (int i=0;i<30;++i){
             Monsters.spawnMonsertAt(worldMap.getOpenSpace());

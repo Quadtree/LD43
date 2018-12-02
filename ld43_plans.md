@@ -56,9 +56,14 @@
 * More item types
 * Opening screen, help text
 * Ending screen
+* Increase all damage
 
 # TODO
-* Increase all damage
+* Powerful enemies cannot drop crappy gear
+* Increase monster damage
+* Rest until healed option
+* Reset game button
+* Cap on food in stomach
 
 ## Nice to Have
 * Save/Load system

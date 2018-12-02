@@ -401,7 +401,7 @@ public class Creature {
         int defense = trg.getEffectiveSpeed();
 
         if ((attackRoll >= defense || Util.randInt(8) == 0) && Util.randInt(8) != 0){
-            int damage = Math.round(Util.randInt(getMaxDamageOnAttack()) * getPowerMultiplier()) - trg.getArmor();
+            int damage = Math.round((Util.randInt(getMaxDamageOnAttack()) + getMaxDamageOnAttack() / 2f) * getPowerMultiplier()) - trg.getArmor();
 
             if (damage == 0 && Util.randInt(5) == 0) damage = 1;
 

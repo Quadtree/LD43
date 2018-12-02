@@ -96,8 +96,8 @@ public class LD43 extends ApplicationAdapter {
 		lowerStatusLabel.setPosition(20, 20);
 
 		Label upperStatusLabel = Util.createDynamicLabel(() -> "Tick: " + gameState.tick +
-				"    HP: " + gameState.pc.hp + "/" + gameState.pc.statEndurance +
-				"    SP: " + gameState.pc.sp + "/" + gameState.pc.statMagic +
+				"    HP: " + gameState.pc.hp + "/" + gameState.pc.getEffectiveEndurance() +
+				"    SP: " + gameState.pc.sp + "/" + gameState.pc.getEffectiveMagic() +
 				"    Level: " + gameState.pc.level +
 				"    " + ((gameState.pc.food < 1000) ? "Hungry" : "")
 		);
@@ -180,6 +180,7 @@ public class LD43 extends ApplicationAdapter {
 	public void resetGameState() {
 		gameState = new GameState();
 		gameState.init();
+		updateDisplays();
 	}
 
 	@Override
@@ -202,15 +203,7 @@ public class LD43 extends ApplicationAdapter {
 				resetGameState();
 			}
 
-			inventoryDisplay.refresh();
-
-			combatLog.clear();
-			for (String s : gameState.combatLogMessages) {
-				combatLog.add(Util.lbl(s));
-				combatLog.row();
-			}
-			combatLogPane.layout();
-			combatLogPane.setScrollY(100000);
+			updateDisplays();
 		}
 
 		gameState.pc.tickActions();
@@ -240,7 +233,19 @@ public class LD43 extends ApplicationAdapter {
 		gameState.renderMinimap();
 		batch.end();
 	}
-	
+
+	public void updateDisplays() {
+		inventoryDisplay.refresh();
+
+		combatLog.clear();
+		for (String s : gameState.combatLogMessages) {
+			combatLog.add(Util.lbl(s));
+			combatLog.row();
+		}
+		combatLogPane.layout();
+		combatLogPane.setScrollY(100000);
+	}
+
 	@Override
 	public void dispose () {
 		batch.dispose();
