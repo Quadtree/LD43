@@ -44,6 +44,9 @@ public class Creature {
     int hasteTime = 0;
     int slowTime = 0;
 
+    int oldEncumbrance = 0;
+    int newEncumbrance = 0;
+
     boolean endBoss = false;
 
     public String name = "???";
@@ -90,6 +93,18 @@ public class Creature {
 
     public void tick(){
         if (sleepTime <= 0) ticksTillNextAction -= 1;
+
+        newEncumbrance = inventory.stream().mapToInt(it -> it.weight).sum() / (getEffectiveEndurance() * 2);
+        if (newEncumbrance != oldEncumbrance){
+            oldEncumbrance = newEncumbrance;
+            switch(newEncumbrance){
+                case 0: LD43.s.gameState.addCombatLogMessage(pos, "Your movements are now unencumbered"); break;
+                case 1: LD43.s.gameState.addCombatLogMessage(pos, "You are somewhat slowed by your load"); break;
+                case 2: LD43.s.gameState.addCombatLogMessage(pos, "You are significantly slowed by your load"); break;
+                case 3: LD43.s.gameState.addCombatLogMessage(pos, "You are carrying so much you can barely move"); break;
+                case 4: LD43.s.gameState.addCombatLogMessage(pos, "You are carrying too much to move"); break;
+            }
+        }
 
         boolean wasInvisible = invisibleTime > 0;
         invisibleTime--;
@@ -221,8 +236,16 @@ public class Creature {
 
     public void move(int dx, int dy){
         if (!canAct()) return;
+        if (newEncumbrance >= 4) return;
 
         justMeleeAttackedDueToMove = false;
+
+        int moveTime = 10;
+        switch(newEncumbrance){
+            case 1: moveTime = 15; break;
+            case 2: moveTime = 25; break;
+            case 3: moveTime = 50; break;
+        }
 
         TilePos np = pos.add(dx, dy);
         if (LD43.s.gameState.worldMap.isPassable(np)){
@@ -230,7 +253,7 @@ public class Creature {
                 Optional<Creature> onTile = LD43.s.gameState.worldMap.getCreatureOnTile(np);
                 if (!onTile.isPresent()){
                     pos = np;
-                    takeTime(10);
+                    takeTime(moveTime);
                     food -= 10;
                 } else {
                     justMeleeAttackedDueToMove = true;
@@ -239,7 +262,7 @@ public class Creature {
             } else {
                 justMeleeAttackedDueToMove = true;
                 LD43.s.gameState.worldMap.setTile(np, WorldMap.TerrainType.OpenDoor, null);
-                takeTime(10);
+                takeTime(moveTime);
                 food -= 10;
             }
         }
