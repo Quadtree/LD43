@@ -43,4 +43,14 @@ public class Items {
 
         return ret;
     }
+
+    public static Item createSpellBook(Spell spell){
+        Item ret = new Item();
+        ret.name = "Spellbook of " + spell.name;
+        ret.graphic = "spell_book";
+        ret.weight = 3;
+        ret.castSpell = spell;
+
+        return ret;
+    }
 }

@@ -260,7 +260,7 @@ public class Creature {
         return 1f / (getEffectiveSpeed() / 100f);
     }
 
-    private float getPowerMultiplier(){
+    public float getPowerMultiplier(){
         return statPower / 100f;
     }
 
