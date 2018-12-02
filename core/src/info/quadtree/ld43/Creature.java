@@ -286,6 +286,8 @@ public class Creature {
     }
 
     public void stand(){
+        if (!canAct()) return;
+
         food -= 1;
         Optional<Item> toPickUp = LD43.s.gameState.items.stream().filter(it -> it.onGroundLocation.equals(pos)).findFirst();
 
