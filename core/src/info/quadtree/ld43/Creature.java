@@ -143,7 +143,7 @@ public class Creature {
                 magicRegenTime -= getEffectiveMagic();
 
                 if (healthRegenTime <= 0){
-                    healthRegenTime = 5000;
+                    healthRegenTime = 15000;
                     hp = Math.min(hp + 1, getEffectiveEndurance());
                 }
 
@@ -492,7 +492,7 @@ public class Creature {
     }
 
     public boolean canAct(){
-        return ticksTillNextAction <= 0;
+        return ticksTillNextAction <= 0 && LD43.s.activeVisualEffects.size() == 0;
     }
 
     public boolean isPC(){

@@ -52,9 +52,9 @@
 * Mouseover info
 * Final tile graphics
 * VFX
+* Reduce regeneration speed
 
 # TODO
-* Reduce regeneration speed
 * More item types
 * Opening screen, help text
 * Ending screen
