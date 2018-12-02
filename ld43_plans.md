@@ -44,9 +44,9 @@
 * Magic system
 * More monster types
 * Monster respawns
+* Some monsters patrol
 
 # TODO
-* Some monsters patrol
 * Stop action when see enemy
 * End boss
 * Final tile graphics

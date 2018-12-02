@@ -143,7 +143,13 @@ public class Creature {
         }
 
         if (!isPC() && currentAction == null && getEffectiveSpeed() > 10 && Util.randInt(1000) == 0){
-            currentAction = new MoveAction(this, LD43.s.gameState.worldMap.getOpenSpace());
+            TilePos trgDest = TilePos.create(-1,-1);
+
+            while(!LD43.s.gameState.worldMap.canSee(pos, trgDest, 0)){
+                trgDest = pos.add(MathUtils.random(-20, 20), MathUtils.random(-20, 20));
+            }
+
+            currentAction = new MoveAction(this, trgDest);
         }
     }
 
