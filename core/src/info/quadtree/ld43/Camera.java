@@ -23,6 +23,15 @@ public class Camera {
         gr.setColor(Color.WHITE);
     }
 
+    public void drawOnTile(String graphic, int x, int y, Color color){
+        Vector2 tv = realToScreen(x, y);
+        Sprite gr = LD43.s.getGraphic(graphic);
+        gr.setBounds(tv.x, tv.y, TILE_SIZE, TILE_SIZE);
+        gr.setColor(color);
+        gr.draw(LD43.s.batch);
+        gr.setColor(Color.WHITE);
+    }
+
     public void drawTextOnTile(String text, TilePos tp, Color color){
         Vector2 tv = realToScreen(tp);
 
@@ -31,6 +40,10 @@ public class Camera {
 
         LD43.s.bitmapFont.setColor(color);
         LD43.s.bitmapFont.draw(LD43.s.batch, gl, tv.x - gl.width / 2 + 16, tv.y + gl.height - 2 + 16);
+    }
+
+    public Vector2 realToScreen(int x, int y){
+        return new Vector2((x - pos.x) * TILE_SIZE + getEffectiveScreenWidth() / 2, (y - pos.y) * TILE_SIZE + Gdx.graphics.getHeight() / 2);
     }
 
     public Vector2 realToScreen(TilePos real){

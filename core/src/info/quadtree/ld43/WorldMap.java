@@ -433,7 +433,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 if (withinLOS) tileSeen[i][j] = true;
 
                 if (tileSeen[i][j] || withinLOS){
-                    Color c = getTileColor(TilePos.create(i,j));
+                    Color c = getTileColor(i,j);
 
                     if (!withinLOS){
                         c = new Color(
@@ -444,7 +444,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
                         );
                     }
 
-                    LD43.s.cam.drawOnTile(terrain[i][j].graphic, TilePos.create(i,j), c);
+                    LD43.s.cam.drawOnTile(terrain[i][j].graphic, i, j, c);
                 }
             }
         }
@@ -520,10 +520,13 @@ public class WorldMap implements IndexedGraph<TilePos> {
     final float c1bp = 5f;
     final float c2bp = 20f;
     final float c3bp = 35f;
-
     public Color getTileColor(TilePos tp){
-        int x = MathUtils.clamp(tp.x, 0, WORLD_WIDTH - 1);
-        int y = MathUtils.clamp(tp.y, 0, WORLD_HEIGHT - 1);
+        return getTileColor(tp.x, tp.y);
+    }
+
+    public Color getTileColor(int tx, int ty){
+        int x = MathUtils.clamp(tx, 0, WORLD_WIDTH - 1);
+        int y = MathUtils.clamp(ty, 0, WORLD_HEIGHT - 1);
 
         byte j = jaggednessLevelGrid[x][y];
 
