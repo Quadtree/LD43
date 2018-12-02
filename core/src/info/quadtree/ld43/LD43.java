@@ -115,6 +115,14 @@ public class LD43 extends ApplicationAdapter {
 				LD43.s.bitmapFont
 		);
 
+		final String[] encumbMessages = {
+			"",
+			"Overburdened",
+			"Very Overburdened",
+			"Extremely Overburdened",
+			"Immobile Due to Load"
+		};
+
 		mainStage = new Stage();
 		Label lowerStatusLabel = Util.createDynamicLabel(() ->
 						"PWR: " + gameState.pc.statPower +
@@ -129,7 +137,8 @@ public class LD43 extends ApplicationAdapter {
 				"    HP: " + gameState.pc.hp + "/" + gameState.pc.getEffectiveEndurance() +
 				"    SP: " + gameState.pc.sp + "/" + gameState.pc.getEffectiveMagic() +
 				"    Level: " + gameState.pc.level +
-				"    " + ((gameState.pc.food < 1000) ? "Hungry" : "")
+				"    " + ((gameState.pc.food < 1000) ? "Hungry" : "") +
+				"    " + encumbMessages[gameState.pc.newEncumbrance]
 		);
 		mainStage.addActor(upperStatusLabel);
 		upperStatusLabel.setPosition(20, 45);

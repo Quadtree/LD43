@@ -110,11 +110,11 @@
 * Rest until healed option
 * Reset game button
 * Cap on food in stomach
+* Decrease stomach size
+* Fix glowing button issue
 
 # TODO
-* Fix glowing button issue
 * Indication of current weight category
-* Decrease stomach size
 
 ## Nice to Have
 * Save/Load system

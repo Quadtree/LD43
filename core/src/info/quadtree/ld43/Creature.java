@@ -32,7 +32,7 @@ public class Creature {
     public int corpseToxicity = 0;
     public int corpseWeight = 0;
 
-    final static int MAX_FOOD = 6000;
+    final static int MAX_FOOD = 3000;
     final static int STARTING_FOOD = 2500;
 
     int food = STARTING_FOOD;
@@ -359,8 +359,10 @@ public class Creature {
 
         for (Item itm : equippedItems.values()){
             if (itm.speedSoftCap != null){
-                if (ret > itm.speedSoftCap){
-                    ret -= (ret - itm.speedSoftCap) / 2;
+                int sc = itm.speedSoftCap;
+                sc *= level;
+                if (ret > sc){
+                    ret -= (ret - sc) / 2;
                 }
             }
         }
@@ -547,7 +549,6 @@ public class Creature {
             inventory.remove(itm);
 
             food += itm.food;
-            if (food > MAX_FOOD) food = MAX_FOOD;
 
             int effTox = itm.toxcitiy - getEffectiveEndurance();
 
@@ -556,6 +557,11 @@ public class Creature {
             if (MathUtils.randomBoolean(effTox / 100f)){
                 LD43.s.gameState.addCombatLogMessage(pos, "Oog, that was poisonous...");
                 takeDamage(MathUtils.random(12,24));
+            }
+
+            if (food > MAX_FOOD){
+                food = MAX_FOOD;
+                LD43.s.gameState.addCombatLogMessage(pos, "You are full");
             }
         }
     }

@@ -66,9 +66,9 @@ public class GameState {
 
         while(true){
             switch(Util.randInt(3)){
-                case 0: pc.statPower += Util.randInt(6); break;
-                case 1: pc.statSpeed += Util.randInt(6); break;
-                case 2: pc.statEndurance += Util.randInt(6); break;
+                case 0: pc.statPower += Util.randInt(10); break;
+                case 1: pc.statSpeed += Util.randInt(10); break;
+                case 2: pc.statEndurance += Util.randInt(10); break;
             }
 
             if (pc.statPower + pc.statSpeed + pc.statEndurance + pc.statMagic >= 80) break;
