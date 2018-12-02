@@ -38,6 +38,13 @@
 * Zha-xivin
 * Lsh-dirax
 * Xav-dar
+* Xav-avizi
+* Xav-xisal
+* Xav-vilas
+* **Xav**
+
+# Town Name
+* **Tharburg**
 
 # Game Name
 * Mountain Offering
@@ -45,7 +52,16 @@
 * Tithe to the Mountain
 * Doomed to Die
 * Doomed to be Sacrificed
-*
+* No Exit
+* Short Straw
+* Unlucky
+* A Fitting Sacrifice
+* No Escape
+* Closed Exit
+* Dunegeon of Xav
+* Sacrifice to Xav
+* Offering to Xav
+* Tharburg's Chosen
 
 # DONE
 * More correct map generation
