@@ -87,9 +87,8 @@ public class LD43 extends ApplicationAdapter {
 		Label upperStatusLabel = Util.createDynamicLabel(() -> "Tick: " + gameState.tick +
 				"    HP: " + gameState.pc.hp + "/" + gameState.pc.statEndurance +
 				"    SP: " + gameState.pc.sp + "/" + gameState.pc.statMagic +
-				"    XP: " + gameState.pc.xp +
 				"    Level: " + gameState.pc.level +
-				"    Food: " + gameState.pc.food
+				"    " + ((gameState.pc.food < 1000) ? "Hungry" : "")
 		);
 		mainStage.addActor(upperStatusLabel);
 		upperStatusLabel.setPosition(20, 40);

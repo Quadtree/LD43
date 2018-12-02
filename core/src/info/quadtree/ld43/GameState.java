@@ -109,7 +109,7 @@ public class GameState {
         Texture tx = new Texture(minimap);
         minimap.dispose();
 
-        LD43.s.batch.draw(tx, Gdx.graphics.getWidth() - 380, 20, WorldMap.WORLD_WIDTH * 2, WorldMap.WORLD_HEIGHT * 2);
+        LD43.s.batch.draw(tx, Gdx.graphics.getWidth() - 600, 20, WorldMap.WORLD_WIDTH * 2, WorldMap.WORLD_HEIGHT * 2);
     }
 
     public void tick(){
