@@ -31,7 +31,7 @@ public class Creature {
     public int corpseWeight = 0;
 
     final static int MAX_FOOD = 6000;
-    final static int STARTING_FOOD = 1500;
+    final static int STARTING_FOOD = 2500;
 
     int food = STARTING_FOOD;
 
@@ -443,11 +443,13 @@ public class Creature {
         if (!canAct()) return;
         if (sp < spell.spCost){
             if (isPC()) LD43.s.gameState.addCombatLogMessage(pos, "You do not have enough SP to cast that");
+            ticksTillNextAction++;
             return;
         }
 
         if (spell.requiresTargetOnSpace && !LD43.s.gameState.worldMap.getCreatureOnTile(target).isPresent()){
             if (isPC()) LD43.s.gameState.addCombatLogMessage(pos, "That spell requires a specific target");
+            ticksTillNextAction++;
             return;
         }
 
