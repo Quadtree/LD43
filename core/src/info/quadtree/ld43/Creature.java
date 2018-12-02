@@ -141,6 +141,10 @@ public class Creature {
                 currentAction = new MoveAction(this, LD43.s.gameState.pc.pos);
             }
         }
+
+        if (!isPC() && currentAction == null && getEffectiveSpeed() > 10 && Util.randInt(1000) == 0){
+            currentAction = new MoveAction(this, LD43.s.gameState.worldMap.getOpenSpace());
+        }
     }
 
     public boolean justMeleeAttackedDueToMove = false;
@@ -235,8 +239,9 @@ public class Creature {
             inventory.add(toPickUp.get());
             LD43.s.gameState.items.remove(toPickUp.get());
             LD43.s.gameState.addCombatLogMessage(pos, name + " picks up " + toPickUp.get().name);
-            takeTime(5);
         }
+
+        takeTime(5);
     }
 
     public int getEffectivePower(){
