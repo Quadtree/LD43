@@ -35,20 +35,20 @@ public enum Spell {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             if (!it.isImmuneToSleep){
                 LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
-                it.sleepTime = 200;
+                it.sleepTime = 500;
             } else {
                 LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name + " but it is immune!");
             }
         });
     }),
     Haste("Haste", 14, true, false, ((spell, caster, target) -> {
-        caster.hasteTime = 500;
+        caster.hasteTime = 700;
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.name + " is moving faster");
     })),
     Slow("Slow", 14, false, true, ((spell, caster, target) -> {
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             LD43.s.gameState.addCombatLogMessage(it.pos, caster.name + " casts " + spell.name + " on " + it.name);
-            it.slowTime = 500;
+            it.slowTime = 700;
         });
     }))
     ;
