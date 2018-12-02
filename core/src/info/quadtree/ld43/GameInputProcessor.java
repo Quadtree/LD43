@@ -51,6 +51,10 @@ public class GameInputProcessor implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         TilePos rp = LD43.s.cam.screenToReal(new Vector2(screenX, screenY));
 
+        if (rp.equals(LD43.s.gameState.pc.pos)){
+            LD43.s.gameState.pc.stand();
+        }
+
         if (LD43.s.gameState.selectedSpell == null) {
             if (LD43.s.gameState.worldMap.isPassable(rp)) {
                 LD43.s.gameState.pc.currentAction = new MoveAction(LD43.s.gameState.pc, rp);
