@@ -55,6 +55,7 @@
 
 # TODO
 * Reduce regeneration speed
+* More item types
 * Opening screen, help text
 * Ending screen
 
