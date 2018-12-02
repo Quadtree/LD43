@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameState {
     public WorldMap worldMap;
@@ -20,7 +21,7 @@ public class GameState {
 
     public Spell selectedSpell = null;
 
-    public ArrayList<String> combatLogMessages = new ArrayList<>();
+    public List<String> combatLogMessages = new ArrayList<>();
 
     public void init(){
         this.worldMap = new WorldMap();
@@ -130,6 +131,10 @@ public class GameState {
         System.err.println(loc + " " + message);
 
         if (worldMap.canSee(pc.pos, loc, 0)) combatLogMessages.add(message);
+
+        if (combatLogMessages.size() > 1000){
+            combatLogMessages = combatLogMessages.subList(950, combatLogMessages.size());
+        }
 
         // todo: Consider re-adding this!
         //while (combatLogMessages.size() > 50) combatLogMessages.remove(0);
