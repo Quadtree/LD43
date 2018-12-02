@@ -22,7 +22,8 @@ public class P2PVFX extends BaseVisualEffect {
 
     float rangeToGo;
 
-    public P2PVFX(TilePos start, TilePos end, String graphic) {
+    public P2PVFX(TilePos start, TilePos end, String graphic, Runnable onComplete) {
+        super(onComplete);
         this.start = start;
         this.end = end;
         this.graphic = graphic;

@@ -189,6 +189,7 @@ public class LD43 extends ApplicationAdapter {
 			if (activeVisualEffects.get(0).keep()){
 				activeVisualEffects.get(0).render();
 			} else {
+				activeVisualEffects.get(0).onComplete.run();
 				activeVisualEffects.remove(0);
 			}
 		}
