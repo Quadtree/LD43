@@ -49,7 +49,7 @@ public class Monsters {
 
     public static void spawnImpAt(TilePos pos){
         Creature ret = new Creature();
-        ret.statPower = 20;
+        ret.statPower = 15;
         ret.statSpeed = 30;
         ret.statEndurance = 5;
         ret.graphicName = "imp";
@@ -142,7 +142,7 @@ public class Monsters {
 
     public static void spawnGreaterDemonAt(TilePos pos){
         Creature ret = new Creature();
-        ret.statPower = 200;
+        ret.statPower = 150;
         ret.statSpeed = 60;
         ret.statEndurance = 30;
         ret.graphicName = "greater_demon";
