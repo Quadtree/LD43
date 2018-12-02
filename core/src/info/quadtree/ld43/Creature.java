@@ -265,6 +265,7 @@ public class Creature {
                 LD43.s.gameState.worldMap.setTile(np, WorldMap.TerrainType.OpenDoor, null);
                 takeTime(moveTime);
                 food -= 10;
+                LD43.s.gameState.addCombatLogMessage(pos, "The door opens");
             }
         }
     }
