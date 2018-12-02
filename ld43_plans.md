@@ -59,11 +59,11 @@
 * Increase all damage
 * Powerful enemies cannot drop crappy gear
 * Increase monster damage
-
-# TODO
 * Rest until healed option
 * Reset game button
 * Cap on food in stomach
+
+# TODO
 
 ## Nice to Have
 * Save/Load system

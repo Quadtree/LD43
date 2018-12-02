@@ -540,6 +540,7 @@ public class Creature {
             inventory.remove(itm);
 
             food += itm.food;
+            if (food > MAX_FOOD) food = MAX_FOOD;
 
             int effTox = itm.toxcitiy - getEffectiveEndurance();
 
