@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class InventoryDisplay extends Table {
-    public static final int BUTTON_WIDTH = 60;
+    public static final int BUTTON_WIDTH = 70;
     boolean needsRefresh = true;
 
     public InventoryDisplay() {

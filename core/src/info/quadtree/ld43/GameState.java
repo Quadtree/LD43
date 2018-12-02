@@ -113,6 +113,8 @@ public class GameState {
     }
 
     public void tick(){
+        worldMap.losCache = null;
+
         Util.indexIterate(creatures, Creature::tick);
         tick++;
 

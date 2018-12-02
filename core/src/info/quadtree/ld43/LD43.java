@@ -26,7 +26,7 @@ import java.util.Optional;
 public class LD43 extends ApplicationAdapter {
 	static boolean CHEATS = true;
 
-	public static final String EVIL_GOD_NAME = "Xav";
+	public static final String EVIL_GOD_NAME = "Gathar";
 	public static final String TOWN_NAME = "Tharburg";
 
 	public SpriteBatch batch;
@@ -134,7 +134,7 @@ public class LD43 extends ApplicationAdapter {
 		ScrollPane invDisplayPane = new ScrollPane(inventoryDisplay);
 		inventoryDisplay.setFillParent(true);
 		inventoryDisplay.align(Align.topLeft);
-		inventoryDisplay.pad(20);
+		inventoryDisplay.pad(10);
 
 		Table rightToolbar = new Table();
 		rightToolbar.setBackground(new NinePatchDrawable(LD43.s.buttonDark));
