@@ -1,6 +1,8 @@
 package info.quadtree.ld43;
 
 import com.badlogic.gdx.graphics.Color;
+import info.quadtree.ld43.vfx.P2PVFX;
+import info.quadtree.ld43.vfx.TileVisualEffect;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,22 +13,26 @@ public enum Spell {
         int healAmt = (int)(Util.randInt(200) * power);
         caster.healedFor(healAmt);
 
+        LD43.s.activeVisualEffects.add(new TileVisualEffect(Integer.toString(healAmt), "heal", caster.pos));
+
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " heal"+caster.s()+" themselves for " + healAmt);
     }),
     Fireball("Fireball", Color.ORANGE, 20, false, false, (spell,power, caster, target) -> {
         if (target == null) throw new RuntimeException("Target can't be null");
         LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " cast"+caster.s()+" fireball");
 
-        List<Creature> hit = LD43.s.gameState.creatures.stream()
-                .filter(it -> it.pos.dst2(target) <= 2)
-                .filter(it -> LD43.s.gameState.worldMap.canSee(target, it.pos, 0))
-                .collect(Collectors.toList());
+        LD43.s.activeVisualEffects.add(new P2PVFX(caster.pos, target, "firebolt", () -> {
+            List<Creature> hit = LD43.s.gameState.creatures.stream()
+                    .filter(it -> it.pos.dst2(target) <= 2)
+                    .filter(it -> LD43.s.gameState.worldMap.canSee(target, it.pos, 0))
+                    .collect(Collectors.toList());
 
-        hit.forEach(it -> {
-            int damage = Math.round(Util.randInt(150) * power);
-            LD43.s.gameState.addCombatLogMessage(it.pos, it.sname() + " " + it.gv("take", "takes") + " " + damage + " damage");
-            it.takeDamage(damage);
-        });
+            hit.forEach(it -> {
+                int damage = Math.round(Util.randInt(150) * power);
+                LD43.s.gameState.addCombatLogMessage(it.pos, it.sname() + " " + it.gv("take", "takes") + " " + damage + " damage");
+                it.takeDamage(damage);
+            });
+        }));
     }),
     Invisibility("Invisibility", Color.SKY, 25, true, false, (spell,power, caster, target) -> {
         caster.invisibleTime = 300;
@@ -69,7 +75,8 @@ public enum Spell {
 
         LD43.s.gameState.worldMap.getCreatureOnTile(target).ifPresent(it -> {
             LD43.s.gameState.addCombatLogMessage(it.pos, caster.sname() + " " + caster.gv("cast", "casts") + " " + spell.name + " on " + it.sname() + " dealing " + damage + " damage");
-            it.takeDamage(damage);
+
+            LD43.s.activeVisualEffects.add(new P2PVFX(caster.pos, it.pos, "astral_bolt", () -> it.takeDamage(damage)));
         });
     }
 
