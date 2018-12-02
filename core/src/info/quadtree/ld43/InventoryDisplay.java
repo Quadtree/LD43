@@ -42,6 +42,10 @@ public class InventoryDisplay extends Table {
                 add(Util.btn("Eat", () -> LD43.s.gameState.pc.eat(itm)));
             }
 
+            if (itm.castSpell != null){
+                add(Util.btn("Cast", () -> LD43.s.gameState.selectedSpell = itm.castSpell));
+            }
+
             add(Util.btn("Drop", () -> LD43.s.gameState.pc.drop(itm)));
 
             row();

@@ -60,16 +60,23 @@ pc1
   orig: 32, 32
   offset: 0, 0
   index: -1
-sword1
+spell_book
   rotate: false
   xy: 274, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-wall1
+sword1
   rotate: false
   xy: 308, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wall1
+  rotate: false
+  xy: 342, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

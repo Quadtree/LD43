@@ -17,6 +17,8 @@ public class GameState {
 
     public int tick;
 
+    public Spell selectedSpell = null;
+
     public void init(){
         this.worldMap = new WorldMap();
 

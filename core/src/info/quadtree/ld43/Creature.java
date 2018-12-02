@@ -321,6 +321,17 @@ public class Creature {
         }
     }
 
+    public void castSpell(Spell spell, TilePos target){
+        if (!canAct()) return;
+        if (sp < spell.spCost) return;
+
+        if (spell.requiresTargetOnSpace && !LD43.s.gameState.worldMap.getCreatureOnTile(target).isPresent()) return;
+
+        spell.effect.cast(spell, this, target);
+
+        sp -= spell.spCost;
+    }
+
     public boolean canAct(){
         return ticksTillNextAction <= 0;
     }

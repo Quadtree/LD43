@@ -1,15 +1,16 @@
 package info.quadtree.ld43;
 
 public enum Spell {
-    AstralBolt("Astral Bolt", 5, false, (caster, target) -> Spell.damagingSpellAttack(caster, target, Spell.AstralBolt, 80))
+    AstralBolt("Astral Bolt", 5, false, true, (spell, caster, target) -> Spell.damagingSpellAttack(caster, target, spell, 80))
     ;
     String name;
     int spCost;
     boolean selfCastOnly;
+    boolean requiresTargetOnSpace;
     SpellEffect effect;
 
     interface SpellEffect {
-        void cast(Creature caster, TilePos target);
+        void cast(Spell spell, Creature caster, TilePos target);
     }
 
     private static void damagingSpellAttack(Creature caster, TilePos target, Spell spell, int maxDamage){
@@ -21,10 +22,11 @@ public enum Spell {
         });
     }
 
-    Spell(String name, int spCost, boolean selfCastOnly, SpellEffect effect) {
+    Spell(String name, int spCost, boolean selfCastOnly, boolean requiresTargetOnSpace, SpellEffect effect) {
         this.name = name;
         this.spCost = spCost;
         this.selfCastOnly = selfCastOnly;
+        this.requiresTargetOnSpace = requiresTargetOnSpace;
         this.effect = effect;
     }
 }

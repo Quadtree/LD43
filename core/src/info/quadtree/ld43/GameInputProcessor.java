@@ -20,6 +20,10 @@ public class GameInputProcessor implements InputProcessor {
         if (keycode == Input.Keys.NUMPAD_8){ LD43.s.gameState.pc.move(0, 1); return true; }
         if (keycode == Input.Keys.NUMPAD_9){ LD43.s.gameState.pc.move(1, 1); return true; }
 
+        if (keycode == Input.Keys.ESCAPE){
+            LD43.s.gameState.selectedSpell = null;
+        }
+
         if (keycode == Input.Keys.R && Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)){
             LD43.s.resetGameState();
         }
@@ -46,8 +50,13 @@ public class GameInputProcessor implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         TilePos rp = LD43.s.cam.screenToReal(new Vector2(screenX, screenY));
 
-        if (LD43.s.gameState.worldMap.isPassable(rp)){
-            LD43.s.gameState.pc.currentAction = new MoveAction(LD43.s.gameState.pc, rp);
+        if (LD43.s.gameState.selectedSpell == null) {
+            if (LD43.s.gameState.worldMap.isPassable(rp)) {
+                LD43.s.gameState.pc.currentAction = new MoveAction(LD43.s.gameState.pc, rp);
+            }
+        } else {
+            LD43.s.gameState.pc.castSpell(LD43.s.gameState.selectedSpell, rp);
+            LD43.s.gameState.selectedSpell = null;
         }
 
         return false;
