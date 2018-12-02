@@ -29,6 +29,8 @@ public class Item {
     int food;
     int toxcitiy;
 
+    Spell castSpell;
+
     public void render(){
         if (LD43.s.gameState.worldMap.canSee(LD43.s.gameState.pc.pos, onGroundLocation, 0)) {
             LD43.s.cam.drawOnTile(graphic, onGroundLocation);

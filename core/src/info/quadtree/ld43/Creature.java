@@ -334,7 +334,21 @@ public class Creature {
     }
 
     void gainXP(int amt){
-        this.xp += amt;
+        if (isPC()) {
+            this.xp += amt;
+
+            if (xp >= level*100){
+                xp -= level*100;
+                level++;
+
+                statPower += statPower / 5;
+                statSpeed += statSpeed / 5;
+                statMagic += statMagic / 5;
+                statEndurance += statEndurance / 5;
+
+                LD43.s.gameState.addCombatLogMessage(pos, "Welcome to experience level " + level);
+            }
+        }
     }
 
     public void eat(Item itm){
