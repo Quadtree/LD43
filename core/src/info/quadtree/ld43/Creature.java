@@ -408,11 +408,11 @@ public class Creature {
                     gainXP(trg.xp);
                 }
             } else {
-                LD43.s.activeVisualEffects.add(new TileVisualEffect("", "shield", pos));
+                LD43.s.activeVisualEffects.add(new TileVisualEffect("", "shield", trg.pos));
                 LD43.s.gameState.addCombatLogMessage(trg.pos, getPossessive() + " attack glances off of " + trg.sname());
             }
         } else {
-            LD43.s.activeVisualEffects.add(new TileVisualEffect("", "miss", pos));
+            LD43.s.activeVisualEffects.add(new TileVisualEffect("", "miss", trg.pos));
             LD43.s.gameState.addCombatLogMessage(trg.pos, sname() + " miss"+gv("", "es")+" " + trg.sname());
         }
     }
