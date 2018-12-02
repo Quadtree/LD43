@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
+import info.quadtree.ld43.action.RestAction;
 import info.quadtree.ld43.vfx.BaseVisualEffect;
 
 import java.util.ArrayList;
@@ -130,8 +131,15 @@ public class LD43 extends ApplicationAdapter {
 		inventoryDisplay.pad(20);
 
 		Table rightToolbar = new Table();
-		rightToolbar.add(invDisplayPane).expand().fill();
+		rightToolbar.add(invDisplayPane).expand().fill().colspan(2);
 		rightToolbar.setBounds(Gdx.graphics.getWidth() - 400, 0, 400, Gdx.graphics.getHeight());
+
+		rightToolbar.row();
+		rightToolbar.add(Util.btn("Restart Game", this::resetGameState)).pad(6);
+		rightToolbar.add(Util.btn("Rest Until Healed", () -> {
+			gameState.pc.currentAction = new RestAction(gameState.pc);
+		})).pad(6);
+
 		mainStage.addActor(rightToolbar);
 
 		combatLog = new Table();

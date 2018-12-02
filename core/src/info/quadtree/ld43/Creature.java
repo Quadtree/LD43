@@ -560,4 +560,16 @@ public class Creature {
     public String s(){
         return isPC() ? "" : "s";
     }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getSp() {
+        return sp;
+    }
+
+    public int getFood() {
+        return food;
+    }
 }

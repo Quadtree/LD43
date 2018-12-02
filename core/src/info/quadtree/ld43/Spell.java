@@ -15,7 +15,7 @@ public enum Spell {
 
         LD43.s.activeVisualEffects.add(new TileVisualEffect(Integer.toString(healAmt), "heal", caster.pos));
 
-        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " heal"+caster.s()+" themselves for " + healAmt);
+        LD43.s.gameState.addCombatLogMessage(caster.pos, caster.sname() + " heal"+caster.s()+" "+caster.gv("yourself", "themselves")+" for " + healAmt);
     }),
     Fireball("Fireball", Color.ORANGE, 20, false, false, (spell,power, caster, target) -> {
         if (target == null) throw new RuntimeException("Target can't be null");
