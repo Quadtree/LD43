@@ -49,10 +49,12 @@ public class LD43 extends ApplicationAdapter {
 
 	BitmapFont bitmapFont;
 	BitmapFont bigFont;
+	BitmapFont combatLogFont;
 
 	Stage mainStage;
 
 	Label.LabelStyle defaultLabelStyle;
+	Label.LabelStyle combatLogLabelStyle;
 	TextButton.TextButtonStyle defaultTextButtonStyle;
 
 	InventoryDisplay inventoryDisplay;
@@ -109,6 +111,7 @@ public class LD43 extends ApplicationAdapter {
 
 		bitmapFont = new BitmapFont(Gdx.files.internal("font_45.fnt"));
 		bigFont = new BitmapFont(Gdx.files.internal("font_180.fnt"));
+		combatLogFont = new BitmapFont(Gdx.files.internal("font_25.fnt"));
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
 		buttonDark = new NinePatchDrawable(atlas.createPatch("toolbar"));
@@ -116,6 +119,7 @@ public class LD43 extends ApplicationAdapter {
 		BitmapFont uiFont = Gdx.graphics.getWidth() > 1200 ? LD43.s.bitmapFont : new BitmapFont(Gdx.files.internal("font_10.fnt"));
 
 		defaultLabelStyle = new Label.LabelStyle(uiFont, Color.WHITE);
+		combatLogLabelStyle = new Label.LabelStyle(combatLogFont, Color.WHITE);
 		defaultTextButtonStyle = new TextButton.TextButtonStyle(
 				new NinePatchDrawable(atlas.createPatch("button")),
 				new NinePatchDrawable(atlas.createPatch("button_light")),
@@ -192,7 +196,7 @@ public class LD43 extends ApplicationAdapter {
 		combatLog = new Table();
 		mainStage.addActor(combatLog);
 
-		combatLog.setBounds(0, Gdx.graphics.getHeight() - 50*5, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 50*5);
+		combatLog.setBounds(0, Gdx.graphics.getHeight() - 24*5, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 24*5);
 		combatLog.setWidth(Gdx.graphics.getWidth() - INV_PANE_WIDTH);
 		//combatLog.debug();
 
@@ -321,8 +325,8 @@ public class LD43 extends ApplicationAdapter {
 
 		combatLog.clear();
 		for (String s : gameState.combatLogMessages) {
-			combatLog.add(Util.lbl(s));
-			combatLog.row();
+			combatLog.add(new Label(s, combatLogLabelStyle));
+			combatLog.row().padTop(-6);
 		}
 	}
 

@@ -25,10 +25,10 @@ public class GameState {
     public List<String> combatLogMessages = new ArrayList<>();
 
     enum StatMessage {
-        Power("Power increases the effect of all your attacks and spells."),
-        Speed("Speed increases the speed of all your actions."),
-        Endurance("Endurance makes you healthier and lets you wear heavier armor."),
-        Magic("Magic increases your spell points. Find spellbooks and click cast, then click on a target.");
+        Power("Power increases the effect of your actions."),
+        Speed("Speed makes you faster."),
+        Endurance("Endurance makes you healthier."),
+        Magic("Magic increases your spell points.");
 
         String message;
 
