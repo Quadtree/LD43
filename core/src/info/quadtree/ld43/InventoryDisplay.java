@@ -1,5 +1,6 @@
 package info.quadtree.ld43;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class InventoryDisplay extends Table {
-    public static final int BUTTON_WIDTH = 80;
+    public static int BUTTON_WIDTH = 80;
     boolean needsRefresh = true;
 
     public InventoryDisplay() {
@@ -29,13 +30,15 @@ public class InventoryDisplay extends Table {
     private void doRefresh(){
         needsRefresh = false;
 
+        if (Gdx.graphics.getWidth() < 1200) BUTTON_WIDTH = 30;
+
         clear();
 
 
         for (Item itm : LD43.s.gameState.pc.inventory){
             Sprite sp = new Sprite(LD43.s.getGraphic(itm.graphic));
             sp.setColor(itm.tint);
-            add(new Image(new SpriteDrawable(sp))).padBottom(6).width(32);
+            add(new Image(new SpriteDrawable(sp))).padBottom(6).width(Gdx.graphics.getWidth() >= 1200 ? 32 : 16).height(Gdx.graphics.getHeight() >= 1200 ? 32 : 16);
 
             add(Util.lbl(itm.name)).fill().expandX().padLeft(12).padBottom(6);
 

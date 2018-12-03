@@ -96,6 +96,8 @@ public class LD43 extends ApplicationAdapter {
 	public void create () {
 		s = this;
 
+		if (Gdx.graphics.getWidth() < 1200) INV_PANE_WIDTH = 270;
+
 		bgm = Gdx.audio.newMusic(Gdx.files.internal("bgm.ogg"));
 
 		backgroundCloud = new Texture(Gdx.files.internal("background_cloud.png"));
@@ -113,7 +115,7 @@ public class LD43 extends ApplicationAdapter {
 				new NinePatchDrawable(atlas.createPatch("button")),
 				new NinePatchDrawable(atlas.createPatch("button_light")),
 				new NinePatchDrawable(atlas.createPatch("button_light")),
-				LD43.s.bitmapFont
+				uiFont
 		);
 
 		final String[] encumbMessages = {
@@ -186,7 +188,7 @@ public class LD43 extends ApplicationAdapter {
 		mainStage.addActor(combatLog);
 		combatLog.setBounds(0, Gdx.graphics.getHeight() - 120, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 120);
 		combatLog.setWidth(Gdx.graphics.getWidth() - INV_PANE_WIDTH);
-		combatLog.debug();
+		//combatLog.debug();
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
