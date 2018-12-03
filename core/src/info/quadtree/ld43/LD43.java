@@ -95,7 +95,7 @@ public class LD43 extends ApplicationAdapter {
 	@Override
 	public void create () {
 		s = this;
-		
+
 		if (Gdx.graphics.getWidth() < 1200) INV_PANE_WIDTH = 270;
 
 		Runnable someLambda = () -> {
