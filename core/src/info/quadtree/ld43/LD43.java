@@ -95,8 +95,13 @@ public class LD43 extends ApplicationAdapter {
 	@Override
 	public void create () {
 		s = this;
-
+		
 		if (Gdx.graphics.getWidth() < 1200) INV_PANE_WIDTH = 270;
+
+		Runnable someLambda = () -> {
+			Gdx.app.log("SOME_LAMBDA", "HAHAHA");
+		};
+		someLambda.run();
 
 		bgm = Gdx.audio.newMusic(Gdx.files.internal("bgm.ogg"));
 
