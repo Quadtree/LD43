@@ -159,10 +159,12 @@ public class Creature {
         if (currentAction != null){
             boolean couldAct = canAct();
 
-            if (!currentAction.tick()) currentAction = null;
+            if (couldAct) {
+                if (!currentAction.tick()) currentAction = null;
 
-            if (couldAct && LD43.s.gameState.creatures.stream().anyMatch(it -> it.hostileTowards(this) && LD43.s.gameState.worldMap.canSee(pos, it.pos, 0))){
-                currentAction = null;
+                if (LD43.s.gameState.creatures.stream().anyMatch(it -> it.hostileTowards(this) && LD43.s.gameState.worldMap.canSee(pos, it.pos, 0))) {
+                    currentAction = null;
+                }
             }
         }
 

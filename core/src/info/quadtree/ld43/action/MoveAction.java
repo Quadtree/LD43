@@ -19,10 +19,10 @@ public class MoveAction extends BaseAction {
     public boolean tick() {
         super.tick();
 
-        if (actor.hasRangedAttack()){
+        if (actor.hasRangedAttack()) {
             Optional<Creature> posTrg = LD43.s.gameState.worldMap.getCreatureOnTile(dest);
-            if (posTrg.isPresent()){
-                if (actor.hostileTowards(posTrg.get())){
+            if (posTrg.isPresent()) {
+                if (actor.hostileTowards(posTrg.get())) {
                     actor.meleeAttack(posTrg.get());
                     return false;
                 }
@@ -31,7 +31,7 @@ public class MoveAction extends BaseAction {
 
         List<TilePos> moves = LD43.s.gameState.worldMap.findPath(actor.pos, dest);
 
-        if (moves.size() > 1){
+        if (moves.size() > 1) {
             actor.move(moves.get(1).x - actor.pos.x, moves.get(1).y - actor.pos.y);
             return !actor.justMeleeAttackedDueToMove;
         } else {
