@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public class Camera {
-    public static final int TILE_SIZE = 32;
+    public static final int TILE_SIZE = 64;
     public TilePos pos = TilePos.create(0,0);
 
     public void drawOnTile(String graphic, TilePos tp){
@@ -39,7 +39,7 @@ public class Camera {
         gl.setText(LD43.s.bitmapFont, text);
 
         LD43.s.bitmapFont.setColor(color);
-        LD43.s.bitmapFont.draw(LD43.s.batch, gl, tv.x - gl.width / 2 + 16, tv.y + gl.height - 2 + 16);
+        LD43.s.bitmapFont.draw(LD43.s.batch, gl, tv.x - gl.width / 2 + (TILE_SIZE / 2), tv.y + gl.height - 2 + (TILE_SIZE / 2));
     }
 
     public Vector2 realToScreen(int x, int y){
