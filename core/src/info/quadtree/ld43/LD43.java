@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class LD43 extends ApplicationAdapter {
-	public static final int INV_PANE_WIDTH = 500;
+	public static int INV_PANE_WIDTH = 500;
 	public static boolean CHEATS = true;
 
 	public static final String EVIL_GOD_NAME = "Zavghul";
@@ -107,7 +107,9 @@ public class LD43 extends ApplicationAdapter {
 
 		buttonDark = new NinePatchDrawable(atlas.createPatch("toolbar"));
 
-		defaultLabelStyle = new Label.LabelStyle(LD43.s.bitmapFont, Color.WHITE);
+		BitmapFont uiFont = Gdx.graphics.getWidth() > 1200 ? LD43.s.bitmapFont : new BitmapFont(Gdx.files.internal("font_10.fnt"));
+
+		defaultLabelStyle = new Label.LabelStyle(uiFont, Color.WHITE);
 		defaultTextButtonStyle = new TextButton.TextButtonStyle(
 				new NinePatchDrawable(atlas.createPatch("button")),
 				new NinePatchDrawable(atlas.createPatch("button_light")),
@@ -186,6 +188,8 @@ public class LD43 extends ApplicationAdapter {
 		combatLogPane = new ScrollPane(combatLog);
 		mainStage.addActor(combatLogPane);
 		combatLogPane.setBounds(0, Gdx.graphics.getHeight() - 120, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 120);
+		combatLog.setWidth(Gdx.graphics.getWidth() - INV_PANE_WIDTH);
+		combatLog.debug();
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");

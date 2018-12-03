@@ -54,7 +54,9 @@ public class Util {
     }
 
     public static Label lbl(String txt){
-        return new Label(txt, LD43.s.defaultLabelStyle);
+        Label ret = new Label(txt, LD43.s.defaultLabelStyle);
+        ret.setWrap(true);
+        return ret;
     }
 
     public static Button btn(String txt, Runnable onClick){
