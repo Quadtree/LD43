@@ -38,7 +38,7 @@ public class InventoryDisplay extends Table {
         for (Item itm : LD43.s.gameState.pc.inventory){
             Sprite sp = new Sprite(LD43.s.getGraphic(itm.graphic));
             sp.setColor(itm.tint);
-            add(new Image(new SpriteDrawable(sp))).padBottom(6).width(Gdx.graphics.getWidth() >= 1200 ? 32 : 16).height(Gdx.graphics.getHeight() >= 1200 ? 32 : 16);
+            add(new Image(new SpriteDrawable(sp))).padBottom(6).width(Gdx.graphics.getWidth() >= 1200 ? 32 : 16).height(Gdx.graphics.getWidth() >= 1200 ? 32 : 16);
 
             add(Util.lbl(itm.name)).fill().expandX().padLeft(12).padBottom(6);
 
