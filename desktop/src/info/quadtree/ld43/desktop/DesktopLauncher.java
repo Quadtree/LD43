@@ -31,12 +31,16 @@ public class DesktopLauncher {
 
 
 
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1800;
-		config.height = 1000;
 
-		//config.width = 1024;
-		//config.height = 768;
+		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+
+		if (LwjglApplicationConfiguration.getDesktopDisplayMode().width > 1800){
+			config.width = 1800;
+			config.height = 1000;
+		} else {
+			config.width = 1024;
+			config.height = 768;
+		}
 
 		new LwjglApplication(new LD43(), config);
 	}
