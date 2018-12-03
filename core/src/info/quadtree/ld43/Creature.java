@@ -361,8 +361,7 @@ public class Creature {
 
         for (Item itm : equippedItems.values()){
             if (itm.speedSoftCap != null){
-                int sc = itm.speedSoftCap;
-                sc *= level;
+                int sc = itm.speedSoftCap + statEndurance - 20;
                 if (ret > sc){
                     ret -= (ret - sc) / 2;
                 }
