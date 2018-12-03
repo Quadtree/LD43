@@ -27,8 +27,8 @@ public class GameState {
     enum StatMessage {
         Power("Power increases the effect of all your attacks and spells."),
         Speed("Speed increases the speed of all your actions."),
-        Endurance("Endurance gives you more health and health regeneration, and helps you resist toxic foods."),
-        Magic("Magic increases your spell points and spell point regeneration. Find spellbooks and click cast, then click on a target.");
+        Endurance("Endurance makes you healthier and lets you wear heavier armor."),
+        Magic("Magic increases your spell points. Find spellbooks and click cast, then click on a target.");
 
         String message;
 
