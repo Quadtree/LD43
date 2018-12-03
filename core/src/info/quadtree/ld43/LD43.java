@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class LD43 extends ApplicationAdapter {
-	public static int INV_PANE_WIDTH = 500;
+	public static int INV_PANE_WIDTH = 800;
 	public static boolean CHEATS = false;
 
 	public static final String EVIL_GOD_NAME = "Zavghul";
@@ -107,8 +107,8 @@ public class LD43 extends ApplicationAdapter {
 
 		backgroundCloud = new Texture(Gdx.files.internal("background_cloud.png"));
 
-		bitmapFont = new BitmapFont(Gdx.files.internal("font_18.fnt"));
-		bigFont = new BitmapFont(Gdx.files.internal("font_90.fnt"));
+		bitmapFont = new BitmapFont(Gdx.files.internal("font_45.fnt"));
+		bigFont = new BitmapFont(Gdx.files.internal("font_180.fnt"));
 		atlas = new TextureAtlas(Gdx.files.internal("main.atlas"));
 
 		buttonDark = new NinePatchDrawable(atlas.createPatch("toolbar"));
@@ -149,7 +149,7 @@ public class LD43 extends ApplicationAdapter {
 				"    " + encumbMessages[gameState.pc.newEncumbrance]
 		);
 		mainStage.addActor(upperStatusLabel);
-		upperStatusLabel.setPosition(20, 45);
+		upperStatusLabel.setPosition(20, 20+50);
 
 		Label mouseOverLabel = Util.createDynamicLabel(() -> {
 			TilePos tp = cam.screenToReal(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
@@ -167,7 +167,7 @@ public class LD43 extends ApplicationAdapter {
 			return "";
 		});
 		mainStage.addActor(mouseOverLabel);
-		mouseOverLabel.setPosition(20, 70);
+		mouseOverLabel.setPosition(20, 20+50*2);
 
 		inventoryDisplay = new InventoryDisplay();
 
@@ -192,7 +192,7 @@ public class LD43 extends ApplicationAdapter {
 		combatLog = new Table();
 		mainStage.addActor(combatLog);
 
-		combatLog.setBounds(0, Gdx.graphics.getHeight() - 120, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 120);
+		combatLog.setBounds(0, Gdx.graphics.getHeight() - 50*5, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 50*5);
 		combatLog.setWidth(Gdx.graphics.getWidth() - INV_PANE_WIDTH);
 		//combatLog.debug();
 

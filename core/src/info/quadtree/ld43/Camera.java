@@ -55,7 +55,7 @@ public class Camera {
     }
 
     public int getEffectiveScreenWidth() {
-        return Gdx.graphics.getWidth() - 300;
+        return Gdx.graphics.getWidth() - LD43.INV_PANE_WIDTH;
     }
 
     public TilePos screenToReal(Vector2 screenPos){
