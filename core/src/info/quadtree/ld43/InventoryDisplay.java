@@ -52,10 +52,14 @@ public class InventoryDisplay extends Table {
             }
 
             if (itm.castSpell != null){
-                if (!itm.castSpell.selfCastOnly){
-                    add(Util.btn("Cast", () -> LD43.s.gameState.selectedSpell = itm.castSpell)).padLeft(6).padBottom(6).width(BUTTON_WIDTH);
+                if (LD43.s.gameState.pc.sp >= itm.castSpell.spCost) {
+                    if (!itm.castSpell.selfCastOnly) {
+                        add(Util.btn("Cast", () -> LD43.s.gameState.selectedSpell = itm.castSpell)).padLeft(6).padBottom(6).width(BUTTON_WIDTH);
+                    } else {
+                        add(Util.btn("Cast", () -> LD43.s.gameState.pc.castSpell(itm.castSpell, LD43.s.gameState.pc.pos))).padLeft(6).padBottom(6).width(BUTTON_WIDTH);
+                    }
                 } else {
-                    add(Util.btn("Cast", () -> LD43.s.gameState.pc.castSpell(itm.castSpell, LD43.s.gameState.pc.pos))).padLeft(6).padBottom(6).width(BUTTON_WIDTH);
+                    add();
                 }
             }
 
