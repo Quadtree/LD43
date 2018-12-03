@@ -42,6 +42,7 @@ public class WorldMap implements IndexedGraph<TilePos> {
     TerrainType[][] terrain;
     boolean[][] tileSeen;
     byte[][] jaggednessLevelGrid;
+    boolean[][] totallyInaccessable;
 
     transient TilePos currentPathFindTarget = null;
 
@@ -205,14 +206,17 @@ public class WorldMap implements IndexedGraph<TilePos> {
         terrain = new TerrainType[WORLD_WIDTH][];
         tileSeen = new boolean[WORLD_WIDTH][];
         jaggednessLevelGrid = new byte[WORLD_WIDTH][];
+        totallyInaccessable = new boolean[WORLD_WIDTH][];
         for (int i=0;i<WORLD_WIDTH;++i){
             terrain[i] = new TerrainType[WORLD_HEIGHT];
             tileSeen[i] = new boolean[WORLD_HEIGHT];
             jaggednessLevelGrid[i] = new byte[WORLD_HEIGHT];
+            totallyInaccessable[i] = new boolean[WORLD_HEIGHT];
             for (int j=0;j<WORLD_HEIGHT;++j){
                 terrain[i][j] = TerrainType.CornerWall;
                 tileSeen[i][j] = false;
                 jaggednessLevelGrid[i][j] = 0;
+                totallyInaccessable[i][j] = false;
             }
         }
 
@@ -374,6 +378,24 @@ public class WorldMap implements IndexedGraph<TilePos> {
                 }
             }
         }
+
+        for (int x=0;x<WORLD_WIDTH;++x) {
+            for (int y = 0; y < WORLD_HEIGHT; ++y) {
+                boolean hasPassableNeighbor = false;
+
+                for (int cx=x - 1;cx <= x + 1;++cx){
+                    for (int cy=y - 1;cy <= y + 1;++cy){
+                        if (isPassable(TilePos.create(cx,cy))){
+                            hasPassableNeighbor = true;
+                            break;
+                        }
+                    }
+                    if (hasPassableNeighbor) break;
+                }
+
+                totallyInaccessable[x][y] = !hasPassableNeighbor;
+            }
+        }
     }
 
     private float computeJagedness(TilePos trgRoom) {
@@ -475,6 +497,8 @@ public class WorldMap implements IndexedGraph<TilePos> {
     }
 
     public boolean canSee(TilePos start, TilePos end, float within){
+        if (end.x >= 0 && end.y >= 0 && end.x < WORLD_WIDTH && end.y < WORLD_HEIGHT && totallyInaccessable[end.x][end.y]) return false;
+
         if (losCache == null) losCache = new HashMap<>();
         if (!losCache.containsKey(start)) losCache.put(start, new HashMap<>());
         if (!losCache.get(start).containsKey(end)) losCache.get(start).put(end, new HashMap<>());
