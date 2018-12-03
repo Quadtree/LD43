@@ -186,6 +186,7 @@ public class LD43 extends ApplicationAdapter {
 
 		combatLog = new Table();
 		mainStage.addActor(combatLog);
+
 		combatLog.setBounds(0, Gdx.graphics.getHeight() - 120, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 120);
 		combatLog.setWidth(Gdx.graphics.getWidth() - INV_PANE_WIDTH);
 		//combatLog.debug();
