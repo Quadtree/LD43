@@ -69,4 +69,6 @@ public class Util {
 
         return btn;
     }
+
+    public static Runnable takeScreenshot;
 }

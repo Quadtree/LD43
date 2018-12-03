@@ -38,6 +38,9 @@ public class GameInputProcessor implements InputProcessor {
                     LD43.s.gameState.pc.inventory.add(Items.createSpellBook(s));
                 }
             }
+            if (keycode == Input.Keys.T){
+                Util.takeScreenshot.run();
+            }
         }
 
         return false;
