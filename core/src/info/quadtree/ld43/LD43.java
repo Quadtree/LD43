@@ -58,7 +58,6 @@ public class LD43 extends ApplicationAdapter {
 	InventoryDisplay inventoryDisplay;
 
 	Table combatLog;
-	ScrollPane combatLogPane;
 
 	NinePatchDrawable buttonDark;
 	NinePatchDrawable buttonLight;
@@ -184,10 +183,8 @@ public class LD43 extends ApplicationAdapter {
 		mainStage.addActor(rightToolbar);
 
 		combatLog = new Table();
-
-		combatLogPane = new ScrollPane(combatLog);
-		mainStage.addActor(combatLogPane);
-		combatLogPane.setBounds(0, Gdx.graphics.getHeight() - 120, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 120);
+		mainStage.addActor(combatLog);
+		combatLog.setBounds(0, Gdx.graphics.getHeight() - 120, Gdx.graphics.getWidth() - INV_PANE_WIDTH, 120);
 		combatLog.setWidth(Gdx.graphics.getWidth() - INV_PANE_WIDTH);
 		combatLog.debug();
 
@@ -319,8 +316,6 @@ public class LD43 extends ApplicationAdapter {
 			combatLog.add(Util.lbl(s));
 			combatLog.row();
 		}
-		combatLogPane.layout();
-		combatLogPane.setScrollY(100000);
 	}
 
 	@Override

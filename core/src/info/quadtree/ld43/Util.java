@@ -55,7 +55,7 @@ public class Util {
 
     public static Label lbl(String txt){
         Label ret = new Label(txt, LD43.s.defaultLabelStyle);
-        ret.setWrap(true);
+        //ret.setWrap(true);
         return ret;
     }
 
