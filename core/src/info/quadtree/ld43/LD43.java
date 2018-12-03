@@ -27,7 +27,7 @@ import java.util.Optional;
 
 public class LD43 extends ApplicationAdapter {
 	public static int INV_PANE_WIDTH = 500;
-	public static boolean CHEATS = true;
+	public static boolean CHEATS = false;
 
 	public static final String EVIL_GOD_NAME = "Zavghul";
 	public static final String TOWN_NAME = "Tharburg";

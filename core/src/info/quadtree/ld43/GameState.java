@@ -100,7 +100,7 @@ public class GameState {
             if (ord[i].amount > 0) addCombatLogMessage(pc.pos, messages[i] + ord[i].message.toString() + ". " + ord[i].message.message);
         }
 
-        addCombatLogMessage(pc.pos, "If you would like to roll again for stats, Press Ctrl+R or click Restart Game.");
+        addCombatLogMessage(pc.pos, "If you would like to roll again for stats, Press R or click Restart Game.");
 
         /*Items.createItemAt(Items.createSword(), pc.pos.add(TilePos.create(1,1)));
         Items.createItemAt(Items.createPlateMail(), pc.pos.add(TilePos.create(2,1)));

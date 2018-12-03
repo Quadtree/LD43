@@ -24,7 +24,7 @@ public class GameInputProcessor implements InputProcessor {
             LD43.s.gameState.selectedSpell = null;
         }
 
-        if (keycode == Input.Keys.R && Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)){
+        if (keycode == Input.Keys.R){
             LD43.s.resetGameState();
         }
 
